@@ -1,7 +1,8 @@
-package com.usach.movie_backend.perfil.service;
+package com.usach.movie_backend.profile.service;
 
-import com.usach.movie_backend.perfil.domain.Profile;
-import com.usach.movie_backend.perfil.repository.IProfileRepository;
+import com.usach.movie_backend.profile.domain.Profile;
+import com.usach.movie_backend.profile.repository.IProfileRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
