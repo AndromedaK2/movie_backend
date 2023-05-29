@@ -1,6 +1,7 @@
-package com.usach.movie_backend.perfil.service;
+package com.usach.movie_backend.profile.service;
 
-import com.usach.movie_backend.perfil.domain.Profile;
+import com.usach.movie_backend.profile.domain.Profile;
+
 
 import java.util.List;
 import java.util.Optional;

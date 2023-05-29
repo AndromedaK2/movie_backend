@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/profile")
-public class ProfileController {
+public class ControllerProfile {
     @Autowired
     private ProfileService profileService;
 

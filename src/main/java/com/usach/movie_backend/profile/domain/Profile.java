@@ -1,4 +1,4 @@
-package com.usach.movie_backend.perfil.domain;
+package com.usach.movie_backend.profile.domain;
 
 
 import jakarta.persistence.*;
