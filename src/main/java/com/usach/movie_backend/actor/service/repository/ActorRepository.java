@@ -1,4 +1,4 @@
-package com.usach.movie_backend.actor.repository;
+package com.usach.movie_backend.actor.service.repository;
 
 import org.springframework.stereotype.Repository;
 
