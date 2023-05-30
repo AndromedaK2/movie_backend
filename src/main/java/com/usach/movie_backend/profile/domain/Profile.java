@@ -25,8 +25,8 @@ public class Profile {
     private String urlPhoto;
     @Column(name = "creation_date")
     private Date creationDate;
-
-    //private Long id_user;
+    @Column(name = "id_user")
+    private Long idUser;
 
 
 }
