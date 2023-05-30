@@ -1,6 +1,6 @@
 package com.usach.movie_backend.user.controller;
 
-import com.usach.movie_backend.user.service.UserService;
+import com.usach.movie_backend.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<String> getUserById(@PathVariable("id") String userId){

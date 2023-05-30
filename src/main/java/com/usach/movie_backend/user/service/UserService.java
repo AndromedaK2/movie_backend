@@ -1,6 +1,6 @@
 package com.usach.movie_backend.user.service;
 
-import com.usach.movie_backend.user.repository.UserRepository;
+import com.usach.movie_backend.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService  implements  IUserService{
+
     @Autowired
-    private UserRepository userRepository;
+    IUserRepository userRepository;
 
     public String getUserById(String userId){
         if(userId.equals("1")){
@@ -18,6 +19,11 @@ public class UserService {
         }else{
             return "Usuario x";
         }
+    }
+
+    @Override
+    public String getUserByUserName(String userId) {
+        return null;
     }
 
     public List<String> getAllUsers(){
