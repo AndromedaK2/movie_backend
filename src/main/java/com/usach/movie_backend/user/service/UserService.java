@@ -1,43 +1,55 @@
 package com.usach.movie_backend.user.service;
 
-import com.usach.movie_backend.user.repository.UserRepository;
+import com.usach.movie_backend.rol.service.IRolService;
+import com.usach.movie_backend.user.domain.User;
+import com.usach.movie_backend.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService  implements  IUserService<User>{
+
     @Autowired
-    private UserRepository userRepository;
+    IUserRepository userRepository;
 
-    public String getUserById(String userId){
-        if(userId.equals("1")){
-            return  "Usuario 1";
-        }else{
-            return "Usuario x";
-        }
+    @Autowired
+    UserMapper userMapper;
+
+    @Autowired
+    IRolService rolService;
+
+    public Optional<User> findByIdUser(Integer idUser){
+        Optional<User> user = userRepository.findById(idUser);
+        return user;
     }
 
-    public List<String> getAllUsers(){
-        ArrayList<String> users = new ArrayList<>();
-        for (int i = 0; i<10; i++){
-            users.add("usuario "+i);
-        }
-        return users;
+
+    public Optional<User> findByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user;
     }
 
-    public String createUser(){
-        return "Usuario Creado";
+    public List<User> getAllUsers(){
+         List<User> users = userRepository.findAll();
+         return users;
     }
 
-    public String updateUser(){
-        return "Usuario Creado";
+    public User createUser(UserCreate userCreate){
+        User user = userMapper.createUserMapping(userCreate);
+        return userRepository.save(user);
     }
 
-    public String deleteUser(){
-        return "Usuario Creado";
+    public User updateUser(Integer idUser , UserUpdate userUpdate){
+        User user = userMapper.updateUserMapping( idUser ,userUpdate);
+        return userRepository.save(user);
+    }
+
+    public String deleteById(Integer idUser){
+        userRepository.deleteById(idUser);
+        return "user deleted";
     }
 }
 
