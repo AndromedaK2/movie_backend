@@ -1,4 +1,4 @@
-package com.usach.movie_backend.user.service;
+package com.usach.movie_backend.user.service.dtos;
 import java.util.Date;
 
 public record UserCreate(

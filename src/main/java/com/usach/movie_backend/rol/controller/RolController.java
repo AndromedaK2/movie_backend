@@ -2,6 +2,7 @@ package com.usach.movie_backend.rol.controller;
 
 import com.usach.movie_backend.rol.domain.Rol;
 import com.usach.movie_backend.rol.service.IRolService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/rol")
+@RequestMapping("/roles")
+@Tag(name="roles", description = "Roles Management API")
 public class RolController {
 
     @Autowired
@@ -26,7 +28,7 @@ public class RolController {
         return new ResponseEntity<>(rol, HttpStatus.OK);
     }
 
-    @GetMapping("/get-all")
+    @GetMapping
     public ResponseEntity<List<Rol>> findAll(){
         List<Rol> roles = rolService.findAllRoles();
         return new ResponseEntity<>(roles, HttpStatus.OK);

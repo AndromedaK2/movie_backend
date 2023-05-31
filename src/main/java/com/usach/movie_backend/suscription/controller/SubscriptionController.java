@@ -1,9 +1,10 @@
 package com.usach.movie_backend.suscription.controller;
 
 
-import com.usach.movie_backend.profile.domain.Profile;
+
 import com.usach.movie_backend.suscription.domain.Subscription;
 import com.usach.movie_backend.suscription.service.SubscriptionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/subscription")
+@RequestMapping("/subscriptions")
+@Tag(name="subscriptions", description = "Subscriptions Management API")
 public class SubscriptionController {
     @Autowired
     private SubscriptionService subscriptionService;

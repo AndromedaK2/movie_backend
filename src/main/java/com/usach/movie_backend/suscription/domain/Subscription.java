@@ -1,5 +1,6 @@
 package com.usach.movie_backend.suscription.domain;
 
+import com.usach.movie_backend.subscriptionType.domain.SubscriptionType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +31,8 @@ public class Subscription {
     @Column(name = "expiration_date")
     private Date expirationDate;
 
-    @Column(name = "id_subscription_type")
-    private Integer idSubscriptionType;
+    @OneToOne
+    @JoinColumn(name = "id_subscription_type", referencedColumnName = "id_subscription_type")
+    private SubscriptionType subscriptionType;
 
 }
