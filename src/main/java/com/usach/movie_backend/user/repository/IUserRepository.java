@@ -24,9 +24,11 @@ public interface IUserRepository extends JpaRepository<User,Integer> {
     @Transactional
     void deleteByEmail(@Param("email") String email);
 
-    @Query("UPDATE User u SET u.email =?1, u.password =?2, u.firstName =?3, u.lastName =?4, u.birthday =?5, u.wallet =?6  where u.email=?1")
+    @Query("UPDATE User u SET u.email =:email, u.password =:password, u.firstName =:firstName, u.lastName =:lastName, " +
+            "u.birthday =:birthday, u.wallet =:wallet  WHERE LOWER(u.email) = LOWER(:email)")
     @Modifying
     @Transactional
-    int updateUser(String email, String password, String firstName, String lastName, Date birthday, Float wallet );
+    int updateUser(@Param("email") String email,@Param("password")  String password,@Param("firstName") String firstName,
+                    @Param("lastName")String lastName,@Param("birthday")  Date birthday,@Param("wallet")  Float wallet );
 
 }
