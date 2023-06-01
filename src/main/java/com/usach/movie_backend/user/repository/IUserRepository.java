@@ -2,12 +2,14 @@ package com.usach.movie_backend.user.repository;
 
 
 import com.usach.movie_backend.user.domain.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
+
 import java.util.Optional;
 
 @Repository
@@ -18,6 +20,10 @@ public interface IUserRepository extends JpaRepository<User,Integer> {
     @Query(value = "SELECT u FROM User u WHERE LOWER(u.email) = LOWER(:email) and LOWER(u.password) = LOWER(:password)")
     Optional<User> login(@Param("email") String email, @Param("password") String password);
 
+    @Modifying
+    @Query("DELETE FROM User u WHERE u.email = :email")
+    @Transactional
+    void deleteByEmail(@Param("email") String email);
 
 
 }

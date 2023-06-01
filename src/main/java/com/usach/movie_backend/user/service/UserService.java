@@ -1,6 +1,5 @@
 package com.usach.movie_backend.user.service;
 
-import com.usach.movie_backend.rol.service.IRolService;
 import com.usach.movie_backend.user.domain.User;
 import com.usach.movie_backend.user.repository.IUserRepository;
 import com.usach.movie_backend.user.service.dtos.UserCreate;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService  implements  IUserService<User>{
+public class UserService  implements  IUserService{
 
     @Autowired
     IUserRepository userRepository;
@@ -24,8 +23,6 @@ public class UserService  implements  IUserService<User>{
     @Autowired
     UserMapper userMapper;
 
-    @Autowired
-    IRolService rolService;
 
     public Optional<User> findByIdUser(Integer idUser){
         return Optional.ofNullable(userRepository.findById(idUser).orElseThrow(() ->
@@ -33,8 +30,11 @@ public class UserService  implements  IUserService<User>{
     }
 
     public Optional<User> findByEmail(String email) {
-        return Optional.ofNullable(userRepository.findByEmail(email).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with email: %d not found", email))));
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("User does not exist"));
+        }
+        return user;
     }
 
     public List<User> getAllUsers(){
@@ -51,17 +51,27 @@ public class UserService  implements  IUserService<User>{
     }
 
     public User updateUser(Integer idUser , UserUpdate userUpdate){
+        if(userRepository.findById(idUser).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User does not exist"));
+        }
         User user = userMapper.updateUserMapping( idUser ,userUpdate);
         return userRepository.save(user);
     }
 
-    public String deleteById(Integer idUser){
+    public void deleteById(Integer idUser){
         userRepository.deleteById(idUser);
-        return "user deleted";
+    }
+
+    public  void deleteByEmail(String email){
+        userRepository.deleteByEmail(email);
     }
 
     public Optional<User> login(UserLogin userLogin){
-        return userRepository.login(userLogin.email(), userLogin.password());
+        Optional<User> user = userRepository.login(userLogin.email(), userLogin.password());
+        if(user.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User does not exist"));
+        }
+        return user ;
     }
 }
 

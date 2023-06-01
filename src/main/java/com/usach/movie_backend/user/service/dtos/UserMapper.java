@@ -1,9 +1,7 @@
 package com.usach.movie_backend.user.service.dtos;
 
-import com.usach.movie_backend.suscription.domain.Subscription;
+
 import com.usach.movie_backend.user.domain.User;
-import com.usach.movie_backend.user.service.dtos.UserCreate;
-import com.usach.movie_backend.user.service.dtos.UserUpdate;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -9,12 +9,13 @@ import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
-public interface IUserService<T> {
+public interface IUserService {
     Optional<User> findByIdUser(Integer userId);
     Optional<User> findByEmail(String email);
     List<User> getAllUsers();
     User createUser(UserCreate userCreate);
     User updateUser(Integer idUser, UserUpdate userUpdate);
-    String deleteById(Integer idUser);
+    void deleteById(Integer idUser);
     Optional<User> login(UserLogin userLogin);
+    void deleteByEmail(String email);
 }
