@@ -45,7 +45,7 @@ public class User {
     private Integer quantityProfilesCreated;
 
     @ManyToOne
-    @JoinColumn(name = "id_rol",insertable = false)
+    @JoinColumn(name = "id_rol",insertable = false, updatable = false)
     private Rol rol;
 
     @OneToOne

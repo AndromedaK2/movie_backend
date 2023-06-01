@@ -50,12 +50,22 @@ public class UserService  implements  IUserService{
         return userRepository.save(user);
     }
 
-    public User updateUser(Integer idUser , UserUpdate userUpdate){
+    public Optional<User> updateUser(Integer idUser,UserUpdate userUpdate){
         if(userRepository.findById(idUser).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User does not exist"));
         }
-        User user = userMapper.updateUserMapping( idUser ,userUpdate);
-        return userRepository.save(user);
+
+       userRepository.updateUser(
+               userUpdate.email(),
+               userUpdate.password(),
+               userUpdate.firstName(),
+               userUpdate.lastName(),
+               userUpdate.birthday(),
+               userUpdate.wallet(),
+               idUser);
+
+        return userRepository.findById(idUser);
+
     }
 
     public void deleteById(Integer idUser){
@@ -73,5 +83,7 @@ public class UserService  implements  IUserService{
         }
         return user ;
     }
+
+
 }
 

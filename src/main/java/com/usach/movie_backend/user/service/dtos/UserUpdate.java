@@ -6,5 +6,6 @@ public record UserUpdate(String firstName,
                          String lastName,
                          String email,
                          Date birthday,
-                         String password){
+                         String password,
+                         Float wallet){
 }
