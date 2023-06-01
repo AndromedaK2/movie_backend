@@ -14,7 +14,7 @@ public interface IUserService {
     Optional<User> findByEmail(String email);
     List<User> getAllUsers();
     User createUser(UserCreate userCreate);
-    Optional<User> updateUser(Integer idUser, UserUpdate userUpdate);
+    Optional<User> updateUser( UserUpdate userUpdate);
     void deleteById(Integer idUser);
     Optional<User> login(UserLogin userLogin);
     void deleteByEmail(String email);

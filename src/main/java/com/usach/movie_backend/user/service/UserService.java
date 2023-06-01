@@ -6,6 +6,7 @@ import com.usach.movie_backend.user.service.dtos.UserCreate;
 import com.usach.movie_backend.user.service.dtos.UserLogin;
 import com.usach.movie_backend.user.service.dtos.UserMapper;
 import com.usach.movie_backend.user.service.dtos.UserUpdate;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class UserService  implements  IUserService{
@@ -22,6 +24,7 @@ public class UserService  implements  IUserService{
 
     @Autowired
     UserMapper userMapper;
+
 
 
     public Optional<User> findByIdUser(Integer idUser){
@@ -50,21 +53,22 @@ public class UserService  implements  IUserService{
         return userRepository.save(user);
     }
 
-    public Optional<User> updateUser(Integer idUser,UserUpdate userUpdate){
-        if(userRepository.findById(idUser).isEmpty()){
+    public Optional<User> updateUser(UserUpdate userUpdate){
+        if(userRepository.findByEmail(userUpdate.email()).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User does not exist"));
         }
 
-       userRepository.updateUser(
+       Integer updated = userRepository.updateUser(
                userUpdate.email(),
                userUpdate.password(),
                userUpdate.firstName(),
                userUpdate.lastName(),
                userUpdate.birthday(),
-               userUpdate.wallet(),
-               idUser);
-
-        return userRepository.findById(idUser);
+               userUpdate.wallet());
+        if(updated!=1){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("User could not be updated"));
+        }
+        return userRepository.findByEmail(userUpdate.email());
 
     }
 

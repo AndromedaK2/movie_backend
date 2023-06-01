@@ -51,9 +51,9 @@ public class UserController {
         Optional<User> user =  userService.login(userLogin);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<Optional<User>> updateUser(@PathVariable("id") Integer idUser ,@RequestBody UserUpdate userUpdate){
-        Optional<User> user = userService.updateUser(idUser ,userUpdate);
+    @PutMapping
+    public ResponseEntity<Optional<User>> updateUser(@RequestBody UserUpdate userUpdate){
+        Optional<User> user = userService.updateUser(userUpdate);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
