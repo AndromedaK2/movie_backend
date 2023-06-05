@@ -2,15 +2,20 @@ package com.usach.movie_backend.subscriptionType.controller;
 
 
 import com.usach.movie_backend.subscriptionType.domain.SubscriptionType;
+import com.usach.movie_backend.subscriptionType.domain.SubscriptionTypes;
 import com.usach.movie_backend.subscriptionType.service.SubscriptionTypeService;
 import com.usach.movie_backend.suscription.domain.Subscription;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
+@Tag(name="subscription type", description = "Subscription Type Management API")
 @RestController
 @RequestMapping("/subscriptiontype")
 public class SubscriptionTypeController {
@@ -25,8 +30,14 @@ public class SubscriptionTypeController {
     }
     @GetMapping("/{idSubscriptionType}")
     public ResponseEntity<SubscriptionType> findById(@PathVariable("idSubscriptionType")Integer idSubscriptionType){
-        return subscriptionTypeService.findBySubscriptionType(idSubscriptionType).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+        return subscriptionTypeService.findByIdSubscriptionType(idSubscriptionType).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/subscriptionTypeName/{subscriptionTypeName}")
+    public ResponseEntity<Optional<SubscriptionType>> findByName(@PathVariable("subscriptionTypeName") SubscriptionTypes subscriptionTypeName){
+        return new ResponseEntity<>(subscriptionTypeService.findBySubscriptionTypeName(subscriptionTypeName), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<SubscriptionType> create(@RequestBody SubscriptionType subscriptionType){
         return new ResponseEntity<>(subscriptionTypeService.create(subscriptionType),HttpStatus.CREATED);
@@ -35,13 +46,13 @@ public class SubscriptionTypeController {
 
     @PutMapping
     public ResponseEntity<SubscriptionType> update(@RequestBody SubscriptionType subscriptionType){
-        return subscriptionTypeService.findBySubscriptionType(subscriptionType.getIdSubscriptionType())
+        return subscriptionTypeService.findByIdSubscriptionType(subscriptionType.getIdSubscriptionType())
                 .map( u -> ResponseEntity.ok(subscriptionTypeService.update(subscriptionType)))
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
     @DeleteMapping("/{idSubscriptionType}")
     public ResponseEntity<Object> delete(@PathVariable("idSubscriptionType") Integer id){
-        return subscriptionTypeService.findBySubscriptionType(id)
+        return subscriptionTypeService.findByIdSubscriptionType(id)
                 .map( u ->{
                     subscriptionTypeService.delete(id);
                     return ResponseEntity.ok().build();

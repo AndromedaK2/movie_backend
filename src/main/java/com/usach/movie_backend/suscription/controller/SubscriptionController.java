@@ -2,6 +2,7 @@ package com.usach.movie_backend.suscription.controller;
 
 
 
+import com.usach.movie_backend.subscriptionType.domain.SubscriptionTypes;
 import com.usach.movie_backend.suscription.domain.Subscription;
 import com.usach.movie_backend.suscription.service.SubscriptionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,9 +29,9 @@ public class SubscriptionController {
     public ResponseEntity<Subscription> findById(@PathVariable("idSubscription")Integer idSubscription){
         return subscriptionService.findBySubscription(idSubscription).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
-    @PostMapping
-    public ResponseEntity<Subscription> create(@RequestBody Subscription subscription){
-        return new ResponseEntity<>(subscriptionService.create(subscription),HttpStatus.CREATED);
+    @PostMapping("/{idUser}/{subscriptionType}")
+    public ResponseEntity<Subscription> create(@PathVariable("userEmail") String userEmail , @PathVariable("subscriptionType")SubscriptionTypes subscriptionTypes){
+        return new ResponseEntity<>(subscriptionService.create(userEmail,subscriptionTypes),HttpStatus.CREATED);
 
     }
 
