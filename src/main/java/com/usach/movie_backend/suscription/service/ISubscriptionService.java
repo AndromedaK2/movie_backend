@@ -6,7 +6,7 @@ import com.usach.movie_backend.suscription.domain.Subscription;
 import java.util.List;
 import java.util.Optional;
 
-public interface ISubscriptionService <T>{
+public interface ISubscriptionService{
 
     List<Subscription> findAll();
 

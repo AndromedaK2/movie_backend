@@ -31,4 +31,10 @@ public interface IUserRepository extends JpaRepository<User,Integer> {
     int updateUser(@Param("email") String email,@Param("password")  String password,@Param("firstName") String firstName,
                     @Param("lastName")String lastName,@Param("birthday")  Date birthday,@Param("wallet")  Float wallet );
 
+
+    @Query("UPDATE User u SET u.subscription.idSubscription =:idSubscription WHERE LOWER(u.email) = LOWER(:email)")
+    @Modifying
+    int updateUserSubscriptionId(@Param("email") String email, @Param("idSubscription") Integer idSubscription);
+
+
 }

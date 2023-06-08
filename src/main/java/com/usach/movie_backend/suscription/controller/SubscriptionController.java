@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,9 @@ public class SubscriptionController {
     public ResponseEntity<Subscription> findById(@PathVariable("idSubscription")Integer idSubscription){
         return subscriptionService.findBySubscription(idSubscription).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
-    @PostMapping("/{idUser}/{subscriptionType}")
+
+    @Transactional
+    @PostMapping("/{userEmail}/{subscriptionType}")
     public ResponseEntity<Subscription> create(@PathVariable("userEmail") String userEmail , @PathVariable("subscriptionType")SubscriptionTypes subscriptionTypes){
         return new ResponseEntity<>(subscriptionService.create(userEmail,subscriptionTypes),HttpStatus.CREATED);
 
