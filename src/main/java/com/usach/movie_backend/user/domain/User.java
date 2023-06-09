@@ -1,5 +1,6 @@
 package com.usach.movie_backend.user.domain;
 
+import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.rol.domain.Rol;
 import com.usach.movie_backend.suscription.domain.Subscription;
 import jakarta.persistence.*;
@@ -10,6 +11,8 @@ import lombok.Setter;
 import org.hibernate.action.internal.OrphanRemovalAction;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -52,4 +55,7 @@ public class User {
     @OneToOne()
     @JoinColumn(name = "id_subscription", referencedColumnName = "id_subscription")
     private Subscription subscription;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Profile> profiles;
 }
