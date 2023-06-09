@@ -4,11 +4,16 @@ import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.profile.repository.IProfileRepository;
 
 import com.usach.movie_backend.profile.service.dtos.ProfileCreate;
+import com.usach.movie_backend.profile.service.dtos.ProfileMapper;
+import com.usach.movie_backend.suscription.domain.Subscription;
 import com.usach.movie_backend.user.domain.User;
 import com.usach.movie_backend.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
@@ -20,6 +25,8 @@ public class ProfileService implements IProfileService{
     private IProfileRepository profileRepository;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ProfileMapper profileMapper;
 
     @Transactional(readOnly = true)
     public List<Profile> findAll() {
@@ -33,12 +40,19 @@ public class ProfileService implements IProfileService{
 
     @Transactional
     public Profile create(ProfileCreate profileCreate, String userEmail) {
-        Optional<User> user = userService.findByEmail(userEmail);
-        Profile profile = new Profile();
-        profile.setUsername(profileCreate.username());
-        profile.setUrlPhoto(profileCreate.urlPhoto());
-        profile.setCreationDate(new Date());
-        profile.setUser(user.get());
+
+        User user = userService.findByEmail(userEmail).get();
+        Subscription subscription = user.getSubscription();
+
+        if(!subscription.isActive()){
+            throw new ResponseStatusException( HttpStatus.CONFLICT,"Subscription is not active");
+        }
+        if(user.getQuantityProfilesCreated() >= subscription.getSubscriptionType().getQuantityProfiles() ) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "You can not create more profiles");
+        }
+
+        user.setQuantityProfilesCreated(user.getQuantityProfilesCreated()+1);
+        Profile profile = profileMapper.createProfileMapping(profileCreate,user);
         return profileRepository.save(profile);
     }
 
