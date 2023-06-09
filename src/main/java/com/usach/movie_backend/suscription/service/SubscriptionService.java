@@ -30,11 +30,13 @@ public class SubscriptionService implements ISubscriptionService{
     private ISubscriptionTypeService subscriptionTypeService;
 
 
+    @Transactional(readOnly = true)
     public List<Subscription> findAll() {
         return subscriptionRepository.findAll();
     }
 
 
+    @Transactional(readOnly = true)
     public Optional<Subscription> findBySubscription(Integer idSubscription) {
         return subscriptionRepository.findById(idSubscription);
     }
@@ -43,11 +45,8 @@ public class SubscriptionService implements ISubscriptionService{
     @Transactional
     public Subscription create(String userEmail , SubscriptionTypes subscriptionTypes) {
 
-        // get subscriptionType
         Optional<SubscriptionType> subscriptionType = subscriptionTypeService.findBySubscriptionTypeName(subscriptionTypes);
-        // get userEmail
         Optional<User> user = userService.findByEmail(userEmail);
-        // create Subscription
         if(user.get().getSubscription() != null){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already has a subscription");
         }
@@ -66,11 +65,12 @@ public class SubscriptionService implements ISubscriptionService{
     }
 
 
+    @Transactional
     public Subscription update(Subscription subscription) {
         return  subscriptionRepository.save(subscription);
     }
 
-
+    @Transactional
     public void delete(Integer idSubscription) {
     subscriptionRepository.deleteById(idSubscription);
     }

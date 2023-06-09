@@ -6,6 +6,7 @@ import com.usach.movie_backend.subscriptionType.repository.ISubscriptionTypeRepo
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -20,12 +21,13 @@ public class SubscriptionTypeService implements ISubscriptionTypeService{
         return subscriptionTypeRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
 
     public Optional<SubscriptionType> findByIdSubscriptionType(Integer SubscriptionType) {
         return subscriptionTypeRepository.findById(SubscriptionType);
     }
 
-
+    @Transactional(readOnly = true)
     public Optional<SubscriptionType> findBySubscriptionTypeName(SubscriptionTypes subscriptionTypeName){
         Optional<SubscriptionType> subscriptionType = subscriptionTypeRepository.findByNameSubscription(subscriptionTypeName.toString());
         if(subscriptionType.isEmpty()){
@@ -33,17 +35,19 @@ public class SubscriptionTypeService implements ISubscriptionTypeService{
         }
         return subscriptionType;
     }
-
+    @Transactional
     @Override
     public SubscriptionType create(SubscriptionType subscriptionType) {
         return subscriptionTypeRepository.save(subscriptionType);
     }
 
+    @Transactional
     @Override
     public SubscriptionType update(SubscriptionType subscriptionType) {
         return subscriptionTypeRepository.save(subscriptionType);
     }
 
+    @Transactional
     @Override
     public void delete(Integer id) {
         subscriptionTypeRepository.deleteById(id);

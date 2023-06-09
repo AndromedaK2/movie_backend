@@ -1,6 +1,7 @@
 package com.usach.movie_backend.user.service;
 
 import com.usach.movie_backend.suscription.domain.Subscription;
+import com.usach.movie_backend.suscription.repository.ISubscriptionRepository;
 import com.usach.movie_backend.user.domain.User;
 import com.usach.movie_backend.user.repository.IUserRepository;
 import com.usach.movie_backend.user.service.dtos.UserCreate;
@@ -24,25 +25,27 @@ public class UserService  implements  IUserService{
     IUserRepository userRepository;
 
     @Autowired
+    ISubscriptionRepository subscriptionRepository;
+
+    @Autowired
     UserMapper userMapper;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<User> findByIdUser(Integer idUser){
         return Optional.ofNullable(userRepository.findById(idUser).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with idUser: %d not found", idUser))));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<User> findByEmail(String email) {
        Optional<User> user = userRepository.findByEmail(email);
        if(user.isEmpty()){
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "User does not exist");
        }
        return user;
-
-
     }
 
+    @Transactional(readOnly = true)
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
@@ -85,10 +88,17 @@ public class UserService  implements  IUserService{
         userRepository.deleteById(idUser);
     }
 
+    @Transactional
     public  void deleteByEmail(String email){
-        userRepository.deleteByEmail(email);
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent()){
+            userRepository.deleteByEmail(email);
+            subscriptionRepository.deleteById(user.get().getSubscription().getIdSubscription());
+        }
+
     }
 
+    @Transactional
     public Optional<User> login(UserLogin userLogin){
         Optional<User> user = userRepository.login(userLogin.email(), userLogin.password());
         if(user.isEmpty()){

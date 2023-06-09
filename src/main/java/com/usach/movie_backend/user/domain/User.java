@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.action.internal.OrphanRemovalAction;
 
 import java.util.Date;
 
@@ -48,7 +49,7 @@ public class User {
     @JoinColumn(name = "id_rol",insertable = false, updatable = false)
     private Rol rol;
 
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "id_subscription", referencedColumnName = "id_subscription")
     private Subscription subscription;
 }
