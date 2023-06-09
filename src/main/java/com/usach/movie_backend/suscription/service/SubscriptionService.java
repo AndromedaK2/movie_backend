@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,39 +28,31 @@ public class SubscriptionService implements ISubscriptionService{
     @Autowired
     private ISubscriptionTypeService subscriptionTypeService;
 
+    @Autowired
+    private SubscriptionMapper subscriptionMapper;
+
 
     @Transactional(readOnly = true)
     public List<Subscription> findAll() {
         return subscriptionRepository.findAll();
     }
 
-
     @Transactional(readOnly = true)
     public Optional<Subscription> findBySubscription(Integer idSubscription) {
         return subscriptionRepository.findById(idSubscription);
     }
 
-
     @Transactional
     public Subscription create(String userEmail , SubscriptionTypes subscriptionTypes) {
-
         Optional<SubscriptionType> subscriptionType = subscriptionTypeService.findBySubscriptionTypeName(subscriptionTypes);
         Optional<User> user = userService.findByEmail(userEmail);
         if(user.get().getSubscription() != null){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already has a subscription");
         }
-
-        Subscription subscription = new Subscription();
-        subscription.setSubscriptionType(subscriptionType.get());
-        subscription.setActive(true);
-        subscription.setPaymentDate(new Date());
-        subscription.setExpirationDate(new Date());
+        Subscription subscription = subscriptionMapper.createSubscriptionMapping(subscriptionType.get());
         Subscription newSubscription = subscriptionRepository.save(subscription);
-
         userService.updateUserSubscription(userEmail,subscription);
-
         return newSubscription;
-
     }
 
 
