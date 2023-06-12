@@ -1,5 +1,6 @@
 package com.usach.movie_backend.user.service;
 
+import com.usach.movie_backend.subscriptionType.domain.SubscriptionType;
 import com.usach.movie_backend.suscription.domain.Subscription;
 import com.usach.movie_backend.suscription.repository.ISubscriptionRepository;
 import com.usach.movie_backend.user.domain.User;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,6 +99,42 @@ public class UserService  implements  IUserService{
             userRepository.deleteByEmail(email);
             subscriptionRepository.deleteById(user.get().getSubscription().getIdSubscription());
         }
+    }
+
+    @Transactional
+    public User paySubscription(String email, Float money) {
+        User user = this.findByEmail(email).get();
+        Subscription subscription = user.getSubscription();
+        SubscriptionType subscriptionType = subscription.getSubscriptionType();
+
+        if(!subscription.isActive()){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
+                    String.format("Subscription is still active. You must pay in %s", subscription.getExpirationDate()));
+        }
+
+        Float paid = subscriptionType.getPrice() - money;
+
+        if(subscriptionType.getPrice()> paid ){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Money is not enough");
+        }
+        if(subscriptionType.getPrice() < paid ){
+           user.setWallet(user.getWallet() + paid);
+        }
+
+        subscription.setActive(true);
+        subscription.setPaymentDate(new Date());
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.MONTH, 1);
+        Date updatedDate = calendar.getTime();
+        subscription.setExpirationDate(updatedDate);
+
+        user.setSubscription(subscription);
+
+        User userUpdated = userRepository.save(user);
+
+        return userUpdated;
 
     }
 

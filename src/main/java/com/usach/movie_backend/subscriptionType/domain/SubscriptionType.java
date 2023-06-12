@@ -25,7 +25,7 @@ public class SubscriptionType {
     @Column(name = "name")
     private String nameSubscription;
     @Column(name = "price")
-    private BigDecimal price;
+    private Float price;
     @Column(name = "quantity_profiles")
     private Integer quantityProfiles;
 

@@ -44,6 +44,8 @@ public class SubscriptionController {
                 .map( u -> ResponseEntity.ok(subscriptionService.update(subscription)))
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
+
+
     @DeleteMapping("/{idSubscription}")
     public ResponseEntity<Object> delete(@PathVariable("idSubscription") Integer id){
         return subscriptionService.findBySubscription(id)
