@@ -2,8 +2,11 @@ package com.usach.movie_backend.user.controller;
 
 import com.usach.movie_backend.user.domain.User;
 import com.usach.movie_backend.user.service.IUserService;
-import com.usach.movie_backend.user.service.UserCreate;
-import com.usach.movie_backend.user.service.UserUpdate;
+import com.usach.movie_backend.user.service.dtos.UserCreate;
+import com.usach.movie_backend.user.service.dtos.UserLogin;
+import com.usach.movie_backend.user.service.dtos.UserUpdate;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,40 +15,104 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name="users", description = "Users Management API")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private IUserService userService;
 
-    @GetMapping(value = "/{id}")
+    @Operation(
+            summary = "Retrieve a User by Id",
+            description = "Get a User object by specifying its id",
+            tags = { "users", "get" })
+    @GetMapping(value = "/id/{id}")
     public ResponseEntity<Optional<User>> findUserById(@PathVariable("id") Integer idUser){
         Optional<User> user = userService.findByIdUser(idUser);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @GetMapping("/get-all")
-    public ResponseEntity<List<String>> findAllUsers(){
-        List<String> users = userService.getAllUsers();
+    @Operation(
+            summary = "Retrieve a User by Email",
+            description = "Get a User object by specifying its email",
+            tags = { "users", "get" })
+    @GetMapping(value = "/email/{email}")
+    public ResponseEntity<Optional<User>> findUserByEmail(@PathVariable("email") String email){
+        Optional<User> user = userService.findByEmail(email);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "Retrieve all Users",
+            description = "Get all User objects",
+            tags = { "users", "get" })
+    @GetMapping
+    public ResponseEntity<List<User>> findAllUsers(){
+        List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @Operation(
+            summary = "Create a user",
+            description = "Create user object",
+            tags = { "users", "post" })
+    @PostMapping
     public ResponseEntity<User> createUser (@RequestBody UserCreate userCreate) {
         User userCreated = userService.createUser(userCreate);
         return new ResponseEntity<>(userCreated,HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Integer idUser ,@RequestBody UserUpdate userUpdate){
-        User user = userService.updateUser(idUser ,userUpdate);
+
+    @Operation(
+            summary = "Login a user",
+            description = "Login the application",
+            tags = { "users", "post" })
+    @PostMapping("/login")
+    public ResponseEntity<Optional<User>> login(@RequestBody UserLogin userLogin){
+        Optional<User> user =  userService.login(userLogin);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") Integer idUser){
-        userService.deleteById(idUser);
-        return new ResponseEntity<>("Usuario Eliminado",HttpStatus.OK);
+    @Operation(
+            summary = "Update a user",
+            description = "Update fields of a user",
+            tags = { "users", "put" })
+    @PutMapping
+    public ResponseEntity<Optional<User>> updateUser(@RequestBody UserUpdate userUpdate){
+        Optional<User> user = userService.updateUser(userUpdate);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
+    @Operation(
+            summary = "Pay subscription a user",
+            description = "Pay subscription by using email and money",
+            tags = { "users", "put" })
+    @PutMapping("/email/{email}/{money}")
+    public ResponseEntity<User> paySubscription(@PathVariable("email") String email, @PathVariable("money") Float money){
+        return new ResponseEntity<>(userService.paySubscription(email,money),HttpStatus.OK);
+    }
+
+
+    @Operation(
+            summary = "Delete user by id",
+            description = "Delete all related with the user by id",
+            tags = { "users", "delete" })
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable("id") Integer idUser){
+        userService.deleteById(idUser);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(
+            summary = "Delete user by email",
+            description = "Delete all related with the user by email",
+            tags = { "users", "delete" })
+    @DeleteMapping("/email/{email}")
+    public ResponseEntity<User> deleteByEmail(@PathVariable("email") String email){
+        userService.deleteByEmail(email);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

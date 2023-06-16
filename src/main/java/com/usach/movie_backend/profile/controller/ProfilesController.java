@@ -2,6 +2,8 @@ package com.usach.movie_backend.profile.controller;
 
 import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.profile.service.ProfileService;
+import com.usach.movie_backend.profile.service.dtos.ProfileCreate;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name="profiles", description = "profiles management API")
 @RestController
-@RequestMapping("/profile")
-public class ControllerProfile {
+@RequestMapping("/profiles")
+public class ProfilesController {
     @Autowired
     private ProfileService profileService;
 
@@ -24,9 +27,9 @@ public class ControllerProfile {
     public ResponseEntity<Profile> findById(@PathVariable("idProfile")Integer idProfile){
         return profileService.findByProfile(idProfile).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
-    @PostMapping
-    public ResponseEntity<Profile> create(@RequestBody Profile profile){
-        return new ResponseEntity<>(profileService.create(profile),HttpStatus.CREATED);
+    @PostMapping("/useremail/{userEmail}")
+    public ResponseEntity<Profile> create(@PathVariable("userEmail") String userEmail ,  @RequestBody ProfileCreate profileCreate){
+        return new ResponseEntity<>(profileService.create(profileCreate,userEmail),HttpStatus.CREATED);
     }
 
     @PutMapping

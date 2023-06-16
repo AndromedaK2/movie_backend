@@ -1,13 +1,17 @@
 package com.usach.movie_backend.user.domain;
 
+import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.rol.domain.Rol;
+import com.usach.movie_backend.suscription.domain.Subscription;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -31,7 +35,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "wallet")
+    @Column(name = "wallet",insertable = false)
     private Float wallet;
 
     @Column(name = "birthday")
@@ -40,14 +44,17 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name ="quantity_profiles_created")
+    @Column(name ="quantity_profiles_created",insertable = false)
     private Integer quantityProfilesCreated;
 
     @ManyToOne
-    @JoinColumn(name = "id_rol")
+    @JoinColumn(name = "id_rol",insertable = false, updatable = false)
     private Rol rol;
 
-    //@ManyToOne
-    //@JoinColumn(name = "id_subscription")
-    //private  Subscription subscription;
+    @OneToOne()
+    @JoinColumn(name = "id_subscription", referencedColumnName = "id_subscription")
+    private Subscription subscription;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Profile> profiles;
 }
