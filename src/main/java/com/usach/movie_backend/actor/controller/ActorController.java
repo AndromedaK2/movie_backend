@@ -1,8 +1,7 @@
 package com.usach.movie_backend.actor.controller;
 
 import com.usach.movie_backend.actor.domain.Actor;
-import com.usach.movie_backend.actor.domain.ActorChapter;
-import com.usach.movie_backend.actor.service.ActorChapterService;
+
 import com.usach.movie_backend.actor.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
