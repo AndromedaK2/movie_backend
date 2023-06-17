@@ -11,29 +11,29 @@ import java.util.Optional;
 public class DirectorService  implements  IDirectorService<Director> {
 
     @Autowired
-    private IDirectorRepository iDirectorRepositoryl;
+    private IDirectorRepository iDirectorRepository;
     @Override
     public List<Director> findAll() {
-        return iDirectorRepositoryl.findAll();
+        return iDirectorRepository.findAll();
     }
 
     @Override
     public Optional<Director> findByDirector(Integer idDirector) {
-        return iDirectorRepositoryl.findById(idDirector);
+        return iDirectorRepository.findById(idDirector);
     }
 
     @Override
     public Director create(Director director) {
-        return null;
+        return iDirectorRepository.save(director);
     }
 
     @Override
     public Director update(Director director) {
-        return null;
+        return iDirectorRepository.save(director);
     }
 
     @Override
     public void delete(Integer idDirector) {
-
+    iDirectorRepository.deleteById(idDirector);
     }
 }
