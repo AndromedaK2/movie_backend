@@ -6,7 +6,6 @@ import com.usach.movie_backend.user.service.dtos.UserCreate;
 import com.usach.movie_backend.user.service.dtos.UserLogin;
 import com.usach.movie_backend.user.service.dtos.UserUpdate;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 

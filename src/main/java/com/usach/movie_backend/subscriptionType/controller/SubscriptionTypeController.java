@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Tag(name="subscription type", description = "Subscription Type Management API")
 @RestController
-@RequestMapping("/subscriptiontype")
+@RequestMapping("/subscriptiontypes")
 public class SubscriptionTypeController {
     @Autowired
     private SubscriptionTypeService subscriptionTypeService;

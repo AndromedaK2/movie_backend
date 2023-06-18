@@ -7,8 +7,6 @@ import com.usach.movie_backend.user.service.dtos.UserLogin;
 import com.usach.movie_backend.user.service.dtos.UserUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
