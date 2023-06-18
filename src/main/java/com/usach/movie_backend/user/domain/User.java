@@ -4,10 +4,7 @@ import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.rol.domain.Rol;
 import com.usach.movie_backend.suscription.domain.Subscription;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Set;
@@ -18,6 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User {
 
     @Id
