@@ -27,10 +27,10 @@ public class SubscriptionService implements ISubscriptionService{
     private ISubscriptionRepository subscriptionRepository;
 
     @Autowired
-    private IUserService userService;
+    private IUserRepository userRepository;
 
     @Autowired
-    private IUserRepository userRepository;
+    private IUserService userService;
 
     @Autowired
     private ISubscriptionTypeService subscriptionTypeService;
@@ -38,6 +38,8 @@ public class SubscriptionService implements ISubscriptionService{
     @Autowired
     private SubscriptionMapper subscriptionMapper;
 
+    @Autowired
+    private  SubscriptionHelper subscriptionHelper;
 
     @Transactional(readOnly = true)
     public List<Subscription> findAll() {
@@ -83,7 +85,7 @@ public class SubscriptionService implements ISubscriptionService{
             User user = userService.findByEmail(email).get();
             Subscription subscription = user.getSubscription();
 
-            if(subscription.isActive()){
+            if(!subscription.isActive()){
                 throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
                         String.format("Subscription is still active. You must pay in %s", subscription.getExpirationDate()));
             }
@@ -98,15 +100,7 @@ public class SubscriptionService implements ISubscriptionService{
 
             user.setWallet(remainingMoney);
 
-
-            subscription.setActive(true);
-            subscription.setPaymentDate(new Date());
-            Date currentDate = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(currentDate);
-            calendar.add(Calendar.MONTH, 1);
-            Date updatedDate = calendar.getTime();
-            subscription.setExpirationDate(updatedDate);
+            SubscriptionHelper.activeSubscription(subscription);
 
             user.setSubscription(subscription);
 
@@ -123,4 +117,6 @@ public class SubscriptionService implements ISubscriptionService{
 
 
     }
+
+
 }
