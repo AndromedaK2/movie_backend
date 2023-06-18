@@ -101,42 +101,7 @@ public class UserService  implements  IUserService{
         }
     }
 
-    @Transactional
-    public User paySubscription(String email, Float money) {
-        User user = this.findByEmail(email).get();
-        Subscription subscription = user.getSubscription();
-        SubscriptionType subscriptionType = subscription.getSubscriptionType();
 
-        if(!subscription.isActive()){
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
-                    String.format("Subscription is still active. You must pay in %s", subscription.getExpirationDate()));
-        }
-
-        Float paid = subscriptionType.getPrice() - money;
-
-        if(subscriptionType.getPrice()> paid ){
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Money is not enough");
-        }
-        if(subscriptionType.getPrice() < paid ){
-           user.setWallet(user.getWallet() + paid);
-        }
-
-        subscription.setActive(true);
-        subscription.setPaymentDate(new Date());
-        Date currentDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-        calendar.add(Calendar.MONTH, 1);
-        Date updatedDate = calendar.getTime();
-        subscription.setExpirationDate(updatedDate);
-
-        user.setSubscription(subscription);
-
-        User userUpdated = userRepository.save(user);
-
-        return userUpdated;
-
-    }
 
     @Transactional
     public Optional<User> login(UserLogin userLogin){

@@ -20,5 +20,5 @@ public interface IUserService {
     void deleteById(Integer idUser);
     Optional<User> login(UserLogin userLogin);
     void deleteByEmail(String email);
-    User paySubscription(String email, Float money);
+
 }

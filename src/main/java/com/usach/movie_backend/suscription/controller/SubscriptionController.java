@@ -5,7 +5,11 @@ package com.usach.movie_backend.suscription.controller;
 import com.usach.movie_backend.subscriptionType.domain.SubscriptionTypes;
 import com.usach.movie_backend.suscription.domain.Subscription;
 import com.usach.movie_backend.suscription.service.SubscriptionService;
+import com.usach.movie_backend.user.domain.User;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +58,16 @@ public class SubscriptionController {
                     return ResponseEntity.ok().build();
                 })
                 .orElseGet(()-> ResponseEntity.notFound().build());
+    }
+
+    @Operation(
+            summary = "Pay subscription",
+            description = "Pay subscription by using email and money",
+            tags = { "subscriptions", "put" })
+    @PutMapping("/pay/{email}/{money}")
+    public ResponseEntity<User> paySubscription(@PathVariable("email") String email, @PathVariable("money") @Positive(message = "value must be positive") @Min(value = 0,
+            message = "Invalid amount of money:  Less than zero") Float money){
+        return new ResponseEntity<>(subscriptionService.paySubscription(email,money),HttpStatus.OK);
     }
 
 }

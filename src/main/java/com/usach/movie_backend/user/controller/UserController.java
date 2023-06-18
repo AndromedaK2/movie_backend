@@ -7,9 +7,12 @@ import com.usach.movie_backend.user.service.dtos.UserLogin;
 import com.usach.movie_backend.user.service.dtos.UserUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.Optional;
 @Tag(name="users", description = "Users Management API")
 @RestController
 @RequestMapping("/users")
+@Validated
 public class UserController {
 
     @Autowired
@@ -84,14 +88,6 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @Operation(
-            summary = "Pay subscription a user",
-            description = "Pay subscription by using email and money",
-            tags = { "users", "put" })
-    @PutMapping("/email/{email}/{money}")
-    public ResponseEntity<User> paySubscription(@PathVariable("email") String email, @PathVariable("money") Float money){
-        return new ResponseEntity<>(userService.paySubscription(email,money),HttpStatus.OK);
-    }
 
 
     @Operation(
