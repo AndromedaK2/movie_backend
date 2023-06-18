@@ -48,7 +48,7 @@ public class User {
     @JoinColumn(name = "id_rol",insertable = false, updatable = false)
     private Rol rol;
 
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "id_subscription", referencedColumnName = "id_subscription")
     private Subscription subscription;
 
