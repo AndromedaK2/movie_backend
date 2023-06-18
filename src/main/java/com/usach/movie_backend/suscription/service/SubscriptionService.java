@@ -51,8 +51,8 @@ public class SubscriptionService implements ISubscriptionService{
     @Transactional
     public Subscription create(String userEmail , SubscriptionTypes subscriptionTypes) {
         Optional<SubscriptionType> subscriptionType = subscriptionTypeService.findBySubscriptionTypeName(subscriptionTypes);
-        Optional<User> user = userService.findByEmail(userEmail);
-        if(user.get().getSubscription() != null){
+        User user = userService.findByEmail(userEmail);
+        if(user.getSubscription() != null){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already has a subscription");
         }
         Subscription subscription = subscriptionMapper.createSubscriptionMapping(subscriptionType.get());
@@ -78,7 +78,7 @@ public class SubscriptionService implements ISubscriptionService{
                 if(money < 0 || money.toString().contains("-")){
                     throw new BusinessException("p-500",HttpStatus.NOT_ACCEPTABLE,"Money must be equal or greater than 0");
                 }
-                User user = userService.findByEmail(email).get();
+                User user = userService.findByEmail(email);
                 Subscription subscription = user.getSubscription();
 
                 if(!subscription.isActive()){

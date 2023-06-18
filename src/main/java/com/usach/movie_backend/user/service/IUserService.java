@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
-    Optional<User> findByIdUser(Integer userId);
-    Optional<User> findByEmail(String email);
+    User findByIdUser(Integer userId);
+    User findByEmail(String email);
     List<User> getAllUsers();
     User createUser(UserCreate userCreate);
     Optional<User> updateUser( UserUpdate userUpdate);
     int updateUserSubscription(String email, Subscription subscription);
     void deleteById(Integer idUser);
-    Optional<User> login(UserLogin userLogin);
+    User login(UserLogin userLogin);
     void deleteByEmail(String email);
 
 }

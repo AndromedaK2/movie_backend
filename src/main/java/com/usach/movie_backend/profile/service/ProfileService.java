@@ -41,7 +41,7 @@ public class ProfileService implements IProfileService{
     @Transactional
     public Profile create(ProfileCreate profileCreate, String userEmail) {
 
-        User user = userService.findByEmail(userEmail).get();
+        User user = userService.findByEmail(userEmail);
         Subscription subscription = user.getSubscription();
 
         if(!subscription.isActive()){

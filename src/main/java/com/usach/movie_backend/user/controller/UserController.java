@@ -30,8 +30,8 @@ public class UserController {
             description = "Get a User object by specifying its id",
             tags = { "users", "get" })
     @GetMapping(value = "/id/{id}")
-    public ResponseEntity<Optional<User>> findUserById(@PathVariable("id") Integer idUser){
-        Optional<User> user = userService.findByIdUser(idUser);
+    public ResponseEntity<User> findUserById(@PathVariable("id") Integer idUser){
+        User user = userService.findByIdUser(idUser);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
@@ -40,8 +40,8 @@ public class UserController {
             description = "Get a User object by specifying its email",
             tags = { "users", "get" })
     @GetMapping(value = "/email/{email}")
-    public ResponseEntity<Optional<User>> findUserByEmail(@PathVariable("email") String email){
-        Optional<User> user = userService.findByEmail(email);
+    public ResponseEntity<User> findUserByEmail(@PathVariable("email") String email){
+        User user = userService.findByEmail(email);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
@@ -71,8 +71,8 @@ public class UserController {
             description = "Login the application",
             tags = { "users", "post" })
     @PostMapping("/login")
-    public ResponseEntity<Optional<User>> login(@RequestBody UserLogin userLogin){
-        Optional<User> user =  userService.login(userLogin);
+    public ResponseEntity<User> login(@RequestBody UserLogin userLogin){
+        User user =  userService.login(userLogin);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 

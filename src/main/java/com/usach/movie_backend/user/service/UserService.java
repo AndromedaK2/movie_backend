@@ -1,6 +1,6 @@
 package com.usach.movie_backend.user.service;
 
-import com.usach.movie_backend.subscriptionType.domain.SubscriptionType;
+import com.usach.movie_backend.configuration.exceptions.BusinessException;
 import com.usach.movie_backend.suscription.domain.Subscription;
 import com.usach.movie_backend.suscription.repository.ISubscriptionRepository;
 import com.usach.movie_backend.user.domain.User;
@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -35,18 +33,21 @@ public class UserService  implements  IUserService{
     UserMapper userMapper;
 
     @Transactional(readOnly = true)
-    public Optional<User> findByIdUser(Integer idUser){
-        return Optional.ofNullable(userRepository.findById(idUser).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with idUser: %d not found", idUser))));
+    public User findByIdUser(Integer idUser){
+        Optional<User> user = userRepository.findById(idUser);
+        if(userRepository.findById(idUser).isEmpty()){
+            throw new BusinessException("409",HttpStatus.CONFLICT, String.format("User with idUser: %d not found", idUser));
+        }
+        return user.get();
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> findByEmail(String email) {
+    public User findByEmail(String email) {
        Optional<User> user = userRepository.findByEmail(email);
        if(user.isEmpty()){
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "User does not exist");
+           throw new BusinessException("409",HttpStatus.CONFLICT, String.format("User with email: %d not found", email));
        }
-       return user;
+       return user.get();
     }
 
     @Transactional(readOnly = true)
@@ -57,7 +58,7 @@ public class UserService  implements  IUserService{
     @Transactional
     public User createUser(UserCreate userCreate){
         if(userRepository.findByEmail(userCreate.email()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exist");
+            throw new BusinessException("409",HttpStatus.CONFLICT, "User already exist");
         }
         User user = userMapper.createUserMapping(userCreate);
         return userRepository.save(user);
@@ -93,7 +94,7 @@ public class UserService  implements  IUserService{
     }
 
     @Transactional
-    public  void deleteByEmail(String email){
+    public void deleteByEmail(String email){
         Optional<User> user = userRepository.findByEmail(email);
         if(user.isPresent()){
             userRepository.deleteByEmail(email);
@@ -104,12 +105,12 @@ public class UserService  implements  IUserService{
 
 
     @Transactional
-    public Optional<User> login(UserLogin userLogin){
+    public User login(UserLogin userLogin){
         Optional<User> user = userRepository.login(userLogin.email(), userLogin.password());
         if(user.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
         }
-        return user ;
+        return user.get();
     }
 
 

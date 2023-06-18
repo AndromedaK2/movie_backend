@@ -4,6 +4,7 @@ package com.usach.movie_backend.configuration.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.sql.SQLException;
@@ -36,4 +37,10 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorException,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(value = ResponseStatusException.class)
+    public ResponseEntity<ErrorException> responseStatusExceptionHandler(ResponseStatusException ex){
+        ErrorException errorException = ErrorException.builder().code(ex.getStatusCode().toString())
+                .message(ex.getMessage()).build();
+        return new ResponseEntity<>(errorException,ex.getStatusCode());
+    }
 }
