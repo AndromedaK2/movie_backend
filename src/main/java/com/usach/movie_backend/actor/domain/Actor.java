@@ -1,6 +1,5 @@
 package com.usach.movie_backend.actor.domain;
 
-import com.fasterxml.jackson.databind.DatabindException;
 import jakarta.persistence.*;
 import lombok.*;
 
