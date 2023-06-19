@@ -7,7 +7,7 @@ import com.usach.movie_backend.profile.domain.ProfileChapter;
 import java.util.List;
 import java.util.Optional;
 
-public interface IProfileChapterService<T>{
+public interface IProfileChapterService{
     List<ProfileChapter> findAll();
 
     Optional<ProfileChapter> findByProfileChapter(Integer idProfileChapter);

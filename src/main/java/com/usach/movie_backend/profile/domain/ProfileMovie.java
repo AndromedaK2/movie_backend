@@ -16,7 +16,7 @@ public class ProfileMovie {
     @Column(name = "id_profile_movie")
     private  Integer idProfileMovie;
     @Column(name = "id_movie")
-    private Integer idmovie;
+    private Integer idMovie;
     @Column(name = "id_profile")
     private Integer idProfile;
     @Column(name = "view_later")

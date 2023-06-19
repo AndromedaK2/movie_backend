@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class ProfileSerieService implements IProfileSerieService<ProfileSerie> {
+public class ProfileSerieService implements IProfileSerieService{
     @Autowired
     private IProfileSerieRepository iProfileSerieRepository;
     @Override
