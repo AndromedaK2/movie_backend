@@ -112,6 +112,10 @@ public class UserService  implements  IUserService{
         return user.get();
     }
 
+    @Transactional
+    public User updateFullUser(User user){
+        return userRepository.save(user);
+    }
     private void expiredSubscription(Optional<User> user) {
         boolean subscriptionExpired = user.get().getSubscription().getExpirationDate().before(new Date());
         if (subscriptionExpired) {
@@ -121,6 +125,7 @@ public class UserService  implements  IUserService{
             user.get().setSubscription(subscription);
         }
     }
+
 
 
 }

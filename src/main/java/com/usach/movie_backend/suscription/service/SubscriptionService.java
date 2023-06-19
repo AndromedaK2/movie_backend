@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class SubscriptionService implements ISubscriptionService{
     @Autowired
@@ -35,19 +36,13 @@ public class SubscriptionService implements ISubscriptionService{
     @Autowired
     private SubscriptionMapper subscriptionMapper;
 
-
     @Transactional(readOnly = true)
     public List<Subscription> findAll() {
         return subscriptionRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
-    public Optional<Subscription> findBySubscription(Integer idSubscription) {
-        return subscriptionRepository.findById(idSubscription);
-    }
-
     @Transactional
-    public Subscription create(String userEmail , SubscriptionTypes subscriptionTypes) {
+    public Subscription subscribe(String userEmail , SubscriptionTypes subscriptionTypes) {
         Optional<SubscriptionType> subscriptionType = subscriptionTypeService.findBySubscriptionTypeName(subscriptionTypes);
         User user = userService.findByEmail(userEmail);
         if(user.getSubscription() != null){
@@ -59,15 +54,12 @@ public class SubscriptionService implements ISubscriptionService{
         return newSubscription;
     }
 
-
-    @Transactional
-    public Subscription update(Subscription subscription) {
-        return  subscriptionRepository.save(subscription);
-    }
-
-    @Transactional
-    public void delete(Integer idSubscription) {
-    subscriptionRepository.deleteById(idSubscription);
+    @Transactional(noRollbackFor = {BusinessException.class, ResponseStatusException.class})
+    public void unsubscribe(String userEmail) {
+        User user = userService.findByEmail(userEmail);
+        Subscription subscription = user.getSubscription();
+        subscription.setActive(false);
+        subscriptionRepository.save(subscription);
     }
 
     @Transactional (noRollbackFor = { BusinessException.class })

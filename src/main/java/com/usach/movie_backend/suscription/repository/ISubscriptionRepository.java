@@ -8,4 +8,6 @@ import java.util.List;
 public interface ISubscriptionRepository extends JpaRepository<Subscription, Integer> {
 
     List<Subscription> findAll();
+
+
 }

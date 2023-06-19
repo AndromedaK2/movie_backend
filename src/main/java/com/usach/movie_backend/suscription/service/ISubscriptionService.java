@@ -5,19 +5,14 @@ import com.usach.movie_backend.suscription.domain.Subscription;
 import com.usach.movie_backend.user.domain.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ISubscriptionService{
 
     List<Subscription> findAll();
 
-    Optional<Subscription> findBySubscription(Integer idSubscription);
+    Subscription subscribe(String userEmail, SubscriptionTypes subscriptionTypes);
 
-    Subscription create(String userEmail, SubscriptionTypes subscriptionTypes);
-
-    Subscription update(Subscription subscription);
-
-    void delete(Integer idSubscription);
+    void unsubscribe(String userEmail);
 
     User paySubscription(String email, Float money);
 }

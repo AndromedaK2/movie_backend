@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Component
 public class SubscriptionHelper {
-    static void activeSubscription(Subscription subscription) {
+     public static void activeSubscription(Subscription subscription) {
         subscription.setActive(true);
         subscription.setPaymentDate(new Date());
         Date currentDate = new Date();

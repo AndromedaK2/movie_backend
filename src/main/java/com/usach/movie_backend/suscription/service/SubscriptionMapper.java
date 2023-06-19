@@ -5,9 +5,6 @@ import com.usach.movie_backend.suscription.domain.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.Date;
-
 @Component
 public class SubscriptionMapper {
 
@@ -16,7 +13,6 @@ public class SubscriptionMapper {
         Subscription subscription = new Subscription();
         subscription.setSubscriptionType(subscriptionType);
         SubscriptionHelper.activeSubscription(subscription);
-
         return subscription;
     }
 }
