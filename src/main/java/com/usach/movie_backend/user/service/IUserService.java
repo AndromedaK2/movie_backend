@@ -5,19 +5,19 @@ import com.usach.movie_backend.user.domain.User;
 import com.usach.movie_backend.user.service.dtos.UserCreate;
 import com.usach.movie_backend.user.service.dtos.UserLogin;
 import com.usach.movie_backend.user.service.dtos.UserUpdate;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
     User findByIdUser(Integer userId);
     User findByEmail(String email);
-    List<User> getAllUsers();
-    User createUser(UserCreate userCreate);
-    Optional<User> updateUser( UserUpdate userUpdate);
+    Page<User> findAll(int page, int size);
+    Optional<User> update(UserUpdate userUpdate);
     int updateUserSubscription(String email, Subscription subscription);
     void deleteById(Integer idUser);
-    User login(UserLogin userLogin);
     void deleteByEmail(String email);
+    User login(UserLogin userLogin);
+    User register(UserCreate userCreate);
 
 }

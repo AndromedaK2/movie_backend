@@ -8,6 +8,7 @@ import com.usach.movie_backend.user.service.dtos.UserUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -50,8 +51,9 @@ public class UserController {
             description = "Get all User objects",
             tags = { "users", "get" })
     @GetMapping
-    public ResponseEntity<List<User>> findAllUsers(){
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<Page<User>> findAllUsers(@RequestParam(required = false,value = "page", defaultValue = "0")  Integer page,
+                                                   @RequestParam( required = false, value = "size", defaultValue = "20")  Integer size  ){
+        Page<User> users = userService.findAll(page,size);
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
@@ -61,7 +63,7 @@ public class UserController {
             tags = { "users", "post" })
     @PostMapping
     public ResponseEntity<User> createUser (@RequestBody UserCreate userCreate) {
-        User userCreated = userService.createUser(userCreate);
+        User userCreated = userService.register(userCreate);
         return new ResponseEntity<>(userCreated,HttpStatus.CREATED);
     }
 
@@ -82,7 +84,7 @@ public class UserController {
             tags = { "users", "put" })
     @PutMapping
     public ResponseEntity<Optional<User>> updateUser(@RequestBody UserUpdate userUpdate){
-        Optional<User> user = userService.updateUser(userUpdate);
+        Optional<User> user = userService.update(userUpdate);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 

@@ -9,6 +9,9 @@ import com.usach.movie_backend.user.service.dtos.UserCreate;
 import com.usach.movie_backend.user.service.dtos.UserLogin;
 import com.usach.movie_backend.user.service.dtos.UserUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,12 +54,12 @@ public class UserService  implements  IUserService{
     }
 
     @Transactional(readOnly = true)
-    public List<User> getAllUsers(){
-        return userRepository.findAll();
+    public Page<User> findAll(int page, int size){
+        return userRepository.findAll(PageRequest.of(page,size));
     }
 
     @Transactional(noRollbackFor = {BusinessException.class,ResponseStatusException.class})
-    public User createUser(UserCreate userCreate){
+    public User register(UserCreate userCreate){
         if(userRepository.findByEmail(userCreate.email()).isPresent()){
             throw new BusinessException(HttpStatus.CONFLICT.toString(),HttpStatus.CONFLICT, "User already exist");
         }
@@ -65,7 +68,7 @@ public class UserService  implements  IUserService{
     }
 
     @Transactional(noRollbackFor = {BusinessException.class,ResponseStatusException.class})
-    public Optional<User> updateUser(UserUpdate userUpdate){
+    public Optional<User> update(UserUpdate userUpdate){
         if(userRepository.findByEmail(userUpdate.email()).isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
 
