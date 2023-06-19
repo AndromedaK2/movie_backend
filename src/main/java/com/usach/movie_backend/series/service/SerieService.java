@@ -1,7 +1,7 @@
-package com.usach.movie_backend.serie.service;
+package com.usach.movie_backend.series.service;
 
-import com.usach.movie_backend.serie.domain.Series;
-import com.usach.movie_backend.serie.repository.ISerieRepository;
+import com.usach.movie_backend.series.domain.Series;
+import com.usach.movie_backend.series.repository.ISerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

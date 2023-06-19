@@ -1,6 +1,6 @@
-package com.usach.movie_backend.serie.repository;
+package com.usach.movie_backend.series.repository;
 
-import com.usach.movie_backend.serie.domain.Series;
+import com.usach.movie_backend.series.domain.Series;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

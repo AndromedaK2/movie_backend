@@ -1,8 +1,8 @@
-package com.usach.movie_backend.serie.controller;
+package com.usach.movie_backend.series.controller;
 
 
-import com.usach.movie_backend.serie.domain.Series;
-import com.usach.movie_backend.serie.service.SerieService;
+import com.usach.movie_backend.series.domain.Series;
+import com.usach.movie_backend.series.service.SerieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/serie")
-public class SerieController {
+@RequestMapping("/series")
+public class SeriesController {
     @Autowired
     private SerieService serieService;
 

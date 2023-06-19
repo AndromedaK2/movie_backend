@@ -1,4 +1,4 @@
-package com.usach.movie_backend.serie.domain;
+package com.usach.movie_backend.series.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

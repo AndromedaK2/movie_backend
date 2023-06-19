@@ -1,7 +1,7 @@
-package com.usach.movie_backend.serie.service;
+package com.usach.movie_backend.series.service;
 
 
-import com.usach.movie_backend.serie.domain.Series;
+import com.usach.movie_backend.series.domain.Series;
 
 import java.util.List;
 import java.util.Optional;

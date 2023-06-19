@@ -50,13 +50,4 @@ public class SubscriptionTypeController {
                 .map( u -> ResponseEntity.ok(subscriptionTypeService.update(subscriptionType)))
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
-    @DeleteMapping("/{idSubscriptionType}")
-    public ResponseEntity<Object> delete(@PathVariable("idSubscriptionType") Integer id){
-        return subscriptionTypeService.findByIdSubscriptionType(id)
-                .map( u ->{
-                    subscriptionTypeService.delete(id);
-                    return ResponseEntity.ok().build();
-                })
-                .orElseGet(()-> ResponseEntity.notFound().build());
-    }
 }
