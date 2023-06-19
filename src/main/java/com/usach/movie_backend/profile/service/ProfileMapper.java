@@ -1,6 +1,7 @@
-package com.usach.movie_backend.profile.service.dtos;
+package com.usach.movie_backend.profile.service;
 
 import com.usach.movie_backend.profile.domain.Profile;
+import com.usach.movie_backend.profile.service.dtos.ProfileCreate;
 import com.usach.movie_backend.user.domain.User;
 import org.springframework.stereotype.Component;
 
