@@ -1,7 +1,6 @@
 package com.usach.movie_backend.profile.domain;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
 
 @Entity

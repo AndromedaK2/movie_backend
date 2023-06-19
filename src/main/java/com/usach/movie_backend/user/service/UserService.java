@@ -7,7 +7,6 @@ import com.usach.movie_backend.user.domain.User;
 import com.usach.movie_backend.user.repository.IUserRepository;
 import com.usach.movie_backend.user.service.dtos.UserCreate;
 import com.usach.movie_backend.user.service.dtos.UserLogin;
-import com.usach.movie_backend.user.service.dtos.UserMapper;
 import com.usach.movie_backend.user.service.dtos.UserUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,15 +102,24 @@ public class UserService  implements  IUserService{
         }
     }
 
-
-
     @Transactional
     public User login(UserLogin userLogin){
         Optional<User> user = userRepository.login(userLogin.email(), userLogin.password());
         if(user.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
         }
+        expiredSubscription(user);
         return user.get();
+    }
+
+    private void expiredSubscription(Optional<User> user) {
+        boolean subscriptionExpired = user.get().getSubscription().getExpirationDate().before(new Date());
+        if (subscriptionExpired) {
+            Subscription subscription = user.get().getSubscription();
+            subscription.setActive(false);
+            subscriptionRepository.save(subscription);
+            user.get().setSubscription(subscription);
+        }
     }
 
 

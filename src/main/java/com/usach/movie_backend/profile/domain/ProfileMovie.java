@@ -20,5 +20,5 @@ public class ProfileMovie {
     @Column(name = "id_profile")
     private Integer idProfile;
     @Column(name = "view_later")
-    private boolean viewLeter;
+    private boolean viewLater;
 }

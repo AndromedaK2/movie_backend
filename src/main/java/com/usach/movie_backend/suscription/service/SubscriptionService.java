@@ -73,23 +73,20 @@ public class SubscriptionService implements ISubscriptionService{
     @Transactional (noRollbackFor = { BusinessException.class })
     public User paySubscription(String email, Float money) {
 
-        if(money < 0 || money.toString().contains("-")){
-            throw new BusinessException(HttpStatus.NOT_ACCEPTABLE.toString(),HttpStatus.NOT_ACCEPTABLE,"Money must be equal or greater than 0");
-        }
+        if(money < 0 || money.toString().contains("-"))
+            throw new BusinessException(HttpStatus.NOT_ACCEPTABLE.toString(), HttpStatus.NOT_ACCEPTABLE, "Money must be equal or greater than 0");
         User user = userService.findByEmail(email);
         Subscription subscription = user.getSubscription();
 
-        if(!subscription.isActive()){
-            throw new BusinessException(HttpStatus.NOT_ACCEPTABLE.toString(),HttpStatus.NOT_ACCEPTABLE,String.format("Subscription is still active. You must pay in %s", subscription.getExpirationDate()));
-        }
+        if(subscription.isActive())
+            throw new BusinessException(HttpStatus.NOT_ACCEPTABLE.toString(), HttpStatus.NOT_ACCEPTABLE, String.format("Subscription is still active. You must pay in %s", subscription.getExpirationDate()));
         SubscriptionType subscriptionType = subscription.getSubscriptionType();
 
         Float totalMoney = (user.getWallet() + money);
         Float remainingMoney = totalMoney - subscriptionType.getPrice();
 
-        if( remainingMoney < 0 ){
-            throw new BusinessException(HttpStatus.NOT_ACCEPTABLE.toString(),HttpStatus.NOT_ACCEPTABLE,String.format("Money is not enough"));
-        }
+        if( remainingMoney < 0 )
+            throw new BusinessException(HttpStatus.NOT_ACCEPTABLE.toString(), HttpStatus.NOT_ACCEPTABLE, String.format("Money is not enough"));
 
         user.setWallet(remainingMoney);
 

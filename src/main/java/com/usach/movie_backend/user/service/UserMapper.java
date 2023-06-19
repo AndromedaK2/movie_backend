@@ -1,7 +1,8 @@
-package com.usach.movie_backend.user.service.dtos;
+package com.usach.movie_backend.user.service;
 
 
 import com.usach.movie_backend.user.domain.User;
+import com.usach.movie_backend.user.service.dtos.UserCreate;
 import org.springframework.stereotype.Component;
 
 @Component
