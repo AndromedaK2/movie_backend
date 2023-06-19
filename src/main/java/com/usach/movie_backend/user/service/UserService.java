@@ -45,7 +45,7 @@ public class UserService  implements  IUserService{
     public User findByEmail(String email) {
        Optional<User> user = userRepository.findByEmail(email);
        if(user.isEmpty()){
-           throw new BusinessException(HttpStatus.CONFLICT.toString(),HttpStatus.CONFLICT, String.format("User with email: %d not found", email));
+           throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("User with email: %d not found", email));
        }
        return user.get();
     }
@@ -55,7 +55,7 @@ public class UserService  implements  IUserService{
         return userRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = {BusinessException.class,ResponseStatusException.class})
     public User createUser(UserCreate userCreate){
         if(userRepository.findByEmail(userCreate.email()).isPresent()){
             throw new BusinessException(HttpStatus.CONFLICT.toString(),HttpStatus.CONFLICT, "User already exist");
@@ -64,7 +64,7 @@ public class UserService  implements  IUserService{
         return userRepository.save(user);
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = {BusinessException.class,ResponseStatusException.class})
     public Optional<User> updateUser(UserUpdate userUpdate){
         if(userRepository.findByEmail(userUpdate.email()).isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");

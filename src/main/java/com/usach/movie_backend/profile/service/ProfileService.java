@@ -57,7 +57,7 @@ public class ProfileService implements IProfileService{
         return profileRepository.save(profile);
     }
 
-    @Transactional(noRollbackFor = {RuntimeException.class})
+    @Transactional(noRollbackFor = {ResponseStatusException.class})
     public Profile update(ProfileUpdate profileUpdate, String userEmail) {
         Profile profile = find(profileUpdate.username(),userEmail);
         profile.setUsername(profileUpdate.username());
@@ -65,9 +65,9 @@ public class ProfileService implements IProfileService{
         return profileRepository.save(profile);
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = {ResponseStatusException.class})
     public void delete(String username, String userEmail) {
         Profile profile = find(username,userEmail);
-        profileRepository.deleteById(profile.getIdProfile());
+        profileRepository.deleteByIdProfile(profile.getIdProfile());
     }
 }
