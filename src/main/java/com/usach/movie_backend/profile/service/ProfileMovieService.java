@@ -2,13 +2,11 @@ package com.usach.movie_backend.profile.service;
 
 
 import com.usach.movie_backend.configuration.exceptions.BusinessException;
-import com.usach.movie_backend.movie.service.IMoviesService;
+import com.usach.movie_backend.movies.service.IMoviesService;
 import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.profile.domain.ProfileMovie;
 import com.usach.movie_backend.profile.repository.IProfileMovieRepository;
 import com.usach.movie_backend.profile.service.dtos.ViewLaterMovie;
-import com.usach.movie_backend.user.domain.User;
-import com.usach.movie_backend.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

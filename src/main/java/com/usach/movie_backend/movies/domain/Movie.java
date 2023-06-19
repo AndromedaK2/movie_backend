@@ -1,4 +1,4 @@
-package com.usach.movie_backend.movie.domain;
+package com.usach.movie_backend.movies.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Movies {
+public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_movie")

@@ -1,44 +1,48 @@
-package com.usach.movie_backend.movie.controller;
+package com.usach.movie_backend.movies.controller;
 
-import com.usach.movie_backend.actor.domain.ActorChapter;
-import com.usach.movie_backend.movie.domain.Movies;
-import com.usach.movie_backend.movie.service.MovieService;
+import com.usach.movie_backend.movies.domain.Movie;
+import com.usach.movie_backend.movies.service.MoviesService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Tag(name="movies", description = "Movies Management API")
 @RestController
 @RequestMapping("/movie")
-public class MovieController {
+public class MoviesController {
 @Autowired
-    private MovieService movieService;
+    private MoviesService movieService;
 
     @GetMapping
-    public ResponseEntity<List<Movies>> findAll(){
-        List<Movies>movies = movieService.findAll();
+    public ResponseEntity<List<Movie>> findAll(){
+        List<Movie>movies = movieService.findAll();
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
-    @GetMapping("/{idMovie}")
-    public ResponseEntity<Movies> findById(@PathVariable("idMovie")Integer idMovie){
-        return movieService.findByMovie(idMovie).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+    @GetMapping("/{title}")
+    public ResponseEntity<Movie> findById(@PathVariable("title")String title){
+        Movie movie = movieService.findByTitle(title);
+        return new ResponseEntity<>( movie,HttpStatus.OK);
     }
+
+
+
     @PostMapping
-    public ResponseEntity<Movies> create(@RequestBody Movies movies){
+    public ResponseEntity<Movie> create(@RequestBody Movie movies){
         return new ResponseEntity<>(movieService.create(movies),HttpStatus.CREATED);
     }
     @PutMapping
-    public ResponseEntity<Movies> update(@RequestBody Movies movies){
-        return movieService.findByMovie(movies.getIdMovie())
+    public ResponseEntity<Movie> update(@RequestBody Movie movies){
+        return movieService.findByMovieId(movies.getIdMovie())
                 .map( u -> ResponseEntity.ok(movieService.update(movies)))
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
     @DeleteMapping("/{idMovie}")
     public ResponseEntity<Object> delete(@PathVariable("idMovie") Integer id){
-        return movieService.findByMovie(id)
+        return movieService.findByMovieId(id)
                 .map( u ->{
                     movieService.delete(id);
                     return ResponseEntity.ok().build();

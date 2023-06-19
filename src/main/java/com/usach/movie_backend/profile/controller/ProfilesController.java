@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name="profiles", description = "profiles management API")
+@Tag(name="profiles", description = "Profiles management API")
 @RestController
 @RequestMapping("/profiles")
 public class ProfilesController {
