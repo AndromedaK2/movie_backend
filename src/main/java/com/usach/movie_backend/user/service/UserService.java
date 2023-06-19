@@ -36,7 +36,7 @@ public class UserService  implements  IUserService{
     public User findByIdUser(Integer idUser){
         Optional<User> user = userRepository.findById(idUser);
         if(userRepository.findById(idUser).isEmpty()){
-            throw new BusinessException("409",HttpStatus.CONFLICT, String.format("User with idUser: %d not found", idUser));
+            throw new BusinessException(HttpStatus.CONFLICT.toString(),HttpStatus.CONFLICT, String.format("User with idUser: %d not found", idUser));
         }
         return user.get();
     }
@@ -45,7 +45,7 @@ public class UserService  implements  IUserService{
     public User findByEmail(String email) {
        Optional<User> user = userRepository.findByEmail(email);
        if(user.isEmpty()){
-           throw new BusinessException("409",HttpStatus.CONFLICT, String.format("User with email: %d not found", email));
+           throw new BusinessException(HttpStatus.CONFLICT.toString(),HttpStatus.CONFLICT, String.format("User with email: %d not found", email));
        }
        return user.get();
     }
@@ -58,7 +58,7 @@ public class UserService  implements  IUserService{
     @Transactional
     public User createUser(UserCreate userCreate){
         if(userRepository.findByEmail(userCreate.email()).isPresent()){
-            throw new BusinessException("409",HttpStatus.CONFLICT, "User already exist");
+            throw new BusinessException(HttpStatus.CONFLICT.toString(),HttpStatus.CONFLICT, "User already exist");
         }
         User user = userMapper.createUserMapping(userCreate);
         return userRepository.save(user);

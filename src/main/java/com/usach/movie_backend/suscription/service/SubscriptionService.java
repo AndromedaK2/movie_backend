@@ -1,6 +1,5 @@
 package com.usach.movie_backend.suscription.service;
 
-
 import com.usach.movie_backend.configuration.exceptions.BusinessException;
 import com.usach.movie_backend.subscriptionType.domain.SubscriptionType;
 import com.usach.movie_backend.subscriptionType.domain.SubscriptionTypes;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,35 +73,35 @@ public class SubscriptionService implements ISubscriptionService{
     @Transactional (noRollbackFor = { BusinessException.class })
     public User paySubscription(String email, Float money) {
 
-                if(money < 0 || money.toString().contains("-")){
-                    throw new BusinessException("p-500",HttpStatus.NOT_ACCEPTABLE,"Money must be equal or greater than 0");
-                }
-                User user = userService.findByEmail(email);
-                Subscription subscription = user.getSubscription();
+        if(money < 0 || money.toString().contains("-")){
+            throw new BusinessException(HttpStatus.NOT_ACCEPTABLE.toString(),HttpStatus.NOT_ACCEPTABLE,"Money must be equal or greater than 0");
+        }
+        User user = userService.findByEmail(email);
+        Subscription subscription = user.getSubscription();
 
-                if(!subscription.isActive()){
-                    throw new BusinessException("p-500",HttpStatus.NOT_ACCEPTABLE,String.format("Subscription is still active. You must pay in %s", subscription.getExpirationDate()));
-                }
-                SubscriptionType subscriptionType = subscription.getSubscriptionType();
+        if(!subscription.isActive()){
+            throw new BusinessException(HttpStatus.NOT_ACCEPTABLE.toString(),HttpStatus.NOT_ACCEPTABLE,String.format("Subscription is still active. You must pay in %s", subscription.getExpirationDate()));
+        }
+        SubscriptionType subscriptionType = subscription.getSubscriptionType();
 
-                Float totalMoney = (user.getWallet() + money);
-                Float remainingMoney = totalMoney - subscriptionType.getPrice();
+        Float totalMoney = (user.getWallet() + money);
+        Float remainingMoney = totalMoney - subscriptionType.getPrice();
 
-                if( remainingMoney < 0 ){
-                    throw new BusinessException("p-500",HttpStatus.NOT_ACCEPTABLE,String.format("Money is not enough"));
-                }
+        if( remainingMoney < 0 ){
+            throw new BusinessException(HttpStatus.NOT_ACCEPTABLE.toString(),HttpStatus.NOT_ACCEPTABLE,String.format("Money is not enough"));
+        }
 
-                user.setWallet(remainingMoney);
+        user.setWallet(remainingMoney);
 
-                SubscriptionHelper.activeSubscription(subscription);
+        SubscriptionHelper.activeSubscription(subscription);
 
-                user.setSubscription(subscription);
+        user.setSubscription(subscription);
 
-                User userUpdated = userRepository.save(user);
+        User userUpdated = userRepository.save(user);
 
-                return userUpdated;
-            }
+        return userUpdated;
     }
+}
 
 
 

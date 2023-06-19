@@ -4,7 +4,6 @@ import com.usach.movie_backend.subscriptionType.domain.SubscriptionType;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -20,7 +19,6 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_subscription")
     private Integer idSubscription;
-
 
     @Column(name = "payment_date")
     private Date paymentDate;

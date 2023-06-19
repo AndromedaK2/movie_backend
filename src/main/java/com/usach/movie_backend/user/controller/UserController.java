@@ -86,16 +86,14 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-
-
     @Operation(
             summary = "Delete user by id",
             description = "Delete all related with the user by id",
             tags = { "users", "delete" })
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable("id") Integer idUser){
+    public ResponseEntity deleteUserById(@PathVariable("id") Integer idUser){
         userService.deleteById(idUser);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @Operation(
@@ -103,9 +101,9 @@ public class UserController {
             description = "Delete all related with the user by email",
             tags = { "users", "delete" })
     @DeleteMapping("/email/{email}")
-    public ResponseEntity<User> deleteByEmail(@PathVariable("email") String email){
+    public ResponseEntity deleteByEmail(@PathVariable("email") String email){
         userService.deleteByEmail(email);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 
