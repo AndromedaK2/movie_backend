@@ -4,6 +4,7 @@ import com.usach.movie_backend.movies.domain.Movie;
 import com.usach.movie_backend.movies.service.MoviesService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,18 +18,17 @@ public class MoviesController {
     private MoviesService movieService;
 
     @GetMapping
-    public ResponseEntity<List<Movie>> findAll(){
-        List<Movie>movies = movieService.findAll();
+    public ResponseEntity<Page<Movie>> findAll(@RequestParam(required = false,value = "page", defaultValue = "0")  Integer page,
+                                               @RequestParam( required = false, value = "size", defaultValue = "20")  Integer size ){
+        Page<Movie> movies = movieService.findAll(page,size);
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
     @GetMapping("/{title}")
-    public ResponseEntity<Movie> findById(@PathVariable("title")String title){
+    public ResponseEntity<Movie> findByTitle(@PathVariable("title")String title){
         Movie movie = movieService.findByTitle(title);
         return new ResponseEntity<>( movie,HttpStatus.OK);
     }
-
-
 
     @PostMapping
     public ResponseEntity<Movie> create(@RequestBody Movie movies){

@@ -12,7 +12,6 @@ public interface IProfileMovieService{
 
     List<ProfileMovie> findAll();
 
-    Optional<ProfileMovie> findByProfileMovie(Integer idProfileMovie);
 
     ProfileMovie create(ViewLaterMovie profileMovie);
 

@@ -2,12 +2,14 @@ package com.usach.movie_backend.profile.service;
 
 
 import com.usach.movie_backend.configuration.exceptions.BusinessException;
+import com.usach.movie_backend.movies.domain.Movie;
 import com.usach.movie_backend.movies.service.IMoviesService;
 import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.profile.domain.ProfileMovie;
 import com.usach.movie_backend.profile.repository.IProfileMovieRepository;
 import com.usach.movie_backend.profile.service.dtos.ViewLaterMovie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,21 +31,25 @@ public class ProfileMovieService implements IProfileMovieService  {
         return profileMovieRepository.findAll();
     }
 
-    @Override
-    public Optional<ProfileMovie> findByProfileMovie(Integer idProfileMovie) {
-        return profileMovieRepository.findById(idProfileMovie);
-    }
 
     @Transactional(noRollbackFor = {BusinessException.class, ResponseStatusException.class})
     public ProfileMovie create(ViewLaterMovie viewLaterMovie) {
 
         Profile profile = profileService.find(viewLaterMovie.username(), viewLaterMovie.userEmail());
+        Movie movie = moviesService.findByTitle(viewLaterMovie.movieTitle());
+
         Integer profileId = profile.getIdProfile();
+        Integer movieId   = movie.getIdMovie();
+
+        Optional<ProfileMovie> profileMovieBy = profileMovieRepository.findProfileMovieByIdProfileAndIdMovie(profileId,movieId);
+        if(profileMovieBy.isPresent()){
+           throw  new ResponseStatusException(HttpStatus.CONFLICT,"You have already marked as view later");
+        }
 
         ProfileMovie profileMovie = new ProfileMovie();
         profileMovie.setIdProfile(profileId);
+        profileMovie.setIdMovie(movieId);
         profileMovie.setViewLater(true);
-        profileMovie.setIdMovie(1);
         return profileMovieRepository.save(profileMovie);
     }
 
