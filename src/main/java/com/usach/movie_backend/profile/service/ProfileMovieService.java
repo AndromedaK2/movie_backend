@@ -26,7 +26,7 @@ public class ProfileMovieService implements IProfileMovieService  {
     @Autowired
     private IMoviesService moviesService;
 
-    @Override
+    @Transactional(readOnly = true)
     public List<ProfileMovie> findAll() {
         return profileMovieRepository.findAll();
     }
@@ -53,13 +53,19 @@ public class ProfileMovieService implements IProfileMovieService  {
         return profileMovieRepository.save(profileMovie);
     }
 
-    @Override
-    public ProfileMovie update(ProfileMovie profileMovie) {
-        return profileMovieRepository.save(profileMovie);
-    }
 
-    @Override
-    public void delete(Integer idProfileMovie) {
-        profileMovieRepository.deleteById(idProfileMovie);
+    @Transactional(noRollbackFor = {BusinessException.class, ResponseStatusException.class})
+    public void delete(ViewLaterMovie viewLaterMovie) {
+        Profile profile = profileService.find(viewLaterMovie.username(), viewLaterMovie.userEmail());
+        Movie movie = moviesService.findByTitle(viewLaterMovie.movieTitle());
+
+        Integer profileId = profile.getIdProfile();
+        Integer movieId   = movie.getIdMovie();
+
+        Optional<ProfileMovie> profileMovieBy = profileMovieRepository.findProfileMovieByIdProfileAndIdMovie(profileId,movieId);
+        if(profileMovieBy.isEmpty()){
+            throw  new ResponseStatusException(HttpStatus.CONFLICT,"You have not marked as view later");
+        }
+        profileMovieRepository.deleteById(profileMovieBy.get().getIdProfileMovie());
     }
 }

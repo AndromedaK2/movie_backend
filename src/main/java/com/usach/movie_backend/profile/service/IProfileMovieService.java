@@ -11,13 +11,8 @@ import java.util.Optional;
 public interface IProfileMovieService{
 
     List<ProfileMovie> findAll();
-
-
     ProfileMovie create(ViewLaterMovie profileMovie);
-
-    ProfileMovie update(ProfileMovie profileMovie);
-
-    void delete(Integer idProfileMovie);
+    void delete(ViewLaterMovie viewLaterMovie);
 
 }
 

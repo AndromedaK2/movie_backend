@@ -16,4 +16,6 @@ public interface IProfileMovieRepository extends JpaRepository<ProfileMovie,Inte
 
     @Query("SELECT p FROM ProfileMovie p WHERE  p.idProfile = :idProfile AND p.idMovie = :idMovie")
     Optional<ProfileMovie> findProfileMovieByIdProfileAndIdMovie(@Param("idProfile") Integer IdProfile,@Param("idMovie") Integer idMovie);
+
+
 }
