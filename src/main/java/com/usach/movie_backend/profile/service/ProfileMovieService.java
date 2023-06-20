@@ -7,7 +7,7 @@ import com.usach.movie_backend.movies.service.IMoviesService;
 import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.profile.domain.ProfileMovie;
 import com.usach.movie_backend.profile.repository.IProfileMovieRepository;
-import com.usach.movie_backend.profile.service.dtos.ViewLaterMovie;
+import com.usach.movie_backend.profile.service.dto.ViewLaterMovie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

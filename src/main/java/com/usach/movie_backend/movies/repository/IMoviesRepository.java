@@ -11,4 +11,6 @@ public interface IMoviesRepository extends JpaRepository<Movie,Integer> {
 
     Optional<Movie> findMovieByTitle(String title);
 
+    void deleteByTitle(String title);
+
 }

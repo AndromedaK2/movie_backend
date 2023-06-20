@@ -1,7 +1,9 @@
 package com.usach.movie_backend.movies.service;
 
+import com.usach.movie_backend.configuration.exceptions.BusinessException;
 import com.usach.movie_backend.movies.domain.Movie;
 import com.usach.movie_backend.movies.repository.IMoviesRepository;
+import com.usach.movie_backend.movies.service.dto.MovieUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,20 +43,37 @@ public class MoviesService implements IMoviesService<Movie>{
         logger.info(MessageFormat.format("movie {0} found",title ));
         return movie.get();
     }
-    @Override
+    @Transactional(noRollbackFor = {BusinessException.class, ResponseStatusException.class})
     public Movie create(Movie movies) {
         return moviesRepository.save(movies);
     }
 
-    @Override
-    public Movie update(Movie movies) {
-        return moviesRepository.save(movies);
+    @Transactional(noRollbackFor = {BusinessException.class, ResponseStatusException.class})
+    public Movie update(MovieUpdate movieUpdate) {
+        Movie movie = new Movie();
+        movie.setTitle(movieUpdate.title());
+        movie.setDuration(movie.getDuration());
+        movie.setActive(true);
+        movie.setSynopsis(movieUpdate.synopsis());
+        movie.setUrlTrailer(movieUpdate.urlTrailer());
+        movie.setUrlPhoto(movieUpdate.urlPhoto());
+        movie.setUrlVideo(movieUpdate.urlVideo());
+        movie.setReleaseDate(movieUpdate.releaseDate());
+        movie.setNote(0f);
+        movie.setViews(0);
+        // search director
+        movie.setIdDirector(1);
+
+        // search producer
+        movie.setIdProducer(1);
+
+        logger.info("update movie");
+        return moviesRepository.save(movie);
     }
 
-    @Override
-    public void delete(Integer idMovie) {
-        moviesRepository.deleteById(idMovie);
-
+    @Transactional
+    public void delete(String title) {
+        moviesRepository.deleteByTitle(title);
     }
 
 

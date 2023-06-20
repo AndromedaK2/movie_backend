@@ -3,8 +3,8 @@ package com.usach.movie_backend.profile.service;
 import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.profile.repository.IProfileRepository;
 
-import com.usach.movie_backend.profile.service.dtos.ProfileCreate;
-import com.usach.movie_backend.profile.service.dtos.ProfileUpdate;
+import com.usach.movie_backend.profile.service.dto.ProfileCreate;
+import com.usach.movie_backend.profile.service.dto.ProfileUpdate;
 import com.usach.movie_backend.suscription.domain.Subscription;
 import com.usach.movie_backend.user.domain.User;
 import com.usach.movie_backend.user.service.IUserService;

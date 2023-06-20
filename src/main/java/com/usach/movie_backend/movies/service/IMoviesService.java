@@ -2,6 +2,7 @@ package com.usach.movie_backend.movies.service;
 
 
 import com.usach.movie_backend.movies.domain.Movie;
+import com.usach.movie_backend.movies.service.dto.MovieUpdate;
 import org.springframework.data.domain.Page;
 
 import java.util.Optional;
@@ -13,9 +14,9 @@ public interface IMoviesService<T> {
 
     Movie create(Movie movies);
 
-    Movie update(Movie movies);
+    Movie update(MovieUpdate movieUpdate);
 
-    void delete(Integer idMovie);
+    void delete(String idMovie);
 
     Movie findByTitle(String title);
 }

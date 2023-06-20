@@ -1,4 +1,4 @@
-package com.usach.movie_backend.user.service.dtos;
+package com.usach.movie_backend.user.service.dto;
 
 public record UserLogin(
         String email,

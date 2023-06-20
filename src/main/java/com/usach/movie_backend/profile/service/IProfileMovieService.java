@@ -2,11 +2,10 @@ package com.usach.movie_backend.profile.service;
 
 
 import com.usach.movie_backend.profile.domain.ProfileMovie;
-import com.usach.movie_backend.profile.service.dtos.ViewLaterMovie;
+import com.usach.movie_backend.profile.service.dto.ViewLaterMovie;
 
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IProfileMovieService{
 

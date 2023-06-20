@@ -2,9 +2,9 @@ package com.usach.movie_backend.user.controller;
 
 import com.usach.movie_backend.user.domain.User;
 import com.usach.movie_backend.user.service.IUserService;
-import com.usach.movie_backend.user.service.dtos.UserCreate;
-import com.usach.movie_backend.user.service.dtos.UserLogin;
-import com.usach.movie_backend.user.service.dtos.UserUpdate;
+import com.usach.movie_backend.user.service.dto.UserCreate;
+import com.usach.movie_backend.user.service.dto.UserLogin;
+import com.usach.movie_backend.user.service.dto.UserUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

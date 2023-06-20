@@ -1,12 +1,11 @@
 package com.usach.movie_backend.profile.service;
 
 import com.usach.movie_backend.profile.domain.Profile;
-import com.usach.movie_backend.profile.service.dtos.ProfileCreate;
-import com.usach.movie_backend.profile.service.dtos.ProfileUpdate;
+import com.usach.movie_backend.profile.service.dto.ProfileCreate;
+import com.usach.movie_backend.profile.service.dto.ProfileUpdate;
 
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IProfileService {
     List<Profile>findAll();

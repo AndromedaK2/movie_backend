@@ -2,9 +2,9 @@ package com.usach.movie_backend.user.service;
 
 import com.usach.movie_backend.suscription.domain.Subscription;
 import com.usach.movie_backend.user.domain.User;
-import com.usach.movie_backend.user.service.dtos.UserCreate;
-import com.usach.movie_backend.user.service.dtos.UserLogin;
-import com.usach.movie_backend.user.service.dtos.UserUpdate;
+import com.usach.movie_backend.user.service.dto.UserCreate;
+import com.usach.movie_backend.user.service.dto.UserLogin;
+import com.usach.movie_backend.user.service.dto.UserUpdate;
 import org.springframework.data.domain.Page;
 
 import java.util.Optional;

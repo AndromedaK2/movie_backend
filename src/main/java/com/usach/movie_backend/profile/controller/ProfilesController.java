@@ -2,8 +2,8 @@ package com.usach.movie_backend.profile.controller;
 
 import com.usach.movie_backend.profile.domain.Profile;
 import com.usach.movie_backend.profile.service.ProfileService;
-import com.usach.movie_backend.profile.service.dtos.ProfileCreate;
-import com.usach.movie_backend.profile.service.dtos.ProfileUpdate;
+import com.usach.movie_backend.profile.service.dto.ProfileCreate;
+import com.usach.movie_backend.profile.service.dto.ProfileUpdate;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

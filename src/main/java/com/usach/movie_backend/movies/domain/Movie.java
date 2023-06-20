@@ -34,7 +34,7 @@ public class Movie {
     @Column(name = "views")
     private Integer views;
     @Column(name = "note")
-    private String note;
+    private Float note;
     @Column(name = "id_director")
     private Integer idDirector;
     @Column(name = "id_producer")
