@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @Tag(name="movies", description = "Movies Management API")
 @RestController
 @RequestMapping("/movies")
@@ -19,8 +20,12 @@ public class MoviesController {
 
     @GetMapping
     public ResponseEntity<Page<Movie>> findAll(@RequestParam(required = false,value = "page", defaultValue = "0")  Integer page,
-                                               @RequestParam( required = false, value = "size", defaultValue = "20")  Integer size ){
-        Page<Movie> movies = movieService.findAll(page,size);
+                                               @RequestParam(required = false, value = "size", defaultValue = "20")  Integer size,
+                                               @RequestParam(required = false,value = "genderName", defaultValue = "") String genderName,
+                                               @RequestParam(required = false,value = "producerName",defaultValue = "") String producerName,
+                                               @RequestParam(required = false,value = "directorFirstName",defaultValue = "") String directorFirstName,
+                                               @RequestParam(required = false,value = "directorLastName",defaultValue = "") String directorLastName){
+        Page<Movie> movies = movieService.findAll(page,size,genderName,producerName,directorFirstName,directorLastName);
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 

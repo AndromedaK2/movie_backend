@@ -5,10 +5,12 @@ import com.usach.movie_backend.genders.domain.GenderMovie;
 import java.util.List;
 import java.util.Optional;
 
-public interface IGenderMovieService<T> {
+public interface IGenderMovieService {
     List<GenderMovie> findAll();
 
     Optional<GenderMovie> findByGenderMovie(Integer idGenderMovie);
+
+    List<GenderMovie> findByIdGender(Integer idGender);
 
     GenderMovie create(GenderMovie genderMovie);
 

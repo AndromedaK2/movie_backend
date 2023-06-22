@@ -8,4 +8,6 @@ import java.util.List;
 public interface IGenderMovieRepository extends JpaRepository<GenderMovie,Integer> {
 
     List<GenderMovie> findAll();
+
+    List<GenderMovie> findGenderMovieByIdGender(Integer idGender);
 }

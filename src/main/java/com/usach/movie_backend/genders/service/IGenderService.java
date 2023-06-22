@@ -6,7 +6,7 @@ import com.usach.movie_backend.genders.domain.Gender;
 import java.util.List;
 import java.util.Optional;
 
-public interface IGenderService<T> {
+public interface IGenderService {
     List<Gender> findAll();
 
     Optional<Gender> findByGender(Integer idGender);
@@ -16,4 +16,7 @@ public interface IGenderService<T> {
     Gender update(Gender gender);
 
     void delete(Integer idGender);
+
+    Gender findByName(String name);
+
 }

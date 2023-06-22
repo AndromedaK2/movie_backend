@@ -29,12 +29,19 @@ public class MoviesService implements IMoviesService{
     @Autowired
     private IProducerService producerService;
 
+
     private final static Logger logger = LoggerFactory.getLogger(MoviesService.class);
     @Transactional(readOnly = true)
-    public Page<Movie> findAll(Integer page, Integer size) {
-        logger.info("Retrieves Movies");
-        return moviesRepository.findAll(PageRequest.of(page,size));
+    public Page<Movie> findAll(Integer page, Integer size, String genderName,String producerName, String directorFirstName, String directorLastName) {
+        if(genderName.isBlank() && producerName.isBlank() && directorFirstName.isBlank() && directorLastName.isBlank()){
+            logger.info("Retrieves movies without filters");
+            return moviesRepository.findAll(PageRequest.of(page,size));
+        }
+        logger.info("Retrieves movies with filters");
+        return moviesRepository.findAllByFilter(genderName,producerName,directorFirstName,directorLastName,PageRequest.of(page,size));
     }
+
+
 
     @Transactional(readOnly = true)
     public Optional<Movie> findByMovieId(Integer idMovie) {

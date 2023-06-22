@@ -28,6 +28,12 @@ public class GenderController {
     public ResponseEntity<Gender> findById(@PathVariable("idGender")Integer idGender){
         return genderService.findByGender(idGender).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<Gender> findByName(@PathVariable("name")String name){
+        return new ResponseEntity<>(genderService.findByName(name), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Gender> create(@RequestBody Gender gender){
         return new ResponseEntity<>(genderService.create(gender),HttpStatus.CREATED);
