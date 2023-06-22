@@ -1,19 +1,18 @@
 package com.usach.movie_backend.series.service;
 
 
-import com.usach.movie_backend.series.domain.Series;
+import com.usach.movie_backend.series.domain.Serie;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface ISerieService<T> {
-    List<Series> findAll();
+public interface ISerieService{
+    List<Serie> findAll();
 
-    Optional<Series> findBySerie(Integer idSerie);
+    Serie findByName(String name);
 
-    Series create(Series serie);
+    Serie create(Serie serie);
 
-    Series update(Series serie);
+    Serie update(Serie serie);
 
     void delete(Integer idSerie);
 }
