@@ -2,6 +2,8 @@ package com.usach.movie_backend.directors.controller;
 
 import com.usach.movie_backend.directors.domain.Director;
 import com.usach.movie_backend.directors.service.DirectorService;
+import com.usach.movie_backend.directors.service.dto.DirectorCreate;
+import com.usach.movie_backend.directors.service.dto.DirectorUpdate;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,9 +37,16 @@ public class DirectorController {
     }
 
     @PostMapping
-    public ResponseEntity<Director> create(@RequestBody Director director) {
-        return new ResponseEntity<>(directorService.create(director), HttpStatus.CREATED);
+    public ResponseEntity<Director> create(@RequestBody DirectorCreate directorCreate) {
+        return new ResponseEntity<>(directorService.create(directorCreate), HttpStatus.CREATED);
     }
+
+    @PutMapping
+    public ResponseEntity<Director> update(@RequestBody DirectorUpdate directorUpdate) {
+        return new ResponseEntity<>(directorService.update(directorUpdate), HttpStatus.OK);
+    }
+
+
 
 }
 

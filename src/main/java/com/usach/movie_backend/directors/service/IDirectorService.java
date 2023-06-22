@@ -1,6 +1,8 @@
 package com.usach.movie_backend.directors.service;
 
 import com.usach.movie_backend.directors.domain.Director;
+import com.usach.movie_backend.directors.service.dto.DirectorCreate;
+import com.usach.movie_backend.directors.service.dto.DirectorUpdate;
 
 
 import java.util.List;
@@ -11,9 +13,9 @@ public interface IDirectorService{
 
     Optional<Director> findByDirector(Integer idDirector);
 
-    Director create(Director director);
+    Director create(DirectorCreate director);
 
-    Director update(Director director);
+    Director update(DirectorUpdate director);
 
     void delete(Integer idDirector);
 

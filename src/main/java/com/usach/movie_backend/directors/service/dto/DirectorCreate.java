@@ -1,4 +1,11 @@
 package com.usach.movie_backend.directors.service.dto;
 
-public record DirectorCreate() {
+import jakarta.persistence.Column;
+
+import java.util.Date;
+
+public record DirectorCreate(String firstName, String lastName,
+                             Date birthdate, String nationality, String urlPhoto) {
 }
+
+

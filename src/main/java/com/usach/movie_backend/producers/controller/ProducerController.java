@@ -39,7 +39,6 @@ public class ProducerController {
     public ResponseEntity<Producer> create(@RequestBody ProducerCreate producerCreate){
         return new ResponseEntity<>(producerService.create(producerCreate),HttpStatus.CREATED);
     }
-
     @PutMapping
     public ResponseEntity<Producer> update(@RequestBody ProducerUpdate producerUpdate){
         return new ResponseEntity<>(producerService.update(producerUpdate),HttpStatus.OK);
