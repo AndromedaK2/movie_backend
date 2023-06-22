@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.Optional;
 
-public interface IMoviesService<T> {
+public interface IMoviesService {
     Page<Movie> findAll(Integer page, Integer size);
 
     Optional<Movie> findByMovieId(Integer idMovie);

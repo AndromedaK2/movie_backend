@@ -1,8 +1,9 @@
 package com.usach.movie_backend.producers.controller;
 
-
 import com.usach.movie_backend.producers.domain.Producer;
 import com.usach.movie_backend.producers.service.ProducerService;
+import com.usach.movie_backend.producers.service.dto.ProducerCreate;
+import com.usach.movie_backend.producers.service.dto.ProducerUpdate;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @Tag(name="producers", description = "Producers Management API")
 @RequestMapping("/producers")
@@ -27,26 +27,26 @@ public class ProducerController {
     }
     @GetMapping("/{idProducer}")
     public ResponseEntity<Producer> findById(@PathVariable("idProducer")Integer idProducer){
-        return producerService.findByProducer(idProducer).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+       return new ResponseEntity<>(producerService.findByIdProducer(idProducer),HttpStatus.OK);
+    }
+
+    @GetMapping("name/{name}")
+    public ResponseEntity<Producer> findByName(@PathVariable("name")String name) {
+        return new ResponseEntity<>(producerService.findByName(name), HttpStatus.OK);
+
     }
     @PostMapping
-    public ResponseEntity<Producer> create(@RequestBody Producer producer){
-        return new ResponseEntity<>(producerService.create(producer),HttpStatus.CREATED);
+    public ResponseEntity<Producer> create(@RequestBody ProducerCreate producerCreate){
+        return new ResponseEntity<>(producerService.create(producerCreate),HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Producer> update(@RequestBody Producer producer){
-        return producerService.findByProducer(producer.getIdProducer())
-                .map( u -> ResponseEntity.ok(producerService.update(producer)))
-                .orElseGet(()-> ResponseEntity.notFound().build());
+    public ResponseEntity<Producer> update(@RequestBody ProducerUpdate producerUpdate){
+        return new ResponseEntity<>(producerService.update(producerUpdate),HttpStatus.OK);
     }
     @DeleteMapping("/{idProducer}")
-    public ResponseEntity<Object> delete(@PathVariable("idProducer") Integer id){
-        return producerService.findByProducer(id)
-                .map( u ->{
-                    producerService.delete(id);
-                    return ResponseEntity.ok().build();
-                })
-                .orElseGet(()-> ResponseEntity.notFound().build());
+    public ResponseEntity delete(@PathVariable("idProducer") Integer id){
+        producerService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

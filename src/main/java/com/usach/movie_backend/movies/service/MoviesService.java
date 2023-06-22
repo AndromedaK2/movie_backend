@@ -1,9 +1,11 @@
 package com.usach.movie_backend.movies.service;
 
 import com.usach.movie_backend.configuration.exceptions.BusinessException;
+import com.usach.movie_backend.directors.service.IDirectorService;
 import com.usach.movie_backend.movies.domain.Movie;
 import com.usach.movie_backend.movies.repository.IMoviesRepository;
 import com.usach.movie_backend.movies.service.dto.MovieUpdate;
+import com.usach.movie_backend.producers.service.IProducerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,15 @@ import org.springframework.web.server.ResponseStatusException;
 import java.text.MessageFormat;
 import java.util.Optional;
 @Service
-public class MoviesService implements IMoviesService<Movie>{
+public class MoviesService implements IMoviesService{
     @Autowired
     private IMoviesRepository moviesRepository;
+
+    @Autowired
+    private IDirectorService directorService;
+
+    @Autowired
+    private IProducerService producerService;
 
     private final static Logger logger = LoggerFactory.getLogger(MoviesService.class);
     @Transactional(readOnly = true)
@@ -50,10 +58,18 @@ public class MoviesService implements IMoviesService<Movie>{
 
     @Transactional(noRollbackFor = {BusinessException.class, ResponseStatusException.class})
     public Movie update(MovieUpdate movieUpdate) {
-        Movie movie = new Movie();
+
+        Movie movie = findByTitle(movieUpdate.title());
+        Integer idDirector = directorService.findByFirstNameAndLastName(
+                movieUpdate.directorFirstName(),
+                movieUpdate.directorLastName()).getIdDirector();
+        Integer idProducer = producerService.findByName(movieUpdate.producerName()).getIdProducer();
+
         movie.setTitle(movieUpdate.title());
+        movie.setIdDirector(idDirector);
+        movie.setIdProducer(idProducer);
         movie.setDuration(movie.getDuration());
-        movie.setActive(true);
+        movie.setActive(movie.getActive());
         movie.setSynopsis(movieUpdate.synopsis());
         movie.setUrlTrailer(movieUpdate.urlTrailer());
         movie.setUrlPhoto(movieUpdate.urlPhoto());
@@ -61,17 +77,12 @@ public class MoviesService implements IMoviesService<Movie>{
         movie.setReleaseDate(movieUpdate.releaseDate());
         movie.setNote(0f);
         movie.setViews(0);
-        // search director
-        movie.setIdDirector(1);
-
-        // search producer
-        movie.setIdProducer(1);
 
         logger.info("update movie");
         return moviesRepository.save(movie);
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = {ResponseStatusException.class})
     public void delete(String title) {
         moviesRepository.deleteByTitle(title);
     }
