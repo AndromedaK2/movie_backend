@@ -2,7 +2,6 @@ package com.usach.movie_backend.directors.controller;
 
 import com.usach.movie_backend.directors.domain.Director;
 import com.usach.movie_backend.directors.service.DirectorService;
-import com.usach.movie_backend.profile.domain.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

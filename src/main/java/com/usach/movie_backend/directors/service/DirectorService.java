@@ -33,17 +33,17 @@ public class DirectorService  implements  IDirectorService {
         return director.get();
     }
 
-    @Override
+    @Transactional(noRollbackFor = {ResponseStatusException.class})
     public Director create(Director director) {
         return directorRepository.save(director);
     }
 
-    @Override
+    @Transactional(noRollbackFor = {ResponseStatusException.class})
     public Director update(Director director) {
         return directorRepository.save(director);
     }
 
-    @Override
+    @Transactional(noRollbackFor = {ResponseStatusException.class})
     public void delete(Integer idDirector) {
     directorRepository.deleteById(idDirector);
     }

@@ -3,7 +3,6 @@ package com.usach.movie_backend.producers.controller;
 
 import com.usach.movie_backend.producers.domain.Producer;
 import com.usach.movie_backend.producers.service.ProducerService;
-import com.usach.movie_backend.profile.domain.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
