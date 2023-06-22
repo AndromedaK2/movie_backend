@@ -28,8 +28,8 @@ public class RolController {
             description = "Get a Rol object by specifying its id",
             tags = { "roles", "get" })
     @GetMapping("/{idRol}")
-    public ResponseEntity<Optional<Rol>> findByIdRol(@PathVariable Integer idRol ){
-        Optional<Rol> rol = rolService.findByIdRol(idRol);
+    public ResponseEntity<Rol> findByIdRol(@PathVariable Integer idRol ){
+        Rol rol = rolService.findByIdRol(idRol);
         return new ResponseEntity<>(rol, HttpStatus.OK);
     }
     @Operation(
