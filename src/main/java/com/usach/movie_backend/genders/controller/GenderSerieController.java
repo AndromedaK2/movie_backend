@@ -1,18 +1,17 @@
 package com.usach.movie_backend.genders.controller;
 
-import com.usach.movie_backend.genders.domain.GenderMovie;
 import com.usach.movie_backend.genders.domain.GenderSerie;
-import com.usach.movie_backend.genders.service.GenderMovieService;
 import com.usach.movie_backend.genders.service.GenderSerieService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Tag(name="gender series", description = "Gender Series management API")
 @RestController
-@RequestMapping("/genderserie")
+@RequestMapping("/gender-series")
 public class GenderSerieController {
 
     @Autowired

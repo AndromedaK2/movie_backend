@@ -2,6 +2,7 @@ package com.usach.movie_backend.movies.controller;
 
 import com.usach.movie_backend.movies.domain.Movie;
 import com.usach.movie_backend.movies.service.MoviesService;
+import com.usach.movie_backend.movies.service.dto.MovieCreate;
 import com.usach.movie_backend.movies.service.dto.MovieUpdate;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class MoviesController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> create(@RequestBody Movie movies){
-        return new ResponseEntity<>(movieService.create(movies),HttpStatus.CREATED);
+    public ResponseEntity<Movie> create(@RequestBody MovieCreate movieCreate){
+        return new ResponseEntity<>(movieService.create(movieCreate),HttpStatus.CREATED);
     }
     @PutMapping
     public ResponseEntity<Movie> update(@RequestBody MovieUpdate movieUpdate){
