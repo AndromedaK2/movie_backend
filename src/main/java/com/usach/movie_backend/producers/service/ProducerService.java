@@ -36,14 +36,14 @@ public class ProducerService implements IProducerService{
 
     @Transactional(readOnly = true)
     public Producer findByName(String name) {
-        Optional<Producer> producer = producerRepository.findByName(name);
+        Optional<Producer> producer = producerRepository.findByNameProducer(name);
         if(producer.isEmpty())
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"Producer not found");
         return producer.get();
     }
     @Transactional(rollbackFor = {ResponseStatusException.class})
     public Producer create(ProducerCreate producerCreate) {
-        if(producerRepository.findByName(producerCreate.name()).isPresent())
+        if(producerRepository.findByNameProducer(producerCreate.name()).isPresent())
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Producer already exists");
         Producer producer = new Producer();
         producer.setNameProducer(producerCreate.name());

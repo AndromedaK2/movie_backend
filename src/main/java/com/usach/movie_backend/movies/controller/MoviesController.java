@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name="movies", description = "Movies Management API")
 @RestController
-@RequestMapping("/movie")
+@RequestMapping("/movies")
 public class MoviesController {
 @Autowired
     private MoviesService movieService;

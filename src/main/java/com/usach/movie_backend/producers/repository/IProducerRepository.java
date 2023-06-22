@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface IProducerRepository extends JpaRepository<Producer,Integer> {
 
     List<Producer> findAll();
-    Optional<Producer> findByName(String name);
+    Optional<Producer> findByNameProducer(String name);
 }
