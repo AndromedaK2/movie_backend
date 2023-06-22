@@ -45,7 +45,7 @@ public class DirectorService  implements  IDirectorService {
 
     @Transactional(noRollbackFor = {ResponseStatusException.class})
     public void delete(Integer idDirector) {
-    directorRepository.deleteById(idDirector);
+      directorRepository.deleteById(idDirector);
     }
 
 

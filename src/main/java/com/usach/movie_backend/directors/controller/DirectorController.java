@@ -2,6 +2,7 @@ package com.usach.movie_backend.directors.controller;
 
 import com.usach.movie_backend.directors.domain.Director;
 import com.usach.movie_backend.directors.service.DirectorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@Tag(name="directors", description = "Directors Management API")
 @RestController
-@RequestMapping("/director")
+@RequestMapping("/directors")
 public class DirectorController {
     @Autowired
     private DirectorService directorService;

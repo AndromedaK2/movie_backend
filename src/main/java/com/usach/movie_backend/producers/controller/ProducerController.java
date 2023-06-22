@@ -3,6 +3,7 @@ package com.usach.movie_backend.producers.controller;
 
 import com.usach.movie_backend.producers.domain.Producer;
 import com.usach.movie_backend.producers.service.ProducerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/producer")
+
+@Tag(name="producers", description = "Producers Management API")
+@RequestMapping("/producers")
 @RestController
 public class ProducerController {
 
