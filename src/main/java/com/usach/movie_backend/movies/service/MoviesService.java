@@ -4,6 +4,7 @@ import com.usach.movie_backend.configuration.exceptions.BusinessException;
 import com.usach.movie_backend.directors.service.IDirectorService;
 import com.usach.movie_backend.movies.domain.Movie;
 import com.usach.movie_backend.movies.repository.IMoviesRepository;
+import com.usach.movie_backend.movies.service.dto.MovieCreate;
 import com.usach.movie_backend.movies.service.dto.MovieUpdate;
 import com.usach.movie_backend.producers.service.IProducerService;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import java.text.MessageFormat;
 import java.util.Optional;
 @Service
 public class MoviesService implements IMoviesService{
+
     @Autowired
     private IMoviesRepository moviesRepository;
 
@@ -29,8 +31,10 @@ public class MoviesService implements IMoviesService{
     @Autowired
     private IProducerService producerService;
 
-
     private final static Logger logger = LoggerFactory.getLogger(MoviesService.class);
+    @Autowired
+    private MovieMapper movieMapper;
+
     @Transactional(readOnly = true)
     public Page<Movie> findAll(Integer page, Integer size, String genderName,String producerName, String directorFirstName, String directorLastName) {
         if(genderName.isBlank() && producerName.isBlank() && directorFirstName.isBlank() && directorLastName.isBlank()){
@@ -40,8 +44,6 @@ public class MoviesService implements IMoviesService{
         logger.info("Retrieves movies with filters");
         return moviesRepository.findAllByFilter(genderName,producerName,directorFirstName,directorLastName,PageRequest.of(page,size));
     }
-
-
 
     @Transactional(readOnly = true)
     public Optional<Movie> findByMovieId(Integer idMovie) {
@@ -59,9 +61,20 @@ public class MoviesService implements IMoviesService{
         return movie.get();
     }
     @Transactional(noRollbackFor = {BusinessException.class, ResponseStatusException.class})
-    public Movie create(Movie movies) {
-        return moviesRepository.save(movies);
+    public Movie create(MovieCreate movieCreate) {
+        if(moviesRepository.findMovieByTitle(movieCreate.title()).isPresent()){
+            logger.info(MessageFormat.format("movie {0} found",movieCreate.title()));
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Movie already exists");
+        }
+        Integer idDirector = directorService.findByFirstNameAndLastName(
+                movieCreate.directorFirstName(),
+                movieCreate.directorLastName()).getIdDirector();
+        Integer idProducer = producerService.findByName(movieCreate.producerName()).getIdProducer();
+
+        Movie movie = movieMapper.createMovieMapper(idDirector, idProducer,movieCreate);
+        return moviesRepository.save(movie);
     }
+
 
     @Transactional(noRollbackFor = {BusinessException.class, ResponseStatusException.class})
     public Movie update(MovieUpdate movieUpdate) {
@@ -72,18 +85,7 @@ public class MoviesService implements IMoviesService{
                 movieUpdate.directorLastName()).getIdDirector();
         Integer idProducer = producerService.findByName(movieUpdate.producerName()).getIdProducer();
 
-        movie.setTitle(movieUpdate.title());
-        movie.setIdDirector(idDirector);
-        movie.setIdProducer(idProducer);
-        movie.setDuration(movie.getDuration());
-        movie.setActive(movie.getActive());
-        movie.setSynopsis(movieUpdate.synopsis());
-        movie.setUrlTrailer(movieUpdate.urlTrailer());
-        movie.setUrlPhoto(movieUpdate.urlPhoto());
-        movie.setUrlVideo(movieUpdate.urlVideo());
-        movie.setReleaseDate(movieUpdate.releaseDate());
-        movie.setNote(0f);
-        movie.setViews(0);
+        movieMapper.updateMovieMapper(idDirector, idProducer,movie, movieUpdate);
 
         logger.info("update movie");
         return moviesRepository.save(movie);
