@@ -6,6 +6,7 @@ import com.usach.movie_backend.profiles.domain.ProfileSerie;
 import com.usach.movie_backend.profiles.repository.IProfileSerieRepository;
 import com.usach.movie_backend.profiles.service.dto.ViewLaterSerie;
 import com.usach.movie_backend.series.domain.Serie;
+import com.usach.movie_backend.series.repository.ISerieRepository;
 import com.usach.movie_backend.series.service.ISerieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,8 @@ public class ProfileSerieService implements IProfileSerieService{
     private ISerieService serieService;
     @Autowired
     private  IProfileService profileService;
+    @Autowired
+    private ISerieRepository serieRepository;
 
     @Transactional(readOnly = true)
     public List<ProfileSerie> findAll() {
@@ -49,7 +52,11 @@ public class ProfileSerieService implements IProfileSerieService{
         profileSerie.setIdSerie(serieId);
         profileSerie.setViewLater(true);
 
-        return profileSerieRepository.save(profileSerie);
+        ProfileSerie profileSerieUpdated = profileSerieRepository.save(profileSerie);
+
+        serie.setViews(serie.getViews()+1);
+        serieRepository.save(serie);
+        return profileSerieUpdated;
     }
 
     @Transactional(noRollbackFor = {BusinessException.class, RuntimeException.class})
@@ -67,5 +74,12 @@ public class ProfileSerieService implements IProfileSerieService{
             throw  new ResponseStatusException(HttpStatus.CONFLICT,"You have already marked as view later");
 
         profileSerieRepository.deleteById(profileSerieBy.get().getIdProfileSerie());
+
+        Integer views = serie.getViews();
+        if(views>0){
+            serie.setViews(views-1);
+            serieRepository.save(serie);
+        }
+
     }
 }

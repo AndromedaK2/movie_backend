@@ -3,7 +3,9 @@ package com.usach.movie_backend.profiles.service;
 
 import com.usach.movie_backend.configuration.exceptions.BusinessException;
 import com.usach.movie_backend.movies.domain.Movie;
+import com.usach.movie_backend.movies.repository.IMoviesRepository;
 import com.usach.movie_backend.movies.service.IMoviesService;
+import com.usach.movie_backend.movies.service.dto.MovieUpdate;
 import com.usach.movie_backend.profiles.domain.Profile;
 import com.usach.movie_backend.profiles.domain.ProfileMovie;
 import com.usach.movie_backend.profiles.repository.IProfileMovieRepository;
@@ -25,6 +27,8 @@ public class ProfileMovieService implements IProfileMovieService  {
     private IProfileService profileService;
     @Autowired
     private IMoviesService moviesService;
+    @Autowired
+    private IMoviesRepository moviesRepository;
 
     @Transactional(readOnly = true)
     public List<ProfileMovie> findAll() {
@@ -50,7 +54,12 @@ public class ProfileMovieService implements IProfileMovieService  {
         profileMovie.setIdProfile(profileId);
         profileMovie.setIdMovie(movieId);
         profileMovie.setViewLater(true);
-        return profileMovieRepository.save(profileMovie);
+        ProfileMovie profileMovieCreated = profileMovieRepository.save(profileMovie);
+
+        movie.setViews(movie.getViews()+1);
+        moviesRepository.save(movie);
+
+        return profileMovieCreated;
     }
 
 
@@ -67,5 +76,7 @@ public class ProfileMovieService implements IProfileMovieService  {
             throw  new ResponseStatusException(HttpStatus.CONFLICT,"You have not marked as view later");
         }
         profileMovieRepository.deleteById(profileMovieBy.get().getIdProfileMovie());
+        movie.setViews(movie.getViews()-1);
+        moviesRepository.save(movie);
     }
 }
