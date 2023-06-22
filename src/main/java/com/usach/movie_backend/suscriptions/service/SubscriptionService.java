@@ -43,12 +43,12 @@ public class SubscriptionService implements ISubscriptionService{
 
     @Transactional
     public Subscription subscribe(String userEmail , SubscriptionTypes subscriptionTypes) {
-        Optional<SubscriptionType> subscriptionType = subscriptionTypeService.findBySubscriptionTypeName(subscriptionTypes);
+        SubscriptionType subscriptionType = subscriptionTypeService.findBySubscriptionTypeName(subscriptionTypes);
         User user = userService.findByEmail(userEmail);
         if(user.getSubscription() != null){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already has a subscription");
         }
-        Subscription subscription = subscriptionMapper.createSubscriptionMapping(subscriptionType.get());
+        Subscription subscription = subscriptionMapper.createSubscriptionMapping(subscriptionType);
         Subscription newSubscription = subscriptionRepository.save(subscription);
         userService.updateUserSubscription(userEmail,subscription);
         return newSubscription;
