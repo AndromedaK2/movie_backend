@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface IFavoritesMoviesService{
     List<FavoritesMovie> findAll();
 
-    Optional<FavoritesMovie> findByFavoritesMovies(Integer idFavoritesMovies);
-
     FavoritesMovie create(FavoriteMovieCreate favoritesMovieCreate);
 
     void delete(FavoriteMovieDelete favoriteMovieDelete);

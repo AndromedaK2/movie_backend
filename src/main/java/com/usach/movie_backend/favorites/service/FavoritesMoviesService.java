@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,10 +37,6 @@ public class FavoritesMoviesService implements IFavoritesMoviesService{
         return favoritesMoviesRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
-    public Optional<FavoritesMovie> findByFavoritesMovies(Integer idFavoritesMovies) {
-        return favoritesMoviesRepository.findById(idFavoritesMovies);
-    }
 
     @Transactional(readOnly = true)
     public FavoritesMovie findByIdFavoriteAndIdMovie(Integer idFavorite, Integer idMovie){
