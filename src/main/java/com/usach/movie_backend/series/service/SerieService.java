@@ -2,6 +2,7 @@ package com.usach.movie_backend.series.service;
 
 
 import com.usach.movie_backend.directors.service.IDirectorService;
+import com.usach.movie_backend.producers.service.IProducerService;
 import com.usach.movie_backend.series.domain.Serie;
 import com.usach.movie_backend.series.repository.ISerieRepository;
 import com.usach.movie_backend.series.service.dto.SerieCreate;
@@ -21,7 +22,7 @@ public class SerieService  implements ISerieService{
     @Autowired
     private IDirectorService directorService;
     @Autowired
-    private ISerieService producerService;
+    private IProducerService producerService;
 
     @Transactional(readOnly = true)
     public List<Serie> findAll() {
