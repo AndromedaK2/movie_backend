@@ -57,13 +57,10 @@ public class SeriesController {
     public ResponseEntity<Serie> update(@RequestBody SerieUpdate serieUpdate){
         return new ResponseEntity<>(serieService.update(serieUpdate), HttpStatus.OK);
     }
-   // @DeleteMapping("/{idSerie}")
-    //public ResponseEntity<Object> delete(@PathVariable("idSerie") Integer id){
-     //   return serieService.findBySerie(id)
-       //         .map( u ->{
-         //           serieService.delete(id);
-           //         return ResponseEntity.ok().build();
-             //   })
-               // .orElseGet(()-> ResponseEntity.notFound().build());
-    //}
+
+    @DeleteMapping("/{idSerie}")
+    public ResponseEntity delete(@PathVariable("idSerie") Integer id){
+        serieService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
