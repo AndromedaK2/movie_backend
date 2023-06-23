@@ -21,23 +21,22 @@ public class FavoritesController {
         List<Favorite>favorites = favoritesService.findAll();
         return new ResponseEntity<>(favorites, HttpStatus.OK);
     }
-    @GetMapping("/{idFavorites}")
-    public ResponseEntity<Favorite> findById(@PathVariable("idFavorites")Integer idFavorites){
-        return favoritesService.findByFavorites(idFavorites).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
-    }
+
     @PostMapping
-    public ResponseEntity<Favorite> create(@RequestBody Favorite favorites){
-        return new ResponseEntity<>(favoritesService.create(favorites),HttpStatus.CREATED);
+    public ResponseEntity<Favorite> create(@PathVariable("name") String name,
+                                           @PathVariable("username") String username,
+                                           @PathVariable("userEmail") String userEmail){
+        return new ResponseEntity<>(favoritesService.create(name,username,userEmail),HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Favorite> update(@RequestBody Favorite favorites){
-        return favoritesService.findByFavorites(favorites.getIdFavorite())
-                .map( u -> ResponseEntity.ok(favoritesService.update(favorites)))
-                .orElseGet(()-> ResponseEntity.notFound().build());
+    public ResponseEntity<Favorite> update(@PathVariable("name") String name,
+                                           @PathVariable("username") String username,
+                                           @PathVariable("userEmail") String userEmail){
+        return new ResponseEntity<>(favoritesService.update(name,username,userEmail),HttpStatus.OK);
     }
-    @DeleteMapping("/{name}")
-    public ResponseEntity<Object> delete(@PathVariable("name") String name,
+    @DeleteMapping("/{name}/{username}/{userEmail}")
+    public ResponseEntity delete(@PathVariable("name") String name,
                                          @PathVariable("username") String username,
                                          @PathVariable("userEmail") String userEmail){
         favoritesService.deleteByName(name,username,userEmail);

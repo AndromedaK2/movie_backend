@@ -11,9 +11,11 @@ public interface IFavoritesService {
 
     Optional<Favorite> findByFavorites(Integer idFavorites);
 
-    Favorite create(Favorite favorites);
+    Favorite create(String name, String username, String userEmail);
 
-    Favorite update(Favorite favorites);
+    Favorite update(String name, String username, String userEmail);
 
-    void delete(Integer idFavorites);
+    void deleteByName(String name, String username, String userEmail);
+
+    void delete(Integer idFavorite);
 }

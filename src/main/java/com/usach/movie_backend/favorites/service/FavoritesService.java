@@ -26,10 +26,6 @@ public class FavoritesService implements IFavoritesService {
         return favoritesRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
-    public Optional<Favorite> findByFavorites(Integer idFavorites) {
-        return favoritesRepository.findById(idFavorites);
-    }
 
     @Transactional(readOnly = true)
     public Favorite findByNameAndIdProfile(String name, Integer idProfile){
@@ -40,13 +36,22 @@ public class FavoritesService implements IFavoritesService {
     }
 
     @Transactional(rollbackFor = {ResponseStatusException.class})
-    public Favorite create(Favorite favorites) {
-        return favoritesRepository.save(favorites);
+    public Favorite create(String name, String username, String userEmail) {
+        Profile profile = profileService.find(username,userEmail);
+        if( favoritesRepository.findByNameAndIdProfile(name, profile.getIdProfile()).isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Favorite already exists");
+        Favorite favorite = new Favorite();
+        favorite.setName(name);
+        favorite.setIdProfile(profile.getIdProfile());
+        return favoritesRepository.save(favorite);
     }
 
     @Transactional(rollbackFor = {ResponseStatusException.class})
-    public Favorite update(Favorite favorites) {
-        return favoritesRepository.save(favorites);
+    public Favorite update(String name, String username, String userEmail) {
+        Profile profile = profileService.find(username,userEmail);
+        Favorite favorite = findByNameAndIdProfile(name, profile.getIdProfile());
+        favorite.setName(name);
+        return favoritesRepository.save(favorite);
     }
 
     @Transactional(rollbackFor = {ResponseStatusException.class})
