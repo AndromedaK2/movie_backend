@@ -1,7 +1,7 @@
 package com.usach.movie_backend.favorites.controller;
 
 
-import com.usach.movie_backend.favorites.domain.FavoritesSeries;
+import com.usach.movie_backend.favorites.domain.FavoritesSerie;
 import com.usach.movie_backend.favorites.service.FavoritesSeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,21 +17,21 @@ public class FavoritesSeriesController {
     private FavoritesSeriesService favoritesSeriesService;
 
     @GetMapping
-    public ResponseEntity<List<FavoritesSeries>> findAll(){
-        List<FavoritesSeries>favoritesSeries = favoritesSeriesService.findAll();
+    public ResponseEntity<List<FavoritesSerie>> findAll(){
+        List<FavoritesSerie>favoritesSeries = favoritesSeriesService.findAll();
         return new ResponseEntity<>(favoritesSeries, HttpStatus.OK);
     }
     @GetMapping("/{idFavoritesSeries}")
-    public ResponseEntity<FavoritesSeries> findById(@PathVariable("idFavoritesSeries")Integer idFavoritesSeries){
+    public ResponseEntity<FavoritesSerie> findById(@PathVariable("idFavoritesSeries")Integer idFavoritesSeries){
         return favoritesSeriesService.findByFavoritesSeries(idFavoritesSeries).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
     @PostMapping
-    public ResponseEntity<FavoritesSeries> create(@RequestBody FavoritesSeries favoritesSeries){
+    public ResponseEntity<FavoritesSerie> create(@RequestBody FavoritesSerie favoritesSeries){
         return new ResponseEntity<>(favoritesSeriesService.create(favoritesSeries),HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<FavoritesSeries> update(@RequestBody FavoritesSeries favoritesSeries){
+    public ResponseEntity<FavoritesSerie> update(@RequestBody FavoritesSerie favoritesSeries){
         return favoritesSeriesService.findByFavoritesSeries(favoritesSeries.getIdFavoriteSerie())
                 .map( u -> ResponseEntity.ok(favoritesSeriesService.update(favoritesSeries)))
                 .orElseGet(()-> ResponseEntity.notFound().build());

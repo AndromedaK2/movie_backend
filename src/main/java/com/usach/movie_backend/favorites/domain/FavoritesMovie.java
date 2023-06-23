@@ -10,13 +10,13 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class FavoritesMovies {
+public class FavoritesMovie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_favorite_movie")
     private Integer idFavoriteMovie;
     @Column(name = "id_favorite")
-    private String idFavorite;
+    private Integer idFavorite;
     @Column(name = "id_movie")
     private Integer idMovie;
 }
