@@ -22,14 +22,14 @@ public class FavoritesController {
         return new ResponseEntity<>(favorites, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/{name}/{username}/{userEmail}")
     public ResponseEntity<Favorite> create(@PathVariable("name") String name,
                                            @PathVariable("username") String username,
                                            @PathVariable("userEmail") String userEmail){
         return new ResponseEntity<>(favoritesService.create(name,username,userEmail),HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/{name}/{username}/{userEmail}")
     public ResponseEntity<Favorite> update(@PathVariable("name") String name,
                                            @PathVariable("username") String username,
                                            @PathVariable("userEmail") String userEmail){

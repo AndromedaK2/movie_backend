@@ -27,6 +27,7 @@ public class FavoritesService implements IFavoritesService {
     }
 
 
+
     @Transactional(readOnly = true)
     public Favorite findByNameAndIdProfile(String name, Integer idProfile){
         Optional<Favorite> favorite = favoritesRepository.findByNameAndIdProfile(name, idProfile);

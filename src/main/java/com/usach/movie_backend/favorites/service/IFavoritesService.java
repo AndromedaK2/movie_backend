@@ -9,8 +9,6 @@ import java.util.Optional;
 public interface IFavoritesService {
     List<Favorite> findAll();
 
-    Optional<Favorite> findByFavorites(Integer idFavorites);
-
     Favorite create(String name, String username, String userEmail);
 
     Favorite update(String name, String username, String userEmail);
