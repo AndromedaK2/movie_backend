@@ -22,21 +22,12 @@ public class FavoritesMoviesController {
         List<FavoritesMovies>favoritesMovies = favoritesMoviesService.findAll();
         return new ResponseEntity<>(favoritesMovies, HttpStatus.OK);
     }
-    @GetMapping("/{idFavoritesMovies}")
-    public ResponseEntity<FavoritesMovies> findById(@PathVariable("idFavoritesMovies")Integer idFavoritesMovies){
-        return favoritesMoviesService.findByFavoritesMovies(idFavoritesMovies).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
-    }
+
     @PostMapping
     public ResponseEntity<FavoritesMovies> create(@RequestBody FavoritesMovies favoritesMovies){
         return new ResponseEntity<>(favoritesMoviesService.create(favoritesMovies),HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<FavoritesMovies> update(@RequestBody FavoritesMovies favoritesMovies){
-        return favoritesMoviesService.findByFavoritesMovies(favoritesMovies.getIdFavoriteMovie())
-                .map( u -> ResponseEntity.ok(favoritesMoviesService.update(favoritesMovies)))
-                .orElseGet(()-> ResponseEntity.notFound().build());
-    }
     @DeleteMapping("/{idFavoritesMovies}")
     public ResponseEntity<Object> delete(@PathVariable("idFavoritesMovies") Integer id){
         return favoritesMoviesService.findByFavoritesMovies(id)
