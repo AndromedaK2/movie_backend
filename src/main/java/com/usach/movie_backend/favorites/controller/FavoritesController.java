@@ -46,8 +46,9 @@ public class FavoritesController {
     @PutMapping("/{name}/{username}/{userEmail}")
     public ResponseEntity<Favorite> update(@PathVariable("name") String name,
                                            @PathVariable("username") String username,
-                                           @PathVariable("userEmail") String userEmail){
-        return new ResponseEntity<>(favoritesService.update(name,username,userEmail),HttpStatus.OK);
+                                           @PathVariable("userEmail") String userEmail,
+                                           @PathVariable("newName") String newName){
+        return new ResponseEntity<>(favoritesService.update(name,username,userEmail,newName),HttpStatus.OK);
     }
     @Operation(
             summary = "Delete a favorite list for a profile",

@@ -48,10 +48,10 @@ public class FavoritesService implements IFavoritesService {
     }
 
     @Transactional(rollbackFor = {ResponseStatusException.class})
-    public Favorite update(String name, String username, String userEmail) {
+    public Favorite update(String name, String username, String userEmail, String newName) {
         Profile profile = profileService.find(username,userEmail);
         Favorite favorite = findByNameAndIdProfile(name, profile.getIdProfile());
-        favorite.setName(name);
+        favorite.setName(newName);
         return favoritesRepository.save(favorite);
     }
 

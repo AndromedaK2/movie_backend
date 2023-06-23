@@ -11,7 +11,7 @@ public interface IFavoritesService {
 
     Favorite create(String name, String username, String userEmail);
 
-    Favorite update(String name, String username, String userEmail);
+    Favorite update(String name, String username, String userEmail,String newName);
 
     void deleteByName(String name, String username, String userEmail);
 
