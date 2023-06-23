@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ISerieRepository extends JpaRepository<Serie,Integer> {
-    List<Serie> findAll();
+
+    List<Serie> findByGenders_IdGender(Integer idGender);
 
     Optional<Serie> findByName(String name);
 }

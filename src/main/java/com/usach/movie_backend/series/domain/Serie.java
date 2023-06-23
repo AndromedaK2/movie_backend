@@ -1,14 +1,12 @@
 package com.usach.movie_backend.series.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.usach.movie_backend.genders.domain.Gender;
-import com.usach.movie_backend.genders.domain.GenderSerie;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "series")
@@ -44,7 +42,7 @@ public class Serie {
     private Boolean active;
 
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "genders_series",
             joinColumns = @JoinColumn(name = "id_serie"),
