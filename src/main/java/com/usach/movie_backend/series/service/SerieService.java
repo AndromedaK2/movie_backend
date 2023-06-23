@@ -55,6 +55,8 @@ public class SerieService  implements ISerieService{
         serie.setSynopsis(serieCreate.synopsis());
         serie.setIdDirector(idDirector);
         serie.setIdProducer(idProducer);
+        serie.setViews(0);
+        serie.setQualification(0);
         return serieRepository.save(serie);
     }
 
