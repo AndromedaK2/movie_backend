@@ -46,6 +46,12 @@ public class DirectorController {
         return new ResponseEntity<>(directorService.update(directorUpdate), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{idDirector}")
+    public ResponseEntity delete(@PathVariable("idDirector") Integer idDirector){
+        directorService.delete(idDirector);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
 
 
 }

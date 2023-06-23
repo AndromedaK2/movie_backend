@@ -47,7 +47,7 @@ public class ProfileSerieController {
     @DeleteMapping
     public ResponseEntity desMarkViewLater(@RequestBody ViewLaterSerie  viewLaterMovie){
         profileSerieService.delete(viewLaterMovie);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
 

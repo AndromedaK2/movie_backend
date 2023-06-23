@@ -47,7 +47,7 @@ public class MoviesController {
     @DeleteMapping("/{title}")
     public ResponseEntity<Object> delete(@PathVariable("title")String title){
       movieService.delete(title);
-      return ResponseEntity.noContent().build();
+      return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

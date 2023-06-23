@@ -46,6 +46,6 @@ public class ProducerController {
     @DeleteMapping("/{idProducer}")
     public ResponseEntity delete(@PathVariable("idProducer") Integer id){
         producerService.delete(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
