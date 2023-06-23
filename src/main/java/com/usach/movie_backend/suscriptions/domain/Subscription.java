@@ -1,6 +1,8 @@
 package com.usach.movie_backend.suscriptions.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usach.movie_backend.subscriptionType.domain.SubscriptionType;
+import com.usach.movie_backend.users.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,5 +34,9 @@ public class Subscription {
     @OneToOne
     @JoinColumn(name = "id_subscription_type", referencedColumnName = "id_subscription_type")
     private SubscriptionType subscriptionType;
+
+    @OneToOne(fetch = FetchType.LAZY ,mappedBy = "subscription")
+    @JsonIgnore
+    private transient User user;
 
 }

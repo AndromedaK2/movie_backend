@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -48,6 +49,6 @@ public class Serie {
             joinColumns = @JoinColumn(name = "id_serie"),
             inverseJoinColumns = @JoinColumn(name = "id_gender")
     )
-    private List<Gender> genders;
+    private Set<Gender> genders;
 
 }

@@ -49,7 +49,7 @@ public class UserService  implements  IUserService{
     public User findByEmail(String email) {
        Optional<User> user = userRepository.findByEmail(email);
        if(user.isEmpty()){
-           throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("User with email: %d not found", email));
+           throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("User with email: %s not found", email));
        }
        logger.info("user {0} was finding", user.get().getEmail());
        return user.get();
@@ -111,9 +111,7 @@ public class UserService  implements  IUserService{
         Optional<User> user = userRepository.findByEmail(email);
         if(user.isPresent()){
             logger.info("delete user {0}",email);
-            userRepository.deleteByEmail(email);
-            logger.info("delete subscription");
-            subscriptionRepository.deleteById(user.get().getSubscription().getIdSubscription());
+            userRepository.deleteById(user.get().getId());
         }
     }
 
