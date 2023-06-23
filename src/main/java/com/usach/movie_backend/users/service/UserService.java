@@ -39,7 +39,7 @@ public class UserService  implements  IUserService{
     public User findByIdUser(Integer idUser){
         Optional<User> user = userRepository.findById(idUser);
         if(userRepository.findById(idUser).isEmpty()){
-            throw new BusinessException(HttpStatus.CONFLICT.toString(),HttpStatus.CONFLICT, String.format("User with idUser: %d not found", idUser));
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("User with idUser: %d not found", idUser));
         }
         logger.info("user {0} was finding", user.get().getEmail());
         return user.get();
@@ -66,7 +66,7 @@ public class UserService  implements  IUserService{
     public User register(UserCreate userCreate){
         if(userRepository.findByEmail(userCreate.email()).isPresent()){
             logger.info("user {0} already exists",userCreate.email());
-            throw new BusinessException(HttpStatus.CONFLICT.toString(),HttpStatus.CONFLICT, "User already exist");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exist");
         }
         User user = userMapper.createUserMapping(userCreate);
         logger.info("register user");
