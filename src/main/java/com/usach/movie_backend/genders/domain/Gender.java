@@ -31,6 +31,7 @@ public class Gender {
 
     @ManyToMany(mappedBy = "genders")
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @JsonIgnore
     private List<Serie> series;
 
 }

@@ -42,7 +42,7 @@ public class Serie {
     private Boolean active;
 
 
-    @ManyToMany()
+    @ManyToMany(fetch=FetchType.LAZY,cascade = {CascadeType.ALL})
     @JoinTable(
             name = "genders_series",
             joinColumns = @JoinColumn(name = "id_serie"),
