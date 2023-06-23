@@ -2,6 +2,7 @@ package com.usach.movie_backend.series.controller;
 
 import com.usach.movie_backend.series.domain.Serie;
 import com.usach.movie_backend.series.service.SerieService;
+import com.usach.movie_backend.series.service.dto.SerieCreate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,8 @@ public class SeriesController {
             description = "Create serie",
             tags = { "series", "post" })
     @PostMapping
-    public ResponseEntity<Serie> create(@RequestBody Serie series){
-        return new ResponseEntity<>(serieService.create(series),HttpStatus.CREATED);
+    public ResponseEntity<Serie> create(@RequestBody SerieCreate serieCreate){
+        return new ResponseEntity<>(serieService.create(serieCreate),HttpStatus.CREATED);
     }
 
     //@PutMapping
