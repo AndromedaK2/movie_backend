@@ -3,6 +3,7 @@ package com.usach.movie_backend.series.controller;
 import com.usach.movie_backend.series.domain.Serie;
 import com.usach.movie_backend.series.service.SerieService;
 import com.usach.movie_backend.series.service.dto.SerieCreate;
+import com.usach.movie_backend.series.service.dto.SerieUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +49,14 @@ public class SeriesController {
         return new ResponseEntity<>(serieService.create(serieCreate),HttpStatus.CREATED);
     }
 
-    //@PutMapping
-    //public ResponseEntity<Serie> update(@RequestBody Serie series){
-    //    return serieService.findBySerie(series.getIdSerie())
-      //          .map( u -> ResponseEntity.ok(serieService.update(series)))
-      //          .orElseGet(()-> ResponseEntity.notFound().build());
-    //}
+    @Operation(
+            summary = "Update Serie",
+            description = "Update serie",
+            tags = { "series", "put" })
+    @PutMapping
+    public ResponseEntity<Serie> update(@RequestBody SerieUpdate serieUpdate){
+        return new ResponseEntity<>(serieService.update(serieUpdate), HttpStatus.OK);
+    }
    // @DeleteMapping("/{idSerie}")
     //public ResponseEntity<Object> delete(@PathVariable("idSerie") Integer id){
      //   return serieService.findBySerie(id)

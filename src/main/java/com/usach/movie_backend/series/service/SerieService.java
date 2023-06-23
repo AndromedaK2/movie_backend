@@ -6,6 +6,7 @@ import com.usach.movie_backend.producers.service.IProducerService;
 import com.usach.movie_backend.series.domain.Serie;
 import com.usach.movie_backend.series.repository.ISerieRepository;
 import com.usach.movie_backend.series.service.dto.SerieCreate;
+import com.usach.movie_backend.series.service.dto.SerieUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -60,12 +61,27 @@ public class SerieService  implements ISerieService{
         return serieRepository.save(serie);
     }
 
-    @Override
-    public Serie update(Serie serie) {
+    @Transactional(noRollbackFor = {ResponseStatusException.class})
+    public Serie update(SerieUpdate serieUpdate) {
+        Serie serie = findByName(serieUpdate.name());
+        Integer idDirector = directorService.findByFirstNameAndLastName(
+                serieUpdate.directorFirstName(),
+                serieUpdate.directorLastName()).getIdDirector();
+        Integer idProducer = producerService.findByName(serieUpdate.producerName()).getIdProducer();
+        serie.setName(serieUpdate.name());
+        serie.setUrlPhoto(serieUpdate.urlPhoto());
+        serie.setTrailer(serieUpdate.trailer());
+        serie.setActive(serieUpdate.active());
+        serie.setReleaseDate(serieUpdate.releaseDate());
+        serie.setSynopsis(serieUpdate.synopsis());
+        serie.setIdDirector(idDirector);
+        serie.setIdProducer(idProducer);
+        serie.setViews(0);
+        serie.setQualification(0);
         return serieRepository.save(serie);
     }
 
-    @Override
+    @Transactional(noRollbackFor = {ResponseStatusException.class})
     public void delete(Integer idSerie) {
         serieRepository.deleteById(idSerie);
     }

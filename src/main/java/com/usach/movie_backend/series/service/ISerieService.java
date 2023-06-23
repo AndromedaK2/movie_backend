@@ -3,6 +3,7 @@ package com.usach.movie_backend.series.service;
 
 import com.usach.movie_backend.series.domain.Serie;
 import com.usach.movie_backend.series.service.dto.SerieCreate;
+import com.usach.movie_backend.series.service.dto.SerieUpdate;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface ISerieService{
 
     Serie create(SerieCreate serieCreate);
 
-    Serie update(Serie serie);
+    Serie update(SerieUpdate serieUpdate);
 
     void delete(Integer idSerie);
 }
