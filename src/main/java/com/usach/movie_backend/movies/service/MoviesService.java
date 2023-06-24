@@ -45,7 +45,7 @@ public class MoviesService implements IMoviesService{
             return moviesRepository.findAll(PageRequest.of(page,size));
         }
         logger.info("Retrieves movies with filters");
-        return moviesRepository.findAllByFilter(genderName,producerName,directorFirstName,directorLastName,title, PageRequest.of(page,size));
+        return moviesRepository.findAllByFilters(genderName,producerName,directorFirstName,directorLastName,title, PageRequest.of(page,size));
     }
 
     @Transactional(readOnly = true)

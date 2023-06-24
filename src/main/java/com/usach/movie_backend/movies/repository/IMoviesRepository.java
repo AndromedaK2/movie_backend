@@ -49,7 +49,7 @@ public interface IMoviesRepository extends JpaRepository<Movie,Integer> {
                     "(LOWER(P.name) LIKE LOWER(CONCAT('%',:producerName,'%')) AND (:producerName = '') IS NOT TRUE)) OR " +
                     "(LOWER(M.title) LIKE LOWER(CONCAT('%',:title,'%')) AND (:title = '') IS NOT TRUE) ",
             nativeQuery = true)
-    Page<Movie> findAllByFilter(@Param("genderName") String genderName,
+    Page<Movie> findAllByFilters(@Param("genderName") String genderName,
                                 @Param("producerName") String producerName,
                                 @Param("directorFirstName") String directorFirstName,
                                 @Param("directorLastName") String directorLastName,
