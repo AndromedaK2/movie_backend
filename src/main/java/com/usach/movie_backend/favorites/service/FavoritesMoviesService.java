@@ -44,7 +44,7 @@ public class FavoritesMoviesService implements IFavoritesMoviesService{
         Profile profile   = profileService.find(favoriteMovieGet.username(),favoriteMovieGet.userEmail());
         Favorite favorite = favoritesService.findByNameAndIdProfile(favoriteMovieGet.name(), profile.getIdProfile());
 
-        List<Movie> movies =moviesService.findAllFavoritesByIdFavorite(favorite.getIdFavorite());
+        List<Movie> movies = moviesService.findAllFavoritesByIdFavorite(favorite.getIdFavorite());
         FavoriteMovieList favoriteMovieList = new FavoriteMovieList(favorite.getIdFavorite(),movies);
         return favoriteMovieList;
     }

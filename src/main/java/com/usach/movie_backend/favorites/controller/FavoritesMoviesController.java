@@ -37,7 +37,7 @@ public class FavoritesMoviesController {
             summary = "Retrieve favorite movies",
             description = "Get  favorite movies",
             tags = { "favorite movies", "get" })
-    @GetMapping("/favorite-movie")
+    @PostMapping("/get-list")
     public ResponseEntity<FavoriteMovieList> findFavoriteMovies(@RequestBody FavoriteMovieGet favoriteMovieGet){
         return new ResponseEntity<>(favoritesMoviesService.findFavoriteMovies(favoriteMovieGet), HttpStatus.OK);
     }
