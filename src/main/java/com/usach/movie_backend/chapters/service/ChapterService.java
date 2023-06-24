@@ -10,31 +10,31 @@ import java.util.Optional;
 @Service
 public class ChapterService implements IChapterService<Chapter> {
     @Autowired
-    private IChapterRepository iChapterRepository;
+    private IChapterRepository chapterRepository;
     @Override
     public List<Chapter> findAll() {
-        return iChapterRepository.findAll();
+        return chapterRepository.findAll();
     }
 
     @Override
     public Optional<Chapter> findByChapter(Integer idChapter) {
-        return iChapterRepository.findById(idChapter);
+        return chapterRepository.findById(idChapter);
     }
 
     @Override
     public Chapter create(Chapter chapter) {
-        return iChapterRepository.save(chapter);
+        return chapterRepository.save(chapter);
     }
 
     @Override
     public Chapter update(Chapter chapter) {
-        return iChapterRepository.save(chapter);
+        return chapterRepository.save(chapter);
     }
 
     @Override
     public void delete(Integer idChapter) {
 
-        iChapterRepository.deleteById(idChapter);
+        chapterRepository.deleteById(idChapter);
 
     }
 }
