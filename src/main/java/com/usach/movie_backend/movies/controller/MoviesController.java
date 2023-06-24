@@ -25,8 +25,9 @@ public class MoviesController {
                                                @RequestParam(required = false,value = "genderName", defaultValue = "") String genderName,
                                                @RequestParam(required = false,value = "producerName",defaultValue = "") String producerName,
                                                @RequestParam(required = false,value = "directorFirstName",defaultValue = "") String directorFirstName,
-                                               @RequestParam(required = false,value = "directorLastName",defaultValue = "") String directorLastName){
-        Page<Movie> movies = movieService.findAll(page,size,genderName,producerName,directorFirstName,directorLastName);
+                                               @RequestParam(required = false,value = "directorLastName",defaultValue = "") String directorLastName,
+                                               @RequestParam(required = false,value = "title",defaultValue = "") String title){
+        Page<Movie> movies = movieService.findAll(page,size,genderName,producerName,directorFirstName,directorLastName,title);
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 

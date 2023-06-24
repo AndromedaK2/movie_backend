@@ -36,13 +36,16 @@ public class MoviesService implements IMoviesService{
     private MovieMapper movieMapper;
 
     @Transactional(readOnly = true)
-    public Page<Movie> findAll(Integer page, Integer size, String genderName,String producerName, String directorFirstName, String directorLastName) {
-        if(genderName.isBlank() && producerName.isBlank() && directorFirstName.isBlank() && directorLastName.isBlank()){
+    public Page<Movie> findAll(Integer page, Integer size, String genderName,String producerName, String directorFirstName, String directorLastName, String title) {
+        if(genderName.isBlank() && producerName.isBlank()
+                && directorFirstName.isBlank()
+                && directorLastName.isBlank()
+                && title.isBlank() ){
             logger.info("Retrieves movies without filters");
             return moviesRepository.findAll(PageRequest.of(page,size));
         }
         logger.info("Retrieves movies with filters");
-        return moviesRepository.findAllByFilter(genderName,producerName,directorFirstName,directorLastName,PageRequest.of(page,size));
+        return moviesRepository.findAllByFilter(genderName,producerName,directorFirstName,directorLastName,title, PageRequest.of(page,size));
     }
 
     @Transactional(readOnly = true)

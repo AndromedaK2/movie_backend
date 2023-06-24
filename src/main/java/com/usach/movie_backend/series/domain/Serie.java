@@ -35,13 +35,13 @@ public class Serie {
     private Integer views;
     @Column(name = "qualification")
     private double qualification;
-    @Column(name = "id_director")
-    private Integer idDirector;
-    @Column(name = "id_producer")
     private Integer idProducer;
     @Column(name = "active")
     private Boolean active;
 
+    @Column(name = "id_director")
+    private Integer idDirector;
+    @Column(name = "id_producer")
 
     @ManyToMany(fetch=FetchType.LAZY,cascade = {CascadeType.ALL})
     @JoinTable(
@@ -50,5 +50,6 @@ public class Serie {
             inverseJoinColumns = @JoinColumn(name = "id_gender")
     )
     private Set<Gender> genders;
+
 
 }

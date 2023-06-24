@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface IMoviesService {
     Page<Movie> findAll(Integer page, Integer size, String genderName,
                         String producerName, String directorFirstName,
-                        String directorLastName);
+                        String directorLastName, String title);
 
     Optional<Movie> findByMovieId(Integer idMovie);
 
