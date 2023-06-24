@@ -20,14 +20,14 @@ public class MoviesController {
     private MoviesService movieService;
 
     @GetMapping
-    public ResponseEntity<Page<Movie>> findAll(@RequestParam(required = false,value = "page", defaultValue = "0")  Integer page,
+    public ResponseEntity<Page<Movie>> findAllByFilters(@RequestParam(required = false,value = "page", defaultValue = "0")  Integer page,
                                                @RequestParam(required = false, value = "size", defaultValue = "20")  Integer size,
                                                @RequestParam(required = false,value = "genderName", defaultValue = "") String genderName,
                                                @RequestParam(required = false,value = "producerName",defaultValue = "") String producerName,
                                                @RequestParam(required = false,value = "directorFirstName",defaultValue = "") String directorFirstName,
                                                @RequestParam(required = false,value = "directorLastName",defaultValue = "") String directorLastName,
                                                @RequestParam(required = false,value = "title",defaultValue = "") String title){
-        Page<Movie> movies = movieService.findAll(page,size,genderName,producerName,directorFirstName,directorLastName,title);
+        Page<Movie> movies = movieService.findAllByFilters(page,size,genderName,producerName,directorFirstName,directorLastName,title);
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 

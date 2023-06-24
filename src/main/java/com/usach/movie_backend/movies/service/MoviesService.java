@@ -36,7 +36,7 @@ public class MoviesService implements IMoviesService{
     private MovieMapper movieMapper;
 
     @Transactional(readOnly = true)
-    public Page<Movie> findAll(Integer page, Integer size, String genderName,String producerName, String directorFirstName, String directorLastName, String title) {
+    public Page<Movie> findAllByFilters(Integer page, Integer size, String genderName,String producerName, String directorFirstName, String directorLastName, String title) {
         if(genderName.isBlank() && producerName.isBlank()
                 && directorFirstName.isBlank()
                 && directorLastName.isBlank()

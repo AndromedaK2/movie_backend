@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IMoviesService {
-    Page<Movie> findAll(Integer page, Integer size, String genderName,
+    Page<Movie> findAllByFilters(Integer page, Integer size, String genderName,
                         String producerName, String directorFirstName,
                         String directorLastName, String title);
 
