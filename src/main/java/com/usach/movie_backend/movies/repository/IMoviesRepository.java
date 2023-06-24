@@ -57,8 +57,8 @@ public interface IMoviesRepository extends JpaRepository<Movie,Integer> {
                                 @Param("title") String title,Pageable pageable);
 
 
-    @Query(value = " SELECT M.id_movie, M.title,M.synopsis,M.duration, M.release_date,M.id_producer\n" +
-            "       M.url_video,M.url_photo,M.url_trailer,M.views,M.note,M.id_director, M.active\n" +
+    @Query(value = " SELECT M.id_movie, M.title,M.synopsis,M.duration, M.release_date,M.id_producer,\n" +
+            "M.url_video,M.url_photo,M.url_trailer,M.views,M.note,M.id_director, M.active\n" +
             " FROM MOVIES AS M\n" +
             " INNER JOIN FAVORITES_MOVIES AS FM\n" +
             " ON M.id_movie = FM.id_movie\n" +
