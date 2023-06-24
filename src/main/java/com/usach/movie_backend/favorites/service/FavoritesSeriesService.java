@@ -50,6 +50,9 @@ public class FavoritesSeriesService implements IFavoritesSeriesService{
         Favorite favorite = favoritesService.findByNameAndIdProfile(favoriteSerieCreate.name(), profile.getIdProfile());
         Serie serie       = serieService.findByName(favoriteSerieCreate.serieName());
 
+        if(favoritesSeriesRepository.findFavoritesMovieByIdFavoriteAndIdSerie(favorite.getIdFavorite(), serie.getIdSerie()).isPresent())
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Favorite serie already exists");
+
         FavoritesSerie favoritesSerie = new FavoritesSerie();
         favoritesSerie.setIdFavorite(favorite.getIdFavorite());
         favoritesSerie.setIdSerie(serie.getIdSerie());

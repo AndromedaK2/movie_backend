@@ -53,6 +53,9 @@ public class FavoritesMoviesService implements IFavoritesMoviesService{
         Favorite favorite = favoritesService.findByNameAndIdProfile(favoritesMovieCreate.name(), profile.getIdProfile());
         Movie movie       = moviesService.findByTitle(favoritesMovieCreate.movieTitle());
 
+        if(favoritesMoviesRepository.findFavoritesMovieByIdFavoriteAndIdMovie(favorite.getIdFavorite(), movie.getIdMovie()).isPresent())
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Favorite movie already exists");
+
         FavoritesMovie favoritesMovie = new FavoritesMovie();
         favoritesMovie.setIdFavorite(favorite.getIdFavorite());
         favoritesMovie.setIdMovie(movie.getIdMovie());
