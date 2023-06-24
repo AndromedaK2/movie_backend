@@ -16,6 +16,8 @@ public interface IMoviesService {
 
     Optional<Movie> findByMovieId(Integer idMovie);
 
+    List<Movie> findAllFavoritesByIdFavorite(Integer idFavorite);
+
     Movie create(MovieCreate movieCreate);
 
     Movie update(MovieUpdate movieUpdate);

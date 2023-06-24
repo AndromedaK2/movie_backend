@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Optional;
 @Service
 public class MoviesService implements IMoviesService{
@@ -63,6 +64,12 @@ public class MoviesService implements IMoviesService{
         logger.info(MessageFormat.format("movie {0} found",title ));
         return movie.get();
     }
+
+    @Transactional(readOnly = true)
+    public List<Movie> findAllFavoritesByIdFavorite(Integer idFavorite){
+        return moviesRepository.findAllFavoritesByIdFavorite(idFavorite);
+    }
+
     @Transactional(noRollbackFor = {BusinessException.class, ResponseStatusException.class})
     public Movie create(MovieCreate movieCreate) {
         if(moviesRepository.findMovieByTitle(movieCreate.title()).isPresent()){

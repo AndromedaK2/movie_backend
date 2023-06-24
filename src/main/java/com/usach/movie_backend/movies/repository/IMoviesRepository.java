@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IMoviesRepository extends JpaRepository<Movie,Integer> {
@@ -55,5 +56,15 @@ public interface IMoviesRepository extends JpaRepository<Movie,Integer> {
                                 @Param("directorLastName") String directorLastName,
                                 @Param("title") String title,Pageable pageable);
 
+
+    @Query(value = " SELECT M.id_movie, M.title,M.synopsis,M.duration, M.release_date,\n" +
+            "       M.url_video,M.url_photo,M.url_trailer,M.views,M.note,M.id_director\n" +
+            " FROM MOVIES AS M\n" +
+            " INNER JOIN FAVORITES_MOVIES AS FM\n" +
+            " ON M.id_movie = FM.id_movie\n" +
+            " INNER JOIN FAVORITES AS F\n" +
+            " ON F.id_favorite = FM.id_favorite\n" +
+            " WHERE F.id_favorite = :idFavorite", nativeQuery = true)
+    List<Movie> findAllFavoritesByIdFavorite(@Param("idFavorite") Integer idFavorite );
 
 }
