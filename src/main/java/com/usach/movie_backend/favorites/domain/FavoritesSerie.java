@@ -16,7 +16,7 @@ public class FavoritesSerie {
     @Column(name = "id_favorite_serie")
     private Integer idFavoriteSerie;
     @Column(name = "id_favorite")
-    private String idFavorite;
+    private Integer idFavorite;
     @Column(name = "id_serie")
     private Integer idSerie;
 }

@@ -2,18 +2,15 @@ package com.usach.movie_backend.favorites.service;
 
 
 import com.usach.movie_backend.favorites.domain.FavoritesSerie;
+import com.usach.movie_backend.favorites.service.dto.FavoriteSerieCreate;
+import com.usach.movie_backend.favorites.service.dto.FavoriteSerieDelete;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface IFavoritesSeriesService <T>{
+public interface IFavoritesSeriesService {
     List<FavoritesSerie> findAll();
 
-    Optional<FavoritesSerie> findByFavoritesSeries(Integer idFavoritesSeries);
+    FavoritesSerie create(FavoriteSerieCreate favoritesSeries);
 
-    FavoritesSerie create(FavoritesSerie favoritesSeries);
-
-    FavoritesSerie update(FavoritesSerie favoritesSeries);
-
-    void delete(Integer idFavoritesMovies);
+    void delete(FavoriteSerieDelete idFavoritesMovies);
 }
