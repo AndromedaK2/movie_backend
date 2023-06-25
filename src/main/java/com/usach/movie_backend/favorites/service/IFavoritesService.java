@@ -13,5 +13,5 @@ public interface IFavoritesService {
     void deleteByName(String name, String username, String userEmail);
     void delete(Integer idFavorite);
 
-   FavoriteMovieAndSeriesList findAllFavoriteMoviesAndSeries(String name, String username, String userEmail);
+   FavoriteMovieAndSeriesList findFavoriteMoviesAndSeries(String name, String username, String userEmail);
 }

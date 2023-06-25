@@ -38,6 +38,7 @@ public class FavoritesSeriesService implements IFavoritesSeriesService{
         return favoritesSeriesRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public FavoriteSerieList findFavoriteSerie(FavoriteSerieGet favoriteSerieGet) {
         Profile profile   = profileService.find(favoriteSerieGet.username(),favoriteSerieGet.userEmail());
         Favorite favorite = favoritesService.findByNameAndIdProfile(favoriteSerieGet.name(), profile.getIdProfile());

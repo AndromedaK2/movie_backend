@@ -49,7 +49,7 @@ public class FavoritesService implements IFavoritesService {
     }
 
     @Transactional(readOnly = true)
-    public FavoriteMovieAndSeriesList findAllFavoriteMoviesAndSeries(String name, String username, String userEmail) {
+    public FavoriteMovieAndSeriesList findFavoriteMoviesAndSeries(String name, String username, String userEmail) {
         Profile profile = profileService.find(username,userEmail);
         Favorite favorite = findByNameAndIdProfile(name, profile.getIdProfile());
         List<Movie> movies = moviesService.findAllFavoritesByIdFavorite(favorite.getIdFavorite());

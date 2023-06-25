@@ -34,10 +34,10 @@ public class FavoritesController {
             description = "Get all favorite movies and series",
             tags = { "favorites", "get" })
     @GetMapping("/{name}/{username}/{userEmail}")
-    public ResponseEntity<FavoriteMovieAndSeriesList> findAllFavoriteMoviesAndSeries(@PathVariable("name") String name,
+    public ResponseEntity<FavoriteMovieAndSeriesList> findFavoriteMoviesAndSeries(@PathVariable("name") String name,
                                                                                      @PathVariable("username") String username,
                                                                                      @PathVariable("userEmail") String userEmail){
-        return new ResponseEntity<>(favoritesService.findAllFavoriteMoviesAndSeries(name,username,userEmail), HttpStatus.OK);
+        return new ResponseEntity<>(favoritesService.findFavoriteMoviesAndSeries(name,username,userEmail), HttpStatus.OK);
     }
 
     @Operation(
