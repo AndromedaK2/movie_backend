@@ -3,6 +3,8 @@ package com.usach.movie_backend.comments.controller;
 
 import com.usach.movie_backend.comments.domain.CommentsProfilesMovies;
 import com.usach.movie_backend.comments.service.CommentsProfilesMoviesService;
+import com.usach.movie_backend.comments.service.dto.CommentProfileMovieCreate;
+import com.usach.movie_backend.comments.service.dto.CommentProfileMovieUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,26 +24,20 @@ public class CommentsProfilesMoviesController {
     }
     @GetMapping("/{idCommentsProfilesMovies}")
     public ResponseEntity<CommentsProfilesMovies> findById(@PathVariable("idCommentsProfilesMovies")Integer idCommentsProfilesMovies){
-        return commentsProfilesMoviesService.findByCommentsProfilesMovies(idCommentsProfilesMovies).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+        return new ResponseEntity<>(commentsProfilesMoviesService.findByCommentsProfilesMovies(idCommentsProfilesMovies), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<CommentsProfilesMovies> create(@RequestBody CommentsProfilesMovies commentsProfilesMovies){
-        return new ResponseEntity<>(commentsProfilesMoviesService.create(commentsProfilesMovies),HttpStatus.CREATED);
+    public ResponseEntity<CommentsProfilesMovies> create(@RequestBody CommentProfileMovieCreate commentProfileMovieCreate){
+        return new ResponseEntity<>(commentsProfilesMoviesService.create(commentProfileMovieCreate),HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<CommentsProfilesMovies> update(@RequestBody CommentsProfilesMovies commentsProfilesMovies){
-        return commentsProfilesMoviesService.findByCommentsProfilesMovies(commentsProfilesMovies.getIdCommentMovie())
-                .map( u -> ResponseEntity.ok(commentsProfilesMoviesService.update(commentsProfilesMovies)))
-                .orElseGet(()-> ResponseEntity.notFound().build());
+    public ResponseEntity<CommentsProfilesMovies> update(@RequestBody CommentProfileMovieUpdate commentProfileMovieUpdate){
+        return  new ResponseEntity<>(commentsProfilesMoviesService.update(commentProfileMovieUpdate),HttpStatus.OK);
     }
     @DeleteMapping("/{idCommentsProfilesMovies}")
-    public ResponseEntity<Object> delete(@PathVariable("idCommentsProfilesMovies") Integer id){
-        return commentsProfilesMoviesService.findByCommentsProfilesMovies(id)
-                .map( u ->{
-                    commentsProfilesMoviesService.delete(id);
-                    return ResponseEntity.ok().build();
-                })
-                .orElseGet(()-> ResponseEntity.notFound().build());
+    public ResponseEntity delete(@PathVariable("idCommentsProfilesMovies") Integer id){
+        commentsProfilesMoviesService.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

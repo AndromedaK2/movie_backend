@@ -1,20 +1,22 @@
 package com.usach.movie_backend.comments.service;
 
 import com.usach.movie_backend.comments.domain.CommentsProfilesMovies;
+import com.usach.movie_backend.comments.service.dto.CommentProfileMovieCreate;
+import com.usach.movie_backend.comments.service.dto.CommentProfileMovieUpdate;
 
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ICommentsProfilesMoviesService<T> {
+public interface ICommentsProfilesMoviesService{
 
-    List<CommentsProfilesMovies> findAll();
+    List findAll();
 
-    Optional<CommentsProfilesMovies> findByCommentsProfilesMovies(Integer idCommentsProfilesMovies);
+    CommentsProfilesMovies findByCommentsProfilesMovies(Integer idCommentsProfilesMovies);
 
-    CommentsProfilesMovies create(CommentsProfilesMovies commentsProfilesMovies);
+    CommentsProfilesMovies create(CommentProfileMovieCreate commentsProfilesMovies);
 
-    CommentsProfilesMovies update(CommentsProfilesMovies commentsProfilesMovies);
+    CommentsProfilesMovies update(CommentProfileMovieUpdate commentsProfilesMovies);
 
     void delete(Integer idCommentsProfilesMovies);
 }
