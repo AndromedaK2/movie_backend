@@ -31,12 +31,16 @@ public class SerieService  implements ISerieService{
     }
 
     @Transactional(readOnly = true)
-    @Override
     public Serie findByName(String name) {
         Optional<Serie> serie = serieRepository.findByName(name);
         if(serie.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Serie not found");
         return serie.get();
+    }
+
+   @Transactional(readOnly = true)
+    public List<Serie> findFavoriteSeriesByIdFavorite(Integer idFavorite) {
+        return serieRepository.findFavoriteSeriesByIdFavorite(idFavorite);
     }
 
     @Transactional(noRollbackFor = {ResponseStatusException.class})

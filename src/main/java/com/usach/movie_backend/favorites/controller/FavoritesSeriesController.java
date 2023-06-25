@@ -2,8 +2,7 @@ package com.usach.movie_backend.favorites.controller;
 
 import com.usach.movie_backend.favorites.domain.FavoritesSerie;
 import com.usach.movie_backend.favorites.service.FavoritesSeriesService;
-import com.usach.movie_backend.favorites.service.dto.FavoriteSerieCreate;
-import com.usach.movie_backend.favorites.service.dto.FavoriteSerieDelete;
+import com.usach.movie_backend.favorites.service.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,14 @@ public class FavoritesSeriesController {
     public ResponseEntity<List<FavoritesSerie>> findAll(){
         List<FavoritesSerie>favoritesSeries = favoritesSeriesService.findAll();
         return new ResponseEntity<>(favoritesSeries, HttpStatus.OK);
+    }
+    @Operation(
+            summary = "Retrieve favorite movies",
+            description = "Get  favorite movies",
+            tags = { "favorite movies", "get" })
+    @PostMapping("/get-list")
+    public ResponseEntity<FavoriteSerieList> findFavoriteMovies(@RequestBody FavoriteSerieGet favoriteSerieGet){
+        return new ResponseEntity<>(favoritesSeriesService.findFavoriteSerie(favoriteSerieGet), HttpStatus.OK);
     }
     @Operation(
             summary = "Add serie to my favorite list",

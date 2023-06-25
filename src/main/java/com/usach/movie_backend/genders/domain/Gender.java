@@ -1,14 +1,11 @@
 package com.usach.movie_backend.genders.domain;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.usach.movie_backend.series.domain.Serie;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,6 +28,7 @@ public class Gender {
 
     @ManyToMany(mappedBy = "genders")
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @JsonIgnore
     private transient Set<Serie> series;
 
 }

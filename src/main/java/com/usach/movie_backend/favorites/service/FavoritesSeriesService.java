@@ -5,6 +5,8 @@ import com.usach.movie_backend.favorites.domain.FavoritesSerie;
 import com.usach.movie_backend.favorites.repository.IFavoritesSeriesRepository;
 import com.usach.movie_backend.favorites.service.dto.FavoriteSerieCreate;
 import com.usach.movie_backend.favorites.service.dto.FavoriteSerieDelete;
+import com.usach.movie_backend.favorites.service.dto.FavoriteSerieGet;
+import com.usach.movie_backend.favorites.service.dto.FavoriteSerieList;
 import com.usach.movie_backend.profiles.domain.Profile;
 import com.usach.movie_backend.profiles.service.IProfileService;
 import com.usach.movie_backend.series.domain.Serie;
@@ -36,6 +38,15 @@ public class FavoritesSeriesService implements IFavoritesSeriesService{
         return favoritesSeriesRepository.findAll();
     }
 
+    public FavoriteSerieList findFavoriteSerie(FavoriteSerieGet favoriteSerieGet) {
+        Profile profile   = profileService.find(favoriteSerieGet.username(),favoriteSerieGet.userEmail());
+        Favorite favorite = favoritesService.findByNameAndIdProfile(favoriteSerieGet.name(), profile.getIdProfile());
+
+        List<Serie> series = serieService.findFavoriteSeriesByIdFavorite(favorite.getIdFavorite());
+
+        FavoriteSerieList favoriteSerieList = new FavoriteSerieList(favorite.getIdFavorite(),series);
+        return favoriteSerieList;
+    }
     @Transactional(readOnly = true)
     public FavoritesSerie findByIdFavoriteAndIdSerie(Integer idFavorite, Integer idSerie){
         Optional<FavoritesSerie> favoritesSerie= favoritesSeriesRepository
@@ -69,4 +80,6 @@ public class FavoritesSeriesService implements IFavoritesSeriesService{
         FavoritesSerie favoritesSerie = findByIdFavoriteAndIdSerie(favorite.getIdFavorite(), serie.getIdSerie());
         favoritesSeriesRepository.deleteById(favoritesSerie.getIdFavorite());
     }
+
+
 }

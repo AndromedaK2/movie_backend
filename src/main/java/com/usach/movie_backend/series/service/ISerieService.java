@@ -12,6 +12,8 @@ public interface ISerieService{
 
     Serie findByName(String name);
 
+    List<Serie> findFavoriteSeriesByIdFavorite(Integer idFavorite);
+
     Serie create(SerieCreate serieCreate);
 
     Serie update(SerieUpdate serieUpdate);
