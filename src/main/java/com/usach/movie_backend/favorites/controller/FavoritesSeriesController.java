@@ -30,11 +30,11 @@ public class FavoritesSeriesController {
         return new ResponseEntity<>(favoritesSeries, HttpStatus.OK);
     }
     @Operation(
-            summary = "Retrieve favorite movies",
-            description = "Get  favorite movies",
-            tags = { "favorite movies", "get" })
+            summary = "Retrieve favorite series",
+            description = "Get  favorite series",
+            tags = { "favorite series", "get" })
     @PostMapping("/get-list")
-    public ResponseEntity<FavoriteSerieList> findFavoriteMovies(@RequestBody FavoriteSerieGet favoriteSerieGet){
+    public ResponseEntity<FavoriteSerieList> findFavoriteSeries(@RequestBody FavoriteSerieGet favoriteSerieGet){
         return new ResponseEntity<>(favoritesSeriesService.findFavoriteSerie(favoriteSerieGet), HttpStatus.OK);
     }
     @Operation(
