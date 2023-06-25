@@ -6,7 +6,7 @@ import com.usach.movie_backend.favorites.service.FavoritesMoviesService;
 import com.usach.movie_backend.favorites.service.dto.FavoriteMovieCreate;
 import com.usach.movie_backend.favorites.service.dto.FavoriteMovieDelete;
 import com.usach.movie_backend.favorites.service.dto.FavoriteMovieGet;
-import com.usach.movie_backend.favorites.service.dto.FavoriteMovieList;
+import com.usach.movie_backend.favorites.service.dto.FavoriteMovies;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class FavoritesMoviesController {
             description = "Get  favorite movies",
             tags = { "favorite movies", "get" })
     @PostMapping("/get-list")
-    public ResponseEntity<FavoriteMovieList> findFavoriteMovies(@RequestBody FavoriteMovieGet favoriteMovieGet){
+    public ResponseEntity<FavoriteMovies> findFavoriteMovies(@RequestBody FavoriteMovieGet favoriteMovieGet){
         return new ResponseEntity<>(favoritesMoviesService.findFavoriteMovies(favoriteMovieGet), HttpStatus.OK);
     }
 

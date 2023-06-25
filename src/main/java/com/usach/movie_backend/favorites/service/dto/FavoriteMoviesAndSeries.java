@@ -5,5 +5,5 @@ import com.usach.movie_backend.series.domain.Serie;
 
 import java.util.List;
 
-public record FavoriteMovieAndSeriesList(
+public record FavoriteMoviesAndSeries(
         Integer idFavorite, List<Movie> movies, List<Serie> series) {}

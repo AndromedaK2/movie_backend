@@ -1,7 +1,7 @@
 package com.usach.movie_backend.favorites.service;
 
 import com.usach.movie_backend.favorites.domain.Favorite;
-import com.usach.movie_backend.favorites.service.dto.FavoriteMovieAndSeriesList;
+import com.usach.movie_backend.favorites.service.dto.FavoriteMoviesAndSeries;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ public interface IFavoritesService {
     void deleteByName(String name, String username, String userEmail);
     void delete(Integer idFavorite);
 
-   FavoriteMovieAndSeriesList findFavoriteMoviesAndSeries(String name, String username, String userEmail);
+   FavoriteMoviesAndSeries findFavoriteMoviesAndSeries(String name, String username, String userEmail);
 }

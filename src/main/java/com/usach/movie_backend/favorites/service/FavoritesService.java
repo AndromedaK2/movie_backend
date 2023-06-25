@@ -2,8 +2,7 @@ package com.usach.movie_backend.favorites.service;
 
 import com.usach.movie_backend.favorites.domain.Favorite;
 import com.usach.movie_backend.favorites.repository.IFavoritesRepository;
-import com.usach.movie_backend.favorites.service.dto.FavoriteMovieAndSeriesList;
-import com.usach.movie_backend.favorites.service.dto.FavoriteSerieList;
+import com.usach.movie_backend.favorites.service.dto.FavoriteMoviesAndSeries;
 import com.usach.movie_backend.movies.domain.Movie;
 import com.usach.movie_backend.movies.service.IMoviesService;
 import com.usach.movie_backend.profiles.domain.Profile;
@@ -49,13 +48,13 @@ public class FavoritesService implements IFavoritesService {
     }
 
     @Transactional(readOnly = true)
-    public FavoriteMovieAndSeriesList findFavoriteMoviesAndSeries(String name, String username, String userEmail) {
+    public FavoriteMoviesAndSeries findFavoriteMoviesAndSeries(String name, String username, String userEmail) {
         Profile profile = profileService.find(username,userEmail);
         Favorite favorite = findByNameAndIdProfile(name, profile.getIdProfile());
         List<Movie> movies = moviesService.findAllFavoritesByIdFavorite(favorite.getIdFavorite());
         List<Serie> series = serieService.findFavoriteSeriesByIdFavorite(favorite.getIdFavorite());
 
-        FavoriteMovieAndSeriesList favoriteMovieAndSeriesList = new FavoriteMovieAndSeriesList(favorite.getIdFavorite(),movies,series);
+        FavoriteMoviesAndSeries favoriteMovieAndSeriesList = new FavoriteMoviesAndSeries(favorite.getIdFavorite(),movies,series);
         return favoriteMovieAndSeriesList;
     }
 
