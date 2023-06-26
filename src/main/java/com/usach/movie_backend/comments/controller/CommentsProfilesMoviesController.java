@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("commentsprofilesmovies")
@@ -22,6 +23,18 @@ public class CommentsProfilesMoviesController {
         List<CommentsProfilesMovies>commentsProfilesMovies = commentsProfilesMoviesService.findAll();
         return new ResponseEntity<>(commentsProfilesMovies, HttpStatus.OK);
     }
+
+    @GetMapping("/sum/{idMovie}")
+    public Double sumCommentsMovie(@PathVariable("idMovie")Integer idMovie){
+
+        Double prom = commentsProfilesMoviesService.sumCommentsMovie(idMovie)/2;
+    return prom;}
+    @GetMapping("/number/{idMovie}")
+    public Double numCommentsMovie(@PathVariable("idMovie")Integer idMovie){
+
+       return commentsProfilesMoviesService.numberComments(idMovie);}
+
+
     @GetMapping("/{idCommentsProfilesMovies}")
     public ResponseEntity<CommentsProfilesMovies> findById(@PathVariable("idCommentsProfilesMovies")Integer idCommentsProfilesMovies){
         return new ResponseEntity<>(commentsProfilesMoviesService.findByCommentsProfilesMovies(idCommentsProfilesMovies), HttpStatus.OK);
@@ -30,6 +43,8 @@ public class CommentsProfilesMoviesController {
     public ResponseEntity<CommentsProfilesMovies> create(@RequestBody CommentProfileMovieCreate commentProfileMovieCreate){
         return new ResponseEntity<>(commentsProfilesMoviesService.create(commentProfileMovieCreate),HttpStatus.CREATED);
     }
+
+
 
     @PutMapping
     public ResponseEntity<CommentsProfilesMovies> update(@RequestBody CommentProfileMovieUpdate commentProfileMovieUpdate){

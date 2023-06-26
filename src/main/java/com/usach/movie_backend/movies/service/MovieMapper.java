@@ -22,7 +22,7 @@ public class MovieMapper {
         movie.setUrlPhoto(movie.getUrlPhoto());
         movie.setUrlVideo(movieCreate.urlVideo());
         movie.setReleaseDate(movieCreate.releaseDate());
-        movie.setNote(0f);
+        movie.setNote(0.0);
         movie.setViews(0);
         return movie;
     }
@@ -37,7 +37,7 @@ public class MovieMapper {
         movie.setUrlPhoto(movie.getUrlPhoto());
         movie.setUrlVideo(movieUpdate.urlVideo());
         movie.setReleaseDate(movieUpdate.releaseDate());
-        movie.setNote(0f);
+        movie.setNote(0.0);
         movie.setViews(0);
     }
 }

@@ -5,12 +5,11 @@ import com.usach.movie_backend.comments.repository.ICommentsProfilesMoviesReposi
 import com.usach.movie_backend.comments.service.dto.CommentProfileMovieCreate;
 import com.usach.movie_backend.comments.service.dto.CommentProfileMovieUpdate;
 import com.usach.movie_backend.movies.domain.Movie;
+import com.usach.movie_backend.movies.repository.IMoviesRepository;
 import com.usach.movie_backend.movies.service.IMoviesService;
-import com.usach.movie_backend.movies.service.dto.MovieUpdate;
 import com.usach.movie_backend.profiles.domain.Profile;
 import com.usach.movie_backend.profiles.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,18 +28,31 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
 
     @Autowired
     private IMoviesService moviesService;
+    @Autowired
+    private IMoviesRepository iMoviesRepository;
 
     @Transactional(readOnly = true)
     public List<CommentsProfilesMovies> findAll() {
         return iCommentsProfilesMoviesRepository.findAll();
     }
 
+    @Override
+    public Double sumCommentsMovie(Integer idMovie) {
+        return iCommentsProfilesMoviesRepository.sumCommentsMovie(idMovie);
+    }
+
+    @Override
+    public Double numberComments(Integer idMovie) {
+
+        return  iCommentsProfilesMoviesRepository.numberComments(idMovie);
+    }
+
     @Transactional(readOnly = true)
     public CommentsProfilesMovies findByCommentsProfilesMovies(Integer idCommentsProfilesMovies) {
-       Optional<CommentsProfilesMovies> commentsProfilesMovies =  iCommentsProfilesMoviesRepository.findById(idCommentsProfilesMovies);
-        if(commentsProfilesMovies.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Comment not found");
-        return commentsProfilesMovies.get();
+       //Optional<CommentsProfilesMovies> commentsProfilesMovies =  iCommentsProfilesMoviesRepository.findById(idCommentsProfilesMovies);
+        //if(commentsProfilesMovies.isPresent())
+         //   throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Comment not found");
+        return iCommentsProfilesMoviesRepository.findById(idCommentsProfilesMovies).get();
     }
 
     @Transactional(noRollbackFor = {ResponseStatusException.class})
@@ -55,12 +67,18 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
         commentsProfilesMovies.setDescription(commentProfileMovieCreate.description());
         commentsProfilesMovies.setCreationDate(new Date());
         commentsProfilesMovies.setLastUpdate(new Date());
+        commentsProfilesMovies.setNote(commentProfileMovieCreate.noteCreate());
+        CommentsProfilesMovies commentsProfilesMovies1 = iCommentsProfilesMoviesRepository.saveAndFlush(commentsProfilesMovies);
+        Double prom =  iCommentsProfilesMoviesRepository.sumCommentsMovie(moviesService.findByTitle(commentProfileMovieCreate.title()).getIdMovie());
+        Double divisor = iCommentsProfilesMoviesRepository.numberComments(moviesService.findByTitle(commentProfileMovieCreate.title()).getIdMovie());
+        double notaV = prom/divisor;
+        movie.setNote(notaV);
+        iMoviesRepository.save(movie);
 
-        // promedio de las notas
-
-
-        return iCommentsProfilesMoviesRepository.save(commentsProfilesMovies);
+        return commentsProfilesMovies1;
     }
+
+
 
     @Transactional(noRollbackFor = {ResponseStatusException.class})
     public CommentsProfilesMovies update(CommentProfileMovieUpdate commentProfileMovieUpdate) {
@@ -69,19 +87,24 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
         Movie movie = moviesService.findByTitle(commentProfileMovieUpdate.title());
         CommentsProfilesMovies commentsProfilesMovies = findByCommentsProfilesMovies(commentProfileMovieUpdate.idComment());
 
-        commentsProfilesMovies.setNote(commentsProfilesMovies.getNote());
+
+        commentsProfilesMovies.setNote(commentProfileMovieUpdate.noteUpdate());
         commentsProfilesMovies.setDescription(commentProfileMovieUpdate.description());
+
         commentsProfilesMovies.setLastUpdate(new Date());
+        iCommentsProfilesMoviesRepository.save(commentsProfilesMovies);
+        Double prom =  iCommentsProfilesMoviesRepository.sumCommentsMovie(moviesService.findByTitle(commentProfileMovieUpdate.title()).getIdMovie());
+        Double divisor = iCommentsProfilesMoviesRepository.numberComments(moviesService.findByTitle(commentProfileMovieUpdate.title()).getIdMovie());
+        double notaV = prom/divisor;
+        movie.setNote(notaV);
+        iMoviesRepository.save(movie);
 
-        CommentsProfilesMovies commentsProfilesMovies1 = iCommentsProfilesMoviesRepository.save(commentsProfilesMovies);
 
 
-        // recalculate promedio
 
-       // MovieUpdate movieUpdate = new MovieUpdate();
-       // moviesService.update(movieUpdate);
 
-        return commentsProfilesMovies1;
+
+        return commentsProfilesMovies;
     }
 
     @Override
