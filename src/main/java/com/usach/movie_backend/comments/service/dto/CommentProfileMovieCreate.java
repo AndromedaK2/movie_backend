@@ -5,7 +5,8 @@ import jakarta.persistence.Column;
 import java.util.Date;
 
 public record CommentProfileMovieCreate(String description,
-                                        Integer note,
+
+                                        Double noteCreate,
                                         String title,
                                         String username,
                                         String userEmail) {

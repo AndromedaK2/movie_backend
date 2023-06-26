@@ -101,6 +101,11 @@ public class MoviesService implements IMoviesService{
         return moviesRepository.save(movie);
     }
 
+    @Override
+    public Movie updateAll(Movie movie) {
+        return moviesRepository.save(movie);
+    }
+
     @Transactional(noRollbackFor = {ResponseStatusException.class})
     public void delete(String title) {
         moviesRepository.deleteByTitle(title);
