@@ -15,6 +15,8 @@ public interface ICommentsProfilesMoviesService{
     Double sumCommentsMovie(Integer idMovie);
     Double numberComments(Integer idMovie);
 
+    Double commentsAVGNote(Integer idMovie);
+
     CommentsProfilesMovies findByCommentsProfilesMovies(Integer idCommentsProfilesMovies);
 
     CommentsProfilesMovies create(CommentProfileMovieCreate commentsProfilesMovies);

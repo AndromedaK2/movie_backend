@@ -22,6 +22,9 @@ public interface IMoviesService {
 
     Movie update(MovieUpdate movieUpdate);
     Movie updateAll(Movie movie);
+    List<Movie>findAllViews();
+    List<Movie>findAllNote();
+
     void delete(String idMovie);
 
     Movie findByTitle(String title);

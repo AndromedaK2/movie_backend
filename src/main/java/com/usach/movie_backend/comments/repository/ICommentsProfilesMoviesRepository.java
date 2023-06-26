@@ -15,4 +15,7 @@ public interface ICommentsProfilesMoviesRepository extends JpaRepository<Comment
     Double sumCommentsMovie(@Param("idMovie") Integer idMovie);
     @Query(value = "select count(id_movie) from comments_profiles_movies where id_movie = :idMovie", nativeQuery = true)
     Double numberComments(@Param("idMovie") Integer idMovie);
+
+    @Query(value = "select AVG(note) from comments_profiles_movies where id_movie = :idMovie", nativeQuery = true)
+    Double commentAVGNote(@Param("idMovie") Integer idMovie);
 }

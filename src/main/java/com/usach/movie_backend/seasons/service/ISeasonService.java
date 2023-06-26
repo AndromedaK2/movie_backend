@@ -11,6 +11,7 @@ public interface ISeasonService <T>{
 
     Optional<Season> findBySeason(Integer idSeason);
 
+    List <Season> findByTitle(String title);
     Season create(Season season);
 
     Season update(Season season);

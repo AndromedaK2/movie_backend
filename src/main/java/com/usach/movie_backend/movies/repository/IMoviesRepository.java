@@ -67,4 +67,11 @@ public interface IMoviesRepository extends JpaRepository<Movie,Integer> {
             " WHERE F.id_favorite = :idFavorite", nativeQuery = true)
     List<Movie> findAllFavoritesByIdFavorite(@Param("idFavorite") Integer idFavorite );
 
+
+    @Query(value = "SELECT * FROM movies ORDER BY views DESC LIMIT 10", nativeQuery = true)
+    List<Movie> findAllViews();
+    @Query(value = "SELECT * FROM movies ORDER BY note DESC LIMIT 10", nativeQuery = true)
+    List<Movie> findAllNote();
+
+
 }

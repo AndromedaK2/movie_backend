@@ -20,7 +20,7 @@ public class CommentsProfilesSeries {
     @Column(name = "description")
     private String description;
     @Column(name = "note")
-    private Integer note;
+    private Double note;
     @Column(name = "last_update")
     private Date lastUpdate;
     @Column(name = "creation_date")

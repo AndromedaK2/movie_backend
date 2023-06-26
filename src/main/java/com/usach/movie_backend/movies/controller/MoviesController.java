@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Tag(name="movies", description = "Movies Management API")
 @RestController
@@ -28,6 +30,16 @@ public class MoviesController {
                                                @RequestParam(required = false,value = "directorLastName",defaultValue = "") String directorLastName,
                                                @RequestParam(required = false,value = "title",defaultValue = "") String title){
         Page<Movie> movies = movieService.findAllByFilters(page,size,genderName,producerName,directorFirstName,directorLastName,title);
+        return new ResponseEntity<>(movies, HttpStatus.OK);
+    }
+    @GetMapping("/views")
+    public ResponseEntity<List<Movie>> findAllViews(){
+        List<Movie>movies= movieService.findAllViews();
+        return new ResponseEntity<>(movies, HttpStatus.OK);
+    }
+    @GetMapping("/note")
+    public ResponseEntity<List<Movie>> findAllNote(){
+        List<Movie>movies= movieService.findAllNote();
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 

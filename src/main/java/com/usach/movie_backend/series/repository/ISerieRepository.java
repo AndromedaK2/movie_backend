@@ -30,4 +30,12 @@ public interface ISerieRepository extends JpaRepository<Serie,Integer> {
     List<Serie> findFavoriteSeriesByIdFavorite(@Param("idFavorite") Integer idFavorite);
 
     Optional<Serie> findByName(String name);
+
+    @Query(value = "SELECT * FROM series ORDER BY views DESC LIMIT 10", nativeQuery = true)
+    List<Serie> findAllViews();
+
+    @Query(value = "SELECT * FROM series ORDER BY qualification DESC LIMIT 10", nativeQuery = true)
+    List<Serie> findAllNote();
+
+
 }
