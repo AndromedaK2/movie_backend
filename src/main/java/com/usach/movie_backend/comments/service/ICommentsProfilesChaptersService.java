@@ -14,6 +14,8 @@ public interface ICommentsProfilesChaptersService<T> {
 
     CommentsProfilesChapters create(CommentsProfilesChapters commentsProfilesChapters);
 
+
+
     CommentsProfilesChapters update(CommentsProfilesChapters commentsProfilesChapters);
 
     void delete(Integer idCommentsProfilesChapters);

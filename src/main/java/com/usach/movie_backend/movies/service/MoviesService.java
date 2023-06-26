@@ -105,6 +105,15 @@ public class MoviesService implements IMoviesService{
     public Movie updateAll(Movie movie) {
         return moviesRepository.save(movie);
     }
+    @Transactional(readOnly = true)
+    public List<Movie>findAllViews(){
+        return moviesRepository.findAllViews();
+    }
+    @Transactional(readOnly = true)
+    public List<Movie> findAllNote() {
+
+        return moviesRepository.findAllNote();
+    }
 
     @Transactional(noRollbackFor = {ResponseStatusException.class})
     public void delete(String title) {

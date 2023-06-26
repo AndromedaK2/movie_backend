@@ -21,6 +21,13 @@ public class SeasonController {
         List<Season>seasons = seasonService.findAll();
         return new ResponseEntity<>(seasons, HttpStatus.OK);
     }
+    @GetMapping("/title/{title}")
+    public ResponseEntity<List<Season>>findAllByFilters(@RequestParam(required = false,value = "title",defaultValue = "")String title){
+
+        List<Season> seasons = seasonService.findByTitle(title);
+        return new ResponseEntity<>(seasons,HttpStatus.OK);
+    }
+
     @GetMapping("/{idSeason}")
     public ResponseEntity<Season> findById(@PathVariable("idSeason")Integer idSeason){
         return seasonService.findBySeason(idSeason).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());

@@ -30,6 +30,8 @@ public class SerieService  implements ISerieService{
         return serieRepository.findAll();
     }
 
+
+
     @Transactional(readOnly = true)
     public Serie findByName(String name) {
         Optional<Serie> serie = serieRepository.findByName(name);
@@ -38,7 +40,17 @@ public class SerieService  implements ISerieService{
         return serie.get();
     }
 
-   @Transactional(readOnly = true)
+    @Override
+    public List<Serie> findAllViews() {
+        return serieRepository.findAllViews();
+    }
+
+    @Override
+    public List<Serie> findAllNote() {
+        return serieRepository.findAllNote();
+    }
+
+    @Transactional(readOnly = true)
     public List<Serie> findFavoriteSeriesByIdFavorite(Integer idFavorite) {
         return serieRepository.findFavoriteSeriesByIdFavorite(idFavorite);
     }

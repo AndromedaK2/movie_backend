@@ -47,6 +47,11 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
         return  iCommentsProfilesMoviesRepository.numberComments(idMovie);
     }
 
+    @Override
+    public Double commentsAVGNote(Integer idMovie) {
+        return iCommentsProfilesMoviesRepository.commentAVGNote(idMovie);
+    }
+
     @Transactional(readOnly = true)
     public CommentsProfilesMovies findByCommentsProfilesMovies(Integer idCommentsProfilesMovies) {
        //Optional<CommentsProfilesMovies> commentsProfilesMovies =  iCommentsProfilesMoviesRepository.findById(idCommentsProfilesMovies);
@@ -69,9 +74,8 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
         commentsProfilesMovies.setLastUpdate(new Date());
         commentsProfilesMovies.setNote(commentProfileMovieCreate.noteCreate());
         CommentsProfilesMovies commentsProfilesMovies1 = iCommentsProfilesMoviesRepository.saveAndFlush(commentsProfilesMovies);
-        Double prom =  iCommentsProfilesMoviesRepository.sumCommentsMovie(moviesService.findByTitle(commentProfileMovieCreate.title()).getIdMovie());
-        Double divisor = iCommentsProfilesMoviesRepository.numberComments(moviesService.findByTitle(commentProfileMovieCreate.title()).getIdMovie());
-        double notaV = prom/divisor;
+
+        double notaV = iCommentsProfilesMoviesRepository.commentAVGNote( moviesService.findByTitle(commentProfileMovieCreate.title()).getIdMovie());
         movie.setNote(notaV);
         iMoviesRepository.save(movie);
 
@@ -93,9 +97,7 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
 
         commentsProfilesMovies.setLastUpdate(new Date());
         iCommentsProfilesMoviesRepository.save(commentsProfilesMovies);
-        Double prom =  iCommentsProfilesMoviesRepository.sumCommentsMovie(moviesService.findByTitle(commentProfileMovieUpdate.title()).getIdMovie());
-        Double divisor = iCommentsProfilesMoviesRepository.numberComments(moviesService.findByTitle(commentProfileMovieUpdate.title()).getIdMovie());
-        double notaV = prom/divisor;
+        double notaV = iCommentsProfilesMoviesRepository.commentAVGNote( moviesService.findByTitle(commentProfileMovieUpdate.title()).getIdMovie());
         movie.setNote(notaV);
         iMoviesRepository.save(movie);
 

@@ -49,6 +49,20 @@ public class SeriesController {
         return new ResponseEntity<>(serieService.create(serieCreate),HttpStatus.CREATED);
     }
 
+
+    @GetMapping("/views")
+    public ResponseEntity<List<Serie>> findAllViews(){
+        List<Serie>series= serieService.findAllViews();
+        return new ResponseEntity<>(series, HttpStatus.OK);
+    }
+
+    @GetMapping("/note")
+    public ResponseEntity<List<Serie>> findAllNote(){
+        List<Serie>series= serieService.findAllNote();
+        return new ResponseEntity<>(series, HttpStatus.OK);
+    }
+
+
     @Operation(
             summary = "Update Serie",
             description = "Update serie",
