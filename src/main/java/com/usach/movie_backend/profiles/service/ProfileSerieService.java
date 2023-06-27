@@ -70,8 +70,8 @@ public class ProfileSerieService implements IProfileSerieService{
         Optional<ProfileSerie> profileSerieBy = profileSerieRepository
                 .findProfileSerieByIdProfileAndIdMovie(profileId,serieId);
 
-        if(profileSerieBy.isPresent())
-            throw  new ResponseStatusException(HttpStatus.CONFLICT,"You have already marked as view later");
+        if(profileSerieBy.isEmpty())
+            throw  new ResponseStatusException(HttpStatus.CONFLICT,"You have not marked movie later");
 
         profileSerieRepository.deleteById(profileSerieBy.get().getIdProfileSerie());
 
