@@ -91,7 +91,9 @@ public class UserService  implements  IUserService{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User could not be updated");
         }
         logger.info("update user");
-        return userRepository.findByEmail(userUpdate.email());
+        Optional<User> user = userRepository.findByEmail(userUpdate.email());
+
+        return  user;
     }
 
     @Transactional

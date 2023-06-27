@@ -49,7 +49,7 @@ public class User {
     private Rol rol;
 
     @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JoinColumn(name = "id_subscription", referencedColumnName = "id_subscription")
+    @JoinColumn(name = "id_subscription", referencedColumnName = "id_subscription", updatable = false)
     private Subscription subscription;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
