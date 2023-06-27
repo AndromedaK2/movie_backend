@@ -19,7 +19,7 @@ public class MovieMapper {
         movie.setActive(movieCreate.active());
         movie.setSynopsis(movieCreate.synopsis());
         movie.setUrlTrailer(movieCreate.urlTrailer());
-        movie.setUrlPhoto(movie.getUrlPhoto());
+        movie.setUrlPhoto(movieCreate.urlPhoto());
         movie.setUrlVideo(movieCreate.urlVideo());
         movie.setReleaseDate(movieCreate.releaseDate());
         movie.setNote(0.0);
@@ -34,7 +34,7 @@ public class MovieMapper {
         movie.setActive(movieUpdate.active());
         movie.setSynopsis(movieUpdate.synopsis());
         movie.setUrlTrailer(movieUpdate.urlTrailer());
-        movie.setUrlPhoto(movie.getUrlPhoto());
+        movie.setUrlPhoto(movieUpdate.urlPhoto());
         movie.setUrlVideo(movieUpdate.urlVideo());
         movie.setReleaseDate(movieUpdate.releaseDate());
         movie.setNote(0.0);

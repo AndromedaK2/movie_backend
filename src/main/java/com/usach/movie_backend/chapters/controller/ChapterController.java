@@ -5,6 +5,7 @@ import com.usach.movie_backend.chapters.domain.Chapter;
 import com.usach.movie_backend.chapters.service.ChapterService;
 import com.usach.movie_backend.chapters.service.dto.ChapterCreate;
 import com.usach.movie_backend.chapters.service.dto.ChapterDelete;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/chapter")
+@RequestMapping("/chapters")
+@Tag(name="chapters", description = "Chapters Management API")
 public class ChapterController {
     @Autowired
     private ChapterService chapterService;
