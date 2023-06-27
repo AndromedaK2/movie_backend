@@ -3,6 +3,7 @@ package com.usach.movie_backend.chapters.controller;
 
 import com.usach.movie_backend.chapters.domain.Chapter;
 import com.usach.movie_backend.chapters.service.ChapterService;
+import com.usach.movie_backend.chapters.service.dto.ChapterDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +36,9 @@ public class ChapterController {
                 .map( u -> ResponseEntity.ok(chapterService.update(chapter)))
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
-    @DeleteMapping("/{idChapter}")
-    public ResponseEntity<Object> delete(@PathVariable("idChapter") Integer id){
-        return chapterService.findByChapter(id)
-                .map( u ->{
-                    chapterService.delete(id);
-                    return ResponseEntity.ok().build();
-                })
-                .orElseGet(()-> ResponseEntity.notFound().build());
+    @DeleteMapping
+    public ResponseEntity<Object> delete(@RequestBody ChapterDelete chapterDelete){
+        chapterService.delete(chapterDelete);
+        return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
