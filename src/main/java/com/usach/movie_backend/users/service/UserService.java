@@ -47,7 +47,7 @@ public class UserService  implements  IUserService{
 
     @Transactional(readOnly = true)
     public User findByEmail(String email) {
-       Optional<User> user = userRepository.findByEmail(email);
+       Optional<User> user = userRepository.findUserByEmail(email);
        if(user.isEmpty()){
            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("User with email: %s not found", email));
        }
@@ -64,7 +64,7 @@ public class UserService  implements  IUserService{
 
     @Transactional(noRollbackFor = {BusinessException.class,ResponseStatusException.class})
     public User register(UserCreate userCreate){
-        if(userRepository.findByEmail(userCreate.email()).isPresent()){
+        if(userRepository.findUserByEmail(userCreate.email()).isPresent()){
             logger.info("user {0} already exists",userCreate.email());
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exist");
         }
@@ -75,7 +75,7 @@ public class UserService  implements  IUserService{
 
     @Transactional(noRollbackFor = {BusinessException.class,ResponseStatusException.class})
     public User update(UserUpdate userUpdate){
-        Optional<User> user = userRepository.findByEmail(userUpdate.email());
+        Optional<User> user = userRepository.findUserByEmail(userUpdate.email());
         if(user.isEmpty()){
             logger.info("user {0} does not exist",userUpdate.email());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
@@ -105,7 +105,7 @@ public class UserService  implements  IUserService{
 
     @Transactional
     public void deleteByEmail(String email){
-        Optional<User> user = userRepository.findByEmail(email);
+        Optional<User> user = userRepository.findUserByEmail(email);
         if(user.isPresent()){
             logger.info("delete user {0}",email);
             userRepository.deleteById(user.get().getId());

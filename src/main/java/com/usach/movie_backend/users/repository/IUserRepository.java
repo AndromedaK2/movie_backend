@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface IUserRepository extends JpaRepository<User,Integer> {
 
-    Optional<User> findByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 
     @Query(value = "SELECT u FROM User u WHERE LOWER(u.email) = LOWER(:email) and LOWER(u.password) = LOWER(:password)")
     Optional<User> login(@Param("email") String email, @Param("password") String password);
