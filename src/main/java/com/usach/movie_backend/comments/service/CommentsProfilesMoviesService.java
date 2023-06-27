@@ -55,7 +55,7 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
     @Transactional(readOnly = true)
     public CommentsProfilesMovies findByCommentsProfilesMovies(Integer idCommentsProfilesMovies) {
        Optional<CommentsProfilesMovies> commentsProfilesMovies =  commentsProfilesMoviesRepository.findById(idCommentsProfilesMovies);
-        if(commentsProfilesMovies.isPresent())
+        if(commentsProfilesMovies.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Comment not found");
         return commentsProfilesMoviesRepository.findById(idCommentsProfilesMovies).get();
     }
