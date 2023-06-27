@@ -2,6 +2,7 @@ package com.usach.movie_backend.chapters.service;
 
 
 import com.usach.movie_backend.chapters.domain.Chapter;
+import com.usach.movie_backend.chapters.service.dto.ChapterCreate;
 import com.usach.movie_backend.chapters.service.dto.ChapterDelete;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface IChapterService<T> {
 
     Optional<Chapter> findByChapter(Integer idChapter);
 
-    Chapter create(Chapter chapter);
+    Chapter create(ChapterCreate chapterCreate);
 
     Chapter update(Chapter chapter);
 

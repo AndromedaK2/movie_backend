@@ -1,6 +1,7 @@
 package com.usach.movie_backend.seasons.controller;
 
 import com.usach.movie_backend.seasons.domain.Season;
+import com.usach.movie_backend.seasons.service.SeasonCreate;
 import com.usach.movie_backend.seasons.service.SeasonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class SeasonController {
         return new ResponseEntity<>(seasonService.findBySeason(idSeason), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<Season> create(@RequestBody Season season){
+    public ResponseEntity<Season> create(@RequestBody SeasonCreate season){
         return new ResponseEntity<>(seasonService.create(season),HttpStatus.CREATED);
     }
 

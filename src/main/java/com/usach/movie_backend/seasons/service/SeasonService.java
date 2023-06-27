@@ -3,6 +3,8 @@ package com.usach.movie_backend.seasons.service;
 
 import com.usach.movie_backend.seasons.domain.Season;
 import com.usach.movie_backend.seasons.repository.ISeasonRepository;
+import com.usach.movie_backend.series.domain.Serie;
+import com.usach.movie_backend.series.service.SerieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ import java.util.Optional;
 public class SeasonService implements ISeasonService{
     @Autowired
     private ISeasonRepository seasonRepository;
+
+    @Autowired
+    private SerieService serieService;
     private final static Logger logger = LoggerFactory.getLogger(SeasonService.class);
     @Transactional(readOnly = true)
     public List<Season> findAll() {
@@ -30,7 +35,14 @@ public class SeasonService implements ISeasonService{
     }
 
     @Transactional(noRollbackFor = {RuntimeException.class})
-    public Season create(Season season) {
+    public Season create(SeasonCreate seasonCreate) {
+        Season season = new Season();
+        Serie serie = serieService.findByName(seasonCreate.titleSerie());
+       season.setIdSerie(serie.getIdSerie());
+        season.setTitle(seasonCreate.seasoname());
+        season.setSynopsis(seasonCreate.sypnosis());
+        season.setReleaseDate(seasonCreate.dateS());
+        season.setNumber(seasonCreate.numbers());
         return seasonRepository.save(season);
     }
 

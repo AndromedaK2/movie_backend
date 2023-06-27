@@ -3,6 +3,7 @@ package com.usach.movie_backend.chapters.controller;
 
 import com.usach.movie_backend.chapters.domain.Chapter;
 import com.usach.movie_backend.chapters.service.ChapterService;
+import com.usach.movie_backend.chapters.service.dto.ChapterCreate;
 import com.usach.movie_backend.chapters.service.dto.ChapterDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class ChapterController {
         return chapterService.findByChapter(idChapter).map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
     @PostMapping
-    public ResponseEntity<Chapter> create(@RequestBody Chapter chapter){
+    public ResponseEntity<Chapter> create(@RequestBody ChapterCreate chapter){
         return new ResponseEntity<>(chapterService.create(chapter),HttpStatus.CREATED);
     }
 
