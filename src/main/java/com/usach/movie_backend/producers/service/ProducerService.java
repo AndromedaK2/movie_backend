@@ -52,7 +52,7 @@ public class ProducerService implements IProducerService{
 
     @Transactional(rollbackFor = {ResponseStatusException.class})
     public Producer update(ProducerUpdate producerUpdate) {
-        Producer producer = findByName(producerUpdate.name());
+        Producer producer = findByIdProducer(producerUpdate.id());
         producer.setNameProducer(producerUpdate.name());
         return producerRepository.save(producer);
     }
