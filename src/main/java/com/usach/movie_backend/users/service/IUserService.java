@@ -13,7 +13,7 @@ public interface IUserService {
     User findByIdUser(Integer userId);
     User findByEmail(String email);
     Page<User> findAll(int page, int size);
-    Optional<User> update(UserUpdate userUpdate);
+    User update(UserUpdate userUpdate);
     int updateUserSubscription(String email, Subscription subscription);
     void deleteById(Integer idUser);
     void deleteByEmail(String email);

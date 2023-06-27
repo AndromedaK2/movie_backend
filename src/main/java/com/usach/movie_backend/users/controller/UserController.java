@@ -82,8 +82,8 @@ public class UserController {
             description = "Update fields of a user",
             tags = { "users", "put" })
     @PutMapping
-    public ResponseEntity<Optional<User>> updateUser(@RequestBody UserUpdate userUpdate){
-        Optional<User> user = userService.update(userUpdate);
+    public ResponseEntity<User> updateUser(@RequestBody UserUpdate userUpdate){
+        User user = userService.update(userUpdate);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 

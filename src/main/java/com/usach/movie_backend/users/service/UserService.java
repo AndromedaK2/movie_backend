@@ -74,26 +74,21 @@ public class UserService  implements  IUserService{
     }
 
     @Transactional(noRollbackFor = {BusinessException.class,ResponseStatusException.class})
-    public Optional<User> update(UserUpdate userUpdate){
-        if(userRepository.findByEmail(userUpdate.email()).isEmpty()){
+    public User update(UserUpdate userUpdate){
+        Optional<User> user = userRepository.findByEmail(userUpdate.email());
+        if(user.isEmpty()){
             logger.info("user {0} does not exist",userUpdate.email());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
         }
-        int updated = userRepository.updateUser(
-               userUpdate.email(),
-               userUpdate.password(),
-               userUpdate.firstName(),
-               userUpdate.lastName(),
-               userUpdate.birthday(),
-               userUpdate.wallet());
-        if(updated!=1){
-            logger.info("user {0} could not be updated",userUpdate.email());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User could not be updated");
-        }
-        logger.info("update user");
-        Optional<User> user = userRepository.findByEmail(userUpdate.email());
 
-        return  user;
+        user.get().setPassword(userUpdate.password());
+        user.get().setEmail(userUpdate.email());
+        user.get().setBirthday(userUpdate.birthday());
+        user.get().setLastName(userUpdate.lastName());
+        user.get().setFirstName(userUpdate.firstName());
+        user.get().setWallet(userUpdate.wallet());
+
+        return  userRepository.save(user.get());
     }
 
     @Transactional
