@@ -2,6 +2,7 @@ package com.usach.movie_backend.chapters.service;
 
 import com.usach.movie_backend.chapters.domain.Chapter;
 import com.usach.movie_backend.chapters.repository.IChapterRepository;
+import com.usach.movie_backend.chapters.service.dto.ChapterCreate;
 import com.usach.movie_backend.chapters.service.dto.ChapterDelete;
 import com.usach.movie_backend.seasons.domain.Season;
 import com.usach.movie_backend.seasons.service.ISeasonService;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class ChapterService implements IChapterService {
     @Autowired
     private IChapterRepository chapterRepository;
+
     @Autowired
     private ISeasonService seasonService;
 
@@ -30,7 +32,17 @@ public class ChapterService implements IChapterService {
     }
 
     @Transactional(noRollbackFor = {ResponseStatusException.class})
-    public Chapter create(Chapter chapter) {
+    public Chapter create(ChapterCreate chapterCreate) {
+        Chapter chapter = new Chapter();
+
+        Season season = seasonService.findByTitle(chapterCreate.nameSeason());
+        chapter.setIdSeason(season.getIdSeason());
+        chapter.setDuration(chapterCreate.duration());
+        chapter.setSynopsis(chapterCreate.sinopsys());
+        chapter.setUrlVideo(chapterCreate.video());
+        chapter.setReleaseDate(chapterCreate.date());
+        chapter.setChapterNumber(chapterCreate.chapterNumber());
+
         return chapterRepository.save(chapter);
     }
 

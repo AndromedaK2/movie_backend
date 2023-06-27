@@ -14,7 +14,7 @@ public interface ISeasonService {
 
     Season findByTitle(String title);
 
-    Season create(Season season);
+    Season create(SeasonCreate seasonCreate);
 
     Season update(Season season);
 
