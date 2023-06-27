@@ -122,7 +122,8 @@ public class UserService  implements  IUserService{
             logger.info("user {0} does not exist",userLogin.email());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
         }
-        expiredSubscription(user);
+        if(user.get().getSubscription()!=null)
+           expiredSubscription(user);
         logger.info("login user {0}",userLogin.email());
         return user.get();
     }

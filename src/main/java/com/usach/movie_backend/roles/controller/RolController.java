@@ -35,7 +35,7 @@ public class RolController {
     @Operation(
             summary = "Retrieve Roles",
             description = "Get Roles",
-            tags = { "users", "get" })
+            tags = { "roles", "get" })
     @GetMapping
     public ResponseEntity<List<Rol>> findAll(){
         List<Rol> roles = rolService.findAllRoles();

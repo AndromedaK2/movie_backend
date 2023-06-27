@@ -44,6 +44,9 @@ public class ProfileService implements IProfileService{
     public Profile create(ProfileCreate profileCreate, String userEmail) {
         User user = userService.findByEmail(userEmail);
         Subscription subscription = user.getSubscription();
+        user.getProfiles().stream().filter(p->p.getUsername().equals(profileCreate.username())).findFirst();
+        if(user.getProfiles().stream().filter(p->p.getUsername().equals(profileCreate.username())).findFirst().isPresent())
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Profile name already created for this user");
 
         if(!subscription.isActive())
             throw new ResponseStatusException( HttpStatus.CONFLICT,"Subscription is not active");
