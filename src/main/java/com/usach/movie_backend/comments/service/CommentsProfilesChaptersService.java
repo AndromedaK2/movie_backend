@@ -9,33 +9,33 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CommentsProfilesChaptersService implements ICommentsProfilesChaptersService<CommentsProfilesChapters> {
+public class CommentsProfilesChaptersService implements ICommentsProfilesChaptersService {
     @Autowired
-    private ICommentsProfilesChaptersRepository iCommentsProfilesChaptersRepository;
+    private ICommentsProfilesChaptersRepository commentsProfilesChaptersRepository;
 
     @Override
     public List<CommentsProfilesChapters> findAll() {
-        return iCommentsProfilesChaptersRepository.findAll();
+        return commentsProfilesChaptersRepository.findAll();
     }
 
     @Override
     public Optional<CommentsProfilesChapters> findByCommentsCommentsProfilesChapters(Integer idCommentsProfilesChapters) {
-        return iCommentsProfilesChaptersRepository.findById(idCommentsProfilesChapters);
+        return commentsProfilesChaptersRepository.findById(idCommentsProfilesChapters);
     }
 
     @Override
     public CommentsProfilesChapters create(CommentsProfilesChapters commentsProfilesChapters) {
-        return iCommentsProfilesChaptersRepository.save(commentsProfilesChapters);
+        return commentsProfilesChaptersRepository.save(commentsProfilesChapters);
     }
 
     @Override
     public CommentsProfilesChapters update(CommentsProfilesChapters commentsProfilesChapters) {
-        return iCommentsProfilesChaptersRepository.save(commentsProfilesChapters);
+        return commentsProfilesChaptersRepository.save(commentsProfilesChapters);
     }
 
     @Override
     public void delete(Integer idCommentsProfilesChapters) {
 
-        iCommentsProfilesChaptersRepository.deleteById(idCommentsProfilesChapters);
+        commentsProfilesChaptersRepository.deleteById(idCommentsProfilesChapters);
     }
 }

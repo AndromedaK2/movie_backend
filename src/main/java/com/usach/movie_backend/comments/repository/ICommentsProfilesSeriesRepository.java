@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ICommentsProfilesSeriesRepository extends JpaRepository<CommentsProfilesSeries,Integer> {
-    List<CommentsProfilesSeries> findAll();
 
     @Query(value = "select AVG(note) from comments_profiles_series where id_serie = :idSerie", nativeQuery = true)
     Double commentAVGNote(@Param("idSerie") Integer idSerie);

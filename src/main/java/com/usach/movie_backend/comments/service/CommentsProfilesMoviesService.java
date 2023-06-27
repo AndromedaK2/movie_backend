@@ -73,13 +73,13 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
         commentsProfilesMovies.setCreationDate(new Date());
         commentsProfilesMovies.setLastUpdate(new Date());
         commentsProfilesMovies.setNote(commentProfileMovieCreate.noteCreate());
-        CommentsProfilesMovies commentsProfilesMovies1 = commentsProfilesMoviesRepository.saveAndFlush(commentsProfilesMovies);
+        CommentsProfilesMovies newCommentsProfilesMovies = commentsProfilesMoviesRepository.saveAndFlush(commentsProfilesMovies);
 
-        double notaV = commentsProfilesMoviesRepository.commentAVGNote( moviesService.findByTitle(commentProfileMovieCreate.title()).getIdMovie());
-        movie.setNote(notaV);
+        double movieNote = commentsProfilesMoviesRepository.commentAVGNote( moviesService.findByTitle(commentProfileMovieCreate.title()).getIdMovie());
+        movie.setNote(movieNote);
         moviesRepository.save(movie);
 
-        return commentsProfilesMovies1;
+        return newCommentsProfilesMovies;
     }
 
 

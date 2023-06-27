@@ -6,7 +6,7 @@ import com.usach.movie_backend.comments.domain.CommentsProfilesChapters;
 import java.util.List;
 import java.util.Optional;
 
-public interface ICommentsProfilesChaptersService<T> {
+public interface ICommentsProfilesChaptersService {
 
     List<CommentsProfilesChapters> findAll();
 
