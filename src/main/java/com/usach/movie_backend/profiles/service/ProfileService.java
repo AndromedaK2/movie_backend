@@ -67,7 +67,7 @@ public class ProfileService implements IProfileService{
         return profileRepository.save(profile);
     }
 
-    @Transactional(noRollbackFor = {ResponseStatusException.class})
+
     public void delete(String username, String userEmail) {
         Profile profile = find(username,userEmail);
         profileRepository.deleteByIdProfile(profile.getIdProfile());
