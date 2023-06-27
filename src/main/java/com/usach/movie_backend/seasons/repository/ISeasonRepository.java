@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ISeasonRepository extends JpaRepository<Season,Integer> {
-    List<Season>findAll();
+
     @Query(value = "SELECT * FROM seasons where title like CONCAT('%',:title,'%')", nativeQuery = true)
     List<Season> findAllByFilters(@Param("title")String title);
+
+    Optional<Season> findSeasonByTitle(@Param("title") String title);
 
 }

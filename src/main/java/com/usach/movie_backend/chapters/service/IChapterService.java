@@ -2,6 +2,7 @@ package com.usach.movie_backend.chapters.service;
 
 
 import com.usach.movie_backend.chapters.domain.Chapter;
+import com.usach.movie_backend.chapters.service.dto.ChapterDelete;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,5 +16,5 @@ public interface IChapterService<T> {
 
     Chapter update(Chapter chapter);
 
-    void delete(Integer idChapter);
+    void delete(ChapterDelete chapterDelete);
 }
