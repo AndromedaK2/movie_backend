@@ -10,6 +10,7 @@ import com.usach.movie_backend.movies.service.IMoviesService;
 import com.usach.movie_backend.profiles.domain.Profile;
 import com.usach.movie_backend.profiles.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,7 +22,7 @@ import java.util.Optional;
 @Service
 public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesService {
     @Autowired
-    private ICommentsProfilesMoviesRepository iCommentsProfilesMoviesRepository;
+    private ICommentsProfilesMoviesRepository commentsProfilesMoviesRepository;
 
     @Autowired
     private IProfileService profileService;
@@ -29,35 +30,34 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
     @Autowired
     private IMoviesService moviesService;
     @Autowired
-    private IMoviesRepository iMoviesRepository;
+    private IMoviesRepository moviesRepository;
 
     @Transactional(readOnly = true)
     public List<CommentsProfilesMovies> findAll() {
-        return iCommentsProfilesMoviesRepository.findAll();
+        return commentsProfilesMoviesRepository.findAll();
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public Double sumCommentsMovie(Integer idMovie) {
-        return iCommentsProfilesMoviesRepository.sumCommentsMovie(idMovie);
+        return commentsProfilesMoviesRepository.sumCommentsMovie(idMovie);
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public Double numberComments(Integer idMovie) {
-
-        return  iCommentsProfilesMoviesRepository.numberComments(idMovie);
+        return  commentsProfilesMoviesRepository.numberComments(idMovie);
     }
 
     @Override
     public Double commentsAVGNote(Integer idMovie) {
-        return iCommentsProfilesMoviesRepository.commentAVGNote(idMovie);
+        return commentsProfilesMoviesRepository.commentAVGNote(idMovie);
     }
 
     @Transactional(readOnly = true)
     public CommentsProfilesMovies findByCommentsProfilesMovies(Integer idCommentsProfilesMovies) {
-       //Optional<CommentsProfilesMovies> commentsProfilesMovies =  iCommentsProfilesMoviesRepository.findById(idCommentsProfilesMovies);
-        //if(commentsProfilesMovies.isPresent())
-         //   throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Comment not found");
-        return iCommentsProfilesMoviesRepository.findById(idCommentsProfilesMovies).get();
+       Optional<CommentsProfilesMovies> commentsProfilesMovies =  commentsProfilesMoviesRepository.findById(idCommentsProfilesMovies);
+        if(commentsProfilesMovies.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Comment not found");
+        return commentsProfilesMoviesRepository.findById(idCommentsProfilesMovies).get();
     }
 
     @Transactional(noRollbackFor = {ResponseStatusException.class})
@@ -73,11 +73,11 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
         commentsProfilesMovies.setCreationDate(new Date());
         commentsProfilesMovies.setLastUpdate(new Date());
         commentsProfilesMovies.setNote(commentProfileMovieCreate.noteCreate());
-        CommentsProfilesMovies commentsProfilesMovies1 = iCommentsProfilesMoviesRepository.saveAndFlush(commentsProfilesMovies);
+        CommentsProfilesMovies commentsProfilesMovies1 = commentsProfilesMoviesRepository.saveAndFlush(commentsProfilesMovies);
 
-        double notaV = iCommentsProfilesMoviesRepository.commentAVGNote( moviesService.findByTitle(commentProfileMovieCreate.title()).getIdMovie());
+        double notaV = commentsProfilesMoviesRepository.commentAVGNote( moviesService.findByTitle(commentProfileMovieCreate.title()).getIdMovie());
         movie.setNote(notaV);
-        iMoviesRepository.save(movie);
+        moviesRepository.save(movie);
 
         return commentsProfilesMovies1;
     }
@@ -91,27 +91,21 @@ public class CommentsProfilesMoviesService implements ICommentsProfilesMoviesSer
         Movie movie = moviesService.findByTitle(commentProfileMovieUpdate.title());
         CommentsProfilesMovies commentsProfilesMovies = findByCommentsProfilesMovies(commentProfileMovieUpdate.idComment());
 
-
         commentsProfilesMovies.setNote(commentProfileMovieUpdate.noteUpdate());
         commentsProfilesMovies.setDescription(commentProfileMovieUpdate.description());
 
         commentsProfilesMovies.setLastUpdate(new Date());
-        iCommentsProfilesMoviesRepository.save(commentsProfilesMovies);
-        double notaV = iCommentsProfilesMoviesRepository.commentAVGNote( moviesService.findByTitle(commentProfileMovieUpdate.title()).getIdMovie());
-        movie.setNote(notaV);
-        iMoviesRepository.save(movie);
-
-
-
-
-
+        commentsProfilesMoviesRepository.save(commentsProfilesMovies);
+        double movieNote = commentsProfilesMoviesRepository.commentAVGNote( moviesService.findByTitle(commentProfileMovieUpdate.title()).getIdMovie());
+        movie.setNote(movieNote);
+        moviesRepository.save(movie);
 
         return commentsProfilesMovies;
     }
 
-    @Override
+    @Transactional(noRollbackFor = {ResponseStatusException.class})
     public void delete(Integer idCommentsProfilesMovies) {
 
-        iCommentsProfilesMoviesRepository.deleteById(idCommentsProfilesMovies);
+        commentsProfilesMoviesRepository.deleteById(idCommentsProfilesMovies);
     }
 }

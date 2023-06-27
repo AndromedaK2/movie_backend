@@ -5,6 +5,7 @@ import com.usach.movie_backend.comments.domain.CommentsProfilesMovies;
 import com.usach.movie_backend.comments.service.CommentsProfilesMoviesService;
 import com.usach.movie_backend.comments.service.dto.CommentProfileMovieCreate;
 import com.usach.movie_backend.comments.service.dto.CommentProfileMovieUpdate;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("commentsprofilesmovies")
+@RequestMapping("comments-profiles-movies")
+@Tag(name="comments profiles movies", description = "Comments profiles movies Management API")
 public class CommentsProfilesMoviesController {
     @Autowired
     private CommentsProfilesMoviesService commentsProfilesMoviesService;

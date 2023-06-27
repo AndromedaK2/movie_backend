@@ -16,32 +16,31 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CommentsProfilesSeriesService implements ICommentsProfilesSeriesService {
     @Autowired
-    private ICommentsProfilesSeriesRepository iCommentsProfilesSeriesRepository;
+    private ICommentsProfilesSeriesRepository commentsProfilesSeriesRepository;
     @Autowired
     private IProfileService profileService;
     @Autowired
     private SerieService serieService;
     @Autowired
-    private ISerieRepository iSerieRepository;
+    private ISerieRepository serieRepository;
 
-    @Override
+    @Transactional(readOnly = true)
     public List<CommentsProfilesSeries> findAll() {
-        return iCommentsProfilesSeriesRepository.findAll();
+        return commentsProfilesSeriesRepository.findAll();
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public CommentsProfilesSeries findByCommentsProfilesSeries(Integer idCommentsProfilesSeries) {
-        return iCommentsProfilesSeriesRepository.findById(idCommentsProfilesSeries).get();
+        return commentsProfilesSeriesRepository.findById(idCommentsProfilesSeries).get();
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public Double commentsSerieAVG(Integer idSerie) {
-        return iCommentsProfilesSeriesRepository.commentAVGNote(idSerie);
+        return commentsProfilesSeriesRepository.commentAVGNote(idSerie);
     }
 
 
@@ -59,11 +58,11 @@ public class CommentsProfilesSeriesService implements ICommentsProfilesSeriesSer
         commentsProfilesSeries.setLastUpdate(new Date() );
         commentsProfilesSeries.setCreationDate(new Date());
         commentsProfilesSeries.setNote(CommentProfileSerieCreate.note());
-        CommentsProfilesSeries commentsProfilesSeries1 = iCommentsProfilesSeriesRepository.saveAndFlush(commentsProfilesSeries);
-        double notep = iCommentsProfilesSeriesRepository.commentAVGNote(serieService.findByName(CommentProfileSerieCreate.title()).getIdSerie());
+        CommentsProfilesSeries commentsProfilesSeries1 = commentsProfilesSeriesRepository.saveAndFlush(commentsProfilesSeries);
+        double noteSerie = commentsProfilesSeriesRepository.commentAVGNote(serieService.findByName(CommentProfileSerieCreate.title()).getIdSerie());
 
-        serie.setQualification(notep);
-        iSerieRepository.save(serie);
+        serie.setQualification(noteSerie);
+        serieRepository.save(serie);
 
         return commentsProfilesSeries1;
 
@@ -78,10 +77,10 @@ public class CommentsProfilesSeriesService implements ICommentsProfilesSeriesSer
         commentsProfilesSeries.setDescription(commentProfileSerieUpdate.description());
         commentsProfilesSeries.setNote(commentProfileSerieUpdate.noteupdate());
         commentsProfilesSeries.setLastUpdate(new Date());
-        iCommentsProfilesSeriesRepository.saveAndFlush(commentsProfilesSeries);
-        double notap = iCommentsProfilesSeriesRepository.commentAVGNote(serieService.findByName(commentProfileSerieUpdate.title()).getIdSerie());
-        serie.setQualification(notap);
-        iSerieRepository.save(serie);
+        commentsProfilesSeriesRepository.saveAndFlush(commentsProfilesSeries);
+        double noteSerie = commentsProfilesSeriesRepository.commentAVGNote(serieService.findByName(commentProfileSerieUpdate.title()).getIdSerie());
+        serie.setQualification(noteSerie);
+        serieRepository.save(serie);
 
 
         return commentsProfilesSeries;
@@ -90,6 +89,6 @@ public class CommentsProfilesSeriesService implements ICommentsProfilesSeriesSer
     @Override
     public void delete(Integer idCommentsProfilesSeries) {
 
-        iCommentsProfilesSeriesRepository.deleteById(idCommentsProfilesSeries);
+        commentsProfilesSeriesRepository.deleteById(idCommentsProfilesSeries);
     }
 }

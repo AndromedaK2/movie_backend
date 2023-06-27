@@ -5,6 +5,7 @@ import com.usach.movie_backend.comments.domain.CommentsProfilesSeries;
 import com.usach.movie_backend.comments.service.CommentsProfilesSeriesService;
 import com.usach.movie_backend.comments.service.dto.CommentProfileSerieCreate;
 import com.usach.movie_backend.comments.service.dto.CommentProfileSerieUpdate;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("commentsprofilesseries")
+@RequestMapping("comments-profiles-series")
+@Tag(name="comments profiles series", description = "Comments profiles series Management API")
 public class CommentsProfilesSeriesController {
     @Autowired
     private CommentsProfilesSeriesService profilesSeriesService;

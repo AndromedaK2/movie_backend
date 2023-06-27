@@ -3,6 +3,7 @@ package com.usach.movie_backend.comments.controller;
 
 import com.usach.movie_backend.comments.domain.CommentsProfilesChapters;
 import com.usach.movie_backend.comments.service.CommentsProfilesChaptersService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("commentsprofileschapters")
+@RequestMapping("comments-profiles-chapters")
+@Tag(name="comments profiles chapters", description = "Comments profiles chapters Management API")
 public class CommentsProfilesChaptersController {
     @Autowired
     private CommentsProfilesChaptersService commentsProfilesChaptersService;
